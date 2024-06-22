@@ -4,6 +4,10 @@ import About from './About';
 import Contact from './Contact';
 
 const PageList = () => {
+
+    //无token时默认为未登录状态，进入login页面
+    //有token时默认为登录状态，进入dashboard页面
+
     return (
         <div>
             {/* 新增页面在这里加入 */}
