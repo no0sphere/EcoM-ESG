@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+//import App from './App.jsx'
 import './index.css'
+
+import PageList from './components/PageList';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -12,7 +14,7 @@ const Main = () => {
     return (
         <>
             <Router>
-                <App />
+                <PageList />
             </Router>
         </>
     );
