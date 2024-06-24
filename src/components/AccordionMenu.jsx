@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AccordionMenu = () => {
+
+    const MenuStyle = {padding: '10px', margin: '20px', width: '28%'};
 
     const [selectedRadio, setSelectedRadio] = useState(null);
 
@@ -32,13 +35,14 @@ const AccordionMenu = () => {
     };
 
     return (
-        <div className="accordion" id="mainAccordion">
+        <div className="accordion" id="mainAccordion" style={MenuStyle}>
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingOne">
                     <button
                         className="accordion-button collapsed"
                         type="button"
                         onClick={toggleAccordion}
+                        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
                     >
                         <div className="d-flex align-items-center">
                             Frameworks
@@ -53,7 +57,7 @@ const AccordionMenu = () => {
                                     className="me-2"
                                     value="subItem1"
                                     checked={selectedRadio === 'subItem1'}
-                                    onClick={handleRadioChange} />
+                                    onChange={handleRadioChange} />
                                     Sub Item 1
                                 </div>
                             </div>
@@ -63,7 +67,7 @@ const AccordionMenu = () => {
                                     className="me-2"
                                     value="subItem2"
                                     checked={selectedRadio === 'subItem2'}
-                                    onClick={handleRadioChange} />
+                                    onChange={handleRadioChange} />
                                     Sub Item 2
                                 </div>
                             </div>
@@ -73,7 +77,7 @@ const AccordionMenu = () => {
                                     className="me-2"
                                     value="subItem3"
                                     checked={selectedRadio === 'subItem3'}
-                                    onClick={handleRadioChange} />
+                                    onChange={handleRadioChange} />
                                     Sub Item 3
                                 </div>
                             </div>
@@ -105,7 +109,7 @@ const AccordionMenu = () => {
                                         <div className="d-flex align-items-center">
                                             <input type="checkbox" className="me-2" onClick={handleInputClick} />
                                             Sub Item 1
-                                            <input type="text" className="ms-2" placeholder="Input here" onClick={handleInputClick} />
+                                            <input type="text" className="ms-2" value="1.00" onClick={handleInputClick} style={{ width: '20%', fontSize: '12px' }} />
                                         </div>
                                     </button>
                                 </h2>
@@ -115,7 +119,7 @@ const AccordionMenu = () => {
                                             <div className="d-flex align-items-center ">
                                                 <input type="checkbox" className="me-2" />
                                                 Content for Sub Item 1
-                                                    <input type="text" className="ms-2" placeholder="Input here" />
+                                                <input type="text" className="ms-2" value="1.00" style={{ width: '20%', fontSize: '12px' }} />
                                             </div>
                                         </div>
                                     </div>
@@ -131,7 +135,7 @@ const AccordionMenu = () => {
                                         <div className="d-flex align-items-center">
                                             <input type="checkbox" className="me-2" onClick={handleInputClick} />
                                             Sub Item 2
-                                            <input type="text" className="ms-2" placeholder="Input here" onClick={handleInputClick} />
+                                            <input type="text" className="ms-2" value="1.00" onClick={handleInputClick} style={{ width: '20%', fontSize: '12px' }} />
                                         </div>
                                     </button>
                                 </h2>
@@ -141,14 +145,14 @@ const AccordionMenu = () => {
                                             <div className="d-flex align-items-center ">
                                                 <input type="checkbox" className="me-2" />
                                                 Content for Sub Item 2
-                                                <input type="text" className="ms-2" placeholder="Input here" />
+                                                <input type="text" className="ms-2" value="1.00" style={{ width: '20%', fontSize: '12px' }} />
                                             </div>
                                         </div>
                                         <div className="accordion-item accordion-body">
                                             <div className="d-flex align-items-center ">
                                                 <input type="checkbox" className="me-2" />
                                                 Content for Sub Item 2
-                                                <input type="text" className="ms-2" placeholder="Input here" />
+                                                <input type="text" className="ms-2" value="1.00" style={{ width: '20%', fontSize: '12px' }} />
                                             </div>
                                         </div>
                                     </div>
