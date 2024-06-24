@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import About from './About';
 import Contact from './Contact';
+import SingleMode from './SingleMode';
+
 
 const PageList = () => {
 
@@ -14,6 +16,7 @@ const PageList = () => {
             <Routes>
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/SingleMode" element={<SingleMode />} />
             </Routes>
 
 
@@ -25,6 +28,9 @@ const PageList = () => {
                     </li>
                     <li>
                         <Link to="/contact">Contact</Link>
+                    </li>
+                    <li>
+                        <Link to="/SingleMode">SingleMode</Link>
                     </li>
                 </ul>
             </nav>
