@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 const AccordionMenu = () => {
+
+    const [selectedRadio, setSelectedRadio] = useState(null);
+
     const toggleAccordion = (event) => {
         const button = event.target.closest('.accordion-button');
         const card = button.closest('.accordion-item');
@@ -24,6 +27,10 @@ const AccordionMenu = () => {
         event.stopPropagation();
     };
 
+    const handleRadioChange = (event) => {
+        setSelectedRadio(event.target.value);
+    };
+
     return (
         <div className="accordion" id="mainAccordion">
             <div className="accordion-item">
@@ -34,7 +41,7 @@ const AccordionMenu = () => {
                         onClick={toggleAccordion}
                     >
                         <div className="d-flex align-items-center">
-                            Main Item 1
+                            Frameworks
                         </div>
                     </button>
                 </h2>
@@ -42,19 +49,31 @@ const AccordionMenu = () => {
                     <div className="accordion-body">
                             <div className="accordion-item accordion-body">
                                 <div className="d-flex align-items-center">
-                                    <input type="checkbox" className="me-2" />
+                                <input type="radio"
+                                    className="me-2"
+                                    value="subItem1"
+                                    checked={selectedRadio === 'subItem1'}
+                                    onClick={handleRadioChange} />
                                     Sub Item 1
                                 </div>
                             </div>
                             <div className="accordion-item accordion-body">
                                 <div className="d-flex align-items-center">
-                                    <input type="checkbox" className="me-2" />
+                                <input type="radio"
+                                    className="me-2"
+                                    value="subItem2"
+                                    checked={selectedRadio === 'subItem2'}
+                                    onClick={handleRadioChange} />
                                     Sub Item 2
                                 </div>
                             </div>
                             <div className="accordion-item accordion-body">
                                 <div className="d-flex align-items-center">
-                                    <input type="checkbox" className="me-2" />
+                                <input type="radio"
+                                    className="me-2"
+                                    value="subItem3"
+                                    checked={selectedRadio === 'subItem3'}
+                                    onClick={handleRadioChange} />
                                     Sub Item 3
                                 </div>
                             </div>
@@ -69,7 +88,7 @@ const AccordionMenu = () => {
                         onClick={toggleAccordion}
                     >
                         <div className="d-flex align-items-center">
-                            Main Item 2
+                            Metrics & Indicators
                         </div>
                     </button>
                 </h2>
@@ -134,6 +153,44 @@ const AccordionMenu = () => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="headingOne">
+                    <button
+                        className="accordion-button collapsed"
+                        type="button"
+                        onClick={toggleAccordion}
+                    >
+                        <div className="d-flex align-items-center">
+                            Additional Idicators
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapseOne" className="accordion-collapse collapse">
+                    <div className="accordion-body">
+                        <div className="accordion-item accordion-body">
+                            <div className="d-flex align-items-center">
+                                <input type="checkbox"
+                                    className="me-2" />
+                                Sub Item 1
+                            </div>
+                        </div>
+                        <div className="accordion-item accordion-body">
+                            <div className="d-flex align-items-center">
+                                <input type="checkbox"
+                                    className="me-2" />
+                                Sub Item 2
+                            </div>
+                        </div>
+                        <div className="accordion-item accordion-body">
+                            <div className="d-flex align-items-center">
+                                <input type="checkbox"
+                                    className="me-2" />
+                                Sub Item 3
                             </div>
                         </div>
                     </div>
