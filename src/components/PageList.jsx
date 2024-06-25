@@ -8,12 +8,12 @@ import Footer from './Footer';
 
 const PageList = () => {
 
-    //��tokenʱĬ��Ϊδ��¼״̬������loginҳ��
-    //��tokenʱĬ��Ϊ��¼״̬������dashboardҳ��
+    //If there is no token jump to login page
+    //otherwise jump to the dashboard
 
     return (
         <div>
-            {/* ����ҳ����������� */}
+            {/* paegs added here */}
             <Routes>
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
@@ -24,7 +24,7 @@ const PageList = () => {
             </Routes>
 
 
-            {/* ���º���Ӧ������βҳ���� */}
+            {/* should be takeplaced by the footer in the future */}
             <nav>
                 <ul>
                     <li>
