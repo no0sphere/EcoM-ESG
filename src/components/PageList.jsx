@@ -18,6 +18,7 @@ const PageList = () => {
 
         <div>   
             <Header />
+
             {/* paegs added here */}
             <Routes>
                 <Route path="/about" element={<About />} />
@@ -26,6 +27,7 @@ const PageList = () => {
                 <Route path="/help" element={<HelpPage />} />
                 <Route path="/download-report" element={<DownloadPage />} />
             </Routes>
+            
             <Footer />
  
 
