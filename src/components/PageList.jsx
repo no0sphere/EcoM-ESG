@@ -3,24 +3,27 @@ import { Routes, Route, Link } from 'react-router-dom';
 import About from './About';
 import Contact from './Contact';
 import SingleMode from './SingleMode';
-
+import Header from './Header';
 
 const PageList = () => {
 
-    //ÎÞtokenÊ±Ä¬ÈÏÎªÎ´µÇÂ¼×´Ì¬£¬½øÈëloginÒ³Ãæ
-    //ÓÐtokenÊ±Ä¬ÈÏÎªµÇÂ¼×´Ì¬£¬½øÈëdashboardÒ³Ãæ
+    //ï¿½ï¿½tokenÊ±Ä¬ï¿½ï¿½ÎªÎ´ï¿½ï¿½Â¼×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½loginÒ³ï¿½ï¿½
+    //ï¿½ï¿½tokenÊ±Ä¬ï¿½ï¿½Îªï¿½ï¿½Â¼×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dashboardÒ³ï¿½ï¿½
 
     return (
         <div>
-            {/* ÐÂÔöÒ³ÃæÔÚÕâÀï¼ÓÈë */}
+            {/* ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */}
             <Routes>
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/SingleMode" element={<SingleMode />} />
+                {/* <Route path="/help" component={HelpPage} />
+                <Route path="/download-report" component={ReportPage} />
+                <Route path="/logout" component={LogoutPage} /> */}
             </Routes>
 
 
-            {/* ÒÔÏÂºóÐøÓ¦±»µ¼º½Î²Ò³´úÌæ */}
+            {/* ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î²Ò³ï¿½ï¿½ï¿½ï¿½ */}
             <nav>
                 <ul>
                     <li>
