@@ -26,29 +26,8 @@ const PageList = () => {
                 <Route path="/help" element={<HelpPage />} />
                 <Route path="/download-report" element={<DownloadPage />} />
             </Routes>
-
-
-            {/* should be takeplaced by the footer in the future */}
             <Footer />
-            {/* <nav>
-                <ul>
-                    <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                        <Link to="/contact">Contact</Link>
-                    </li>
-                    <li>
-                        <Link to="/SingleMode">SingleMode</Link>
-                    </li>
-                    <li>
-                        <Link to="/help">Help</Link>
-                    </li>
-                    <li>
-                        <Link to="/download-report">Download Report</Link>
-                    </li>
-                </ul>
-            </nav> */}
+ 
 
         </div>
     );
