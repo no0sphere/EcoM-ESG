@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     return (
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', borderBottom: '2px solid black' }}>
-            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>Mekboy ESG Platform</div>
-            <button style={{ margin: '0 20px' }}>
+        <header className="d-flex justify-content-between align-items-center p-2 border-bottom">
+            <div className="h3 mb-0">Mekboy ESG Platform</div>
+            <button className="btn btn-link">
                 <Link to="/help">Help</Link> 
             </button>
             <div>
-                <button style={{ marginRight: '10px' }}>
-                    <Link to="/download-report">Download Report</Link>
+                <button className="btn btn-primary mr-3">
+                    <Link className="text-white" to="/download-report" style={{ textDecoration: 'none' }}>Download Report</Link>
                 </button>
-                <button>
-                    <Link to="/logout">Log out</Link>
+            </div>
+            <div>
+                <button className="btn btn-secondary">
+                    <Link className="text-white" to="/logout" style={{ textDecoration: 'none' }}>Log out</Link>
                 </button>
             </div>
         </header>
