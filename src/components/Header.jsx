@@ -15,7 +15,7 @@ function Header() {
             </div>
             <div>
                 <button className="btn btn-secondary">
-                    <Link className="text-white" to="/logout" style={{ textDecoration: 'none' }}>Log out</Link>
+                    <Link className="text-white" to="/login" style={{ textDecoration: 'none' }}>Log out</Link>
                 </button>
             </div>
         </header>

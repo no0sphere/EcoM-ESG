@@ -1,0 +1,111 @@
+.sign-up-page {
+    padding: 20px;
+}
+
+.sign-up-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: left; /* 使标题居左 */
+}
+
+.avatar-container {
+    text-align: left; /* 使头像和按钮居左 */
+    margin-bottom: 20px;
+}
+
+.avatar-container img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px; /* 确保头像和按钮之间有间距 */
+}
+
+.choose-photo-btn {
+    display: block;
+    background: none;
+    border: none;
+    color: gray; /* 灰色 */
+    cursor: pointer;
+    padding: 0;
+    text-align: left; /* 使按钮居左 */
+}
+
+.choose-photo-btn:hover {
+    text-decoration: underline;
+    color: gray; /* 灰色保持不变 */
+}
+
+.avatar-and-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 使头像和按钮在容器中居左对齐 */
+}
+
+.sign-up-section {
+    margin-bottom: 30px;
+}
+
+.sign-up-section h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.notification-options {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.notification-options .form-check-label {
+    font-weight: bold;
+}
+
+.sign-button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.sign-btn {
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.sign-btn:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+/* 表单样式 */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .col-md-6 {
+        margin-bottom: 30px;
+    }
+}
