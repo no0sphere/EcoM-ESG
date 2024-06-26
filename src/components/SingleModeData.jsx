@@ -60,7 +60,7 @@ const SingleModeData = () => {
 
     return (
         <div className="container">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: '10px', margin: '10px', width: '95%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: '10px', margin: '20px', width: '95%' }}>
                 <div style={{ width:'30%'}}>
                     <Select options={options_industry} placeholder='industry' />
                 </div>
@@ -75,7 +75,7 @@ const SingleModeData = () => {
                     <Select options={options_year} placeholder='year' />
                 </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', margin: '10px', width: '95%', height: '40vw' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', margin: '10px', width: '100%', height: '40vw' }}>
                 <div style={{ display: 'flex', padding: '10px', margin: '10px', width: '95%' }}>
                     <input type="radio"
                         className="btn-check"
