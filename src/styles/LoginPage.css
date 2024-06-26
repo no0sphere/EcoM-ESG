@@ -1,9 +1,10 @@
+/* LoginPage.css */
 .login-container {
     padding: 20px;
 }
 
 .login-image {
-    background-image: url('public/LoginBackground.jpg'); /* 替换为你的图片路径 */
+    background-image: url('public/LoginBackground.jpg');
     background-size: cover;
     height: 100vh; /* 使图片充满左侧 */
 }
@@ -17,7 +18,7 @@
 
 .login-form {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px; /* 增大表单的最大宽度 */
     padding: 20px;
     background-color: white;
     border-radius: 8px;

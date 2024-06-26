@@ -5,7 +5,7 @@
 }
 
 .sign-up-image {
-    background-image: url('public/LoginBackground.jpg'); /* 替换为你的图片路径 */
+    background-image: url('public/LoginBackground.jpg');
     background-size: cover;
     height: 100vh; /* 使图片充满左侧 */
 }
