@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import About from './About';
 import Contact from './Contact';
 import SingleMode from './SingleMode';
@@ -14,13 +14,15 @@ const PageList = () => {
 
     //If there is no token jump to login page
     //otherwise jump to the dashboard
-
+    //temporary solution for header and footer not showing in the login and signup page
+    const location = useLocation();
+    const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup';
     return (
        
      
 
         <div>   
-            <Header />
+            {showHeaderAndFooter && <Header />}
 
             {/* pages added here */}
             <Routes>
@@ -33,8 +35,8 @@ const PageList = () => {
                 <Route path="/help" element={<HelpPage />} />
                 <Route path="/download-report" element={<DownloadPage />} />
             </Routes>
-            
-            <Footer />
+
+            {showHeaderAndFooter && <Footer />}
  
 
         </div>

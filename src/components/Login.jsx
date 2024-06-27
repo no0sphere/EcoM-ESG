@@ -43,8 +43,10 @@ function Login() {
                                 required
                             />
                         </div>
-                        <div className="button-group">
-                            <button type="submit" className="btn btn-primary">Login</button>
+                        <div className="button-group"> 
+                            {/* login button directly link to SingleMode temporarily */}
+                            {/* Should be replace in the later development */}
+                            <Link to="/SingleMode" button type="submit" className="btn btn-primary">Login</Link>
                             <Link to="/signup" className="btn btn-primary">Sign Up</Link>
                         </div>
                     </form>

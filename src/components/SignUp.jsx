@@ -68,7 +68,9 @@ function SignUp() {
                             />
                         </div>
                         <div className="button-group">
-                            <button type="submit" className="btn btn-primary">Sign Up</button>
+                            {/*signup button directly link to SingleMode temporarily */}
+                            {/* Should be replace in the later development */}
+                            <Link to="/SingleMode" button type="submit" className="btn btn-primary">Sign Up</Link>
                             <Link to="/login" className="btn btn-primary">Login</Link>
                         </div>
                     </form>
