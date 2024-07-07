@@ -2,7 +2,18 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
+import MockAdapter from 'axios-mock-adapter';
+
 const Login = () => {
+  const mock = new MockAdapter(axios);
+  mock.onPost('/api/auth/login').reply(200, {
+    "status": "success",
+    "message": "Login successful"  
+  });
+  mock.onPost('/api/auth/login').reply(401, {
+    "status": "error",
+    "message": "Authentication failed. Username or password is incorrect."  
+  });
   const [userData, setuserData] = useState({
     username: '',
     password: ''

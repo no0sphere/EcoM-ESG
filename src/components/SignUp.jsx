@@ -2,7 +2,18 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {  Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
+import MockAdapter from 'axios-mock-adapter';
 const SignUp = () => {
+  const mock = new MockAdapter(axios);
+  mock.onPost('/api/auth/register').reply(200, {
+    "status": "success",
+    "message": "User registered successfully!"  
+  });
+  mock.onPost('/api/auth/login').reply(409, {
+    "status": "error",
+    "message": "Username or email already exists."  
+  });
   const [userData, setUserData] = useState({
     username: '',
     password: '',
