@@ -1,59 +1,61 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/LoginPage.css';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
-function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const Login = () => {
+  const [userData, setuserData] = useState({
+    username: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        console.log('Login attempt with:', { username, password });
-        // 这里添加登录逻辑
-    };
+  const handleChange = (e) => {
+    setuserData({ ...userData, [e.target.name]: e.target.value });
+  };
 
-    return (
-        <div className="container-fluid login-container">
-            <div className="row">
-                <div className="col-md-6 login-image">
-                    {/* 这里放置左侧图片 */}
-                </div>
-                <div className="col-md-6 login-form-container">
-                    <form onSubmit={handleLogin} className="login-form">
-                        <h2 className="mb-4">Login</h2>
-                        <div className="mb-3">
-                            <label htmlFor="username" className="form-label">Username</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="button-group"> 
-                            {/* login button directly link to SingleMode temporarily */}
-                            {/* Should be replace in the later development */}
-                            <Link to="/SingleMode" button type="submit" className="btn btn-primary">Login</Link>
-                            <Link to="/signup" className="btn btn-primary">Sign Up</Link>
-                        </div>
-                    </form>
-                </div>
-            </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("userData",userData)
+      const response = await axios.post('/api/auth/login', userData);
+      if (response.status === 200) {
+        localStorage.setItem('username', userData.username);
+        console.log("login success");
+        navigate('/singlemode'); 
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.log("error",error.response);
+        setError('Authentication failed. Username or password is incorrect.');
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
+    }
+  };
+
+  return (
+    <div className="container mt-5">
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">Username</label>
+          <input type="text" className="form-control" id="username" name="username" value={userData.username} onChange={handleChange} required />
         </div>
-    );
-}
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input type="password" className="form-control" id="password" name="password" value={userData.password} onChange={handleChange} required />
+        </div>
+        <div className="d-flex justify-content-between">
+          <button type="submit" className="btn btn-primary">Login</button>
+      
+          <Link to="/signup" className="btn btn-primary">Sign up now!</Link>
+        </div>
+        
+      </form>
+      {error && <div className="alert alert-danger mt-2">{error}</div>}
+    </div>
+  );
+};
 
 export default Login;
