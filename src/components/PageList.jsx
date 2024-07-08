@@ -10,6 +10,8 @@ import DownloadPage from './DownloadPage';
 import Login from "./Login.jsx";
 import SignUp from "./SignUp.jsx";
 import Setting from "./Setting.jsx";
+import FrameSelect from "./FrameSelect.jsx";
+import CompanySearch from "./CompanySearch.jsx";
 const PageList = () => {
 
     //If there is no token jump to login page
@@ -27,6 +29,8 @@ const PageList = () => {
             {/* pages added here */}
             <Routes>
                 <Route path="/login" element={<Login />} />
+                <Route path="/frameSelect" element={<FrameSelect />} />
+                <Route path="/companySearch" element={<CompanySearch />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
