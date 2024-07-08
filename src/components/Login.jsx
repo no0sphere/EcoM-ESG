@@ -6,14 +6,16 @@ import MockAdapter from 'axios-mock-adapter';
 
 const Login = () => {
   const mock = new MockAdapter(axios);
-  mock.onPost('/api/auth/login').reply(200, {
-    "status": "success",
-    "message": "Login successful"  
-  });
+  
   mock.onPost('/api/auth/login').reply(401, {
     "status": "error",
     "message": "Authentication failed. Username or password is incorrect."  
   });
+  mock.onPost('/api/auth/login').reply(200, {
+    "status": "success",
+    "message": "Login successful"  
+  });
+
   const [userData, setuserData] = useState({
     username: '',
     password: ''
