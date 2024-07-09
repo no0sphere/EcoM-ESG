@@ -13,7 +13,6 @@ const SingleMode = () => {
     return (
         <div>
             <div style={styleSingleMode}>
-                <AccordionMenu />
                 <SingleModeData />
             </div>
         </div>
