@@ -34,8 +34,10 @@ const Footer = () => {
                             <li><Link to="/about" className="link-dark">About Us</Link></li>
 
                             <li><Link to="/SingleMode" className="link-dark">Dashboard</Link></li>
-
+                            <li><Link to="/frameSelect" className="link-dark">frameSelect</Link></li>{/*should be moved to subheader*/}
                             <li><Link to="/help" className="link-dark">Helping Document</Link></li>
+                            
+                      
                         </ul>
                     </div>
                 </div>
