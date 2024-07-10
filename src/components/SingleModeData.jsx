@@ -36,26 +36,14 @@ const options_year = [
 const SingleModeData = () => {
 
     const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
 
     const handleCompanyChange = (selectedCompany) => {
         setSelectedCompany(selectedCompany);
     };
 
-
-    // control the display of the IndicatorTable and rating
-    const handleRorIChange = (RorI) => {
-        if (RorI === 'Rating') {
-            document.getElementById('Rating').style.display = 'flex';
-            document.getElementById('IndicatorTable').style.display = 'none';
-        } else if (RorI === 'Indicators') {
-            document.getElementById('Rating').style.display = 'none';
-            document.getElementById('IndicatorTable').style.display = 'block';
-        }
-        else {
-            document.getElementById('Rating').style.display = 'none';
-            document.getElementById('IndicatorTable').style.display = 'none';
-            }
-
+    const handleYearChange = (selectedYear) => {
+        setSelectedYear(selectedYear);
     }
 
     return (
@@ -72,32 +60,19 @@ const SingleModeData = () => {
                         value={selectedCompany} />
                 </div>
                 <div style={{ width: '30%' }}>
-                    <Select options={options_year} placeholder='year' />
+                    <Select options={options_year}
+                        placeholder='year'
+                    onChange={handleYearChange}
+                        value={selectedYear}
+                    />
                 </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', margin: '10px', width: '100%', height: '40vw' }}>
-                <div style={{ display: 'flex', padding: '10px', margin: '10px', width: '95%' }}>
-                    <input type="radio"
-                        className="btn-check"
-                        name="RorI"
-                        id="btnRating"
-                        onClick={() => handleRorIChange('Rating')}
-                        defaultChecked  />
-                    <label className="btn btn-outline-primary" htmlFor="btnRating">Rating</label>
-
-                    <input type="radio"
-                        className="btn-check"
-                        name="RorI"
-                        id="btnIndicators"
-                        onClick={() => handleRorIChange('Indicators')} />
-                    <label className="btn btn-outline-primary" htmlFor="btnIndicators">Indicators</label>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', borderLeft: '10px', width: '60%' }}>
-                        {selectedCompany
-                            ? <p style={{ margin: '0px', fontFamily: 'Arial, sans-serif', fontSize: '1.5em', fontWeight: 'bold' }} >{selectedCompany.label}</p>
-                            : <p style={{ margin: '0px', fontFamily: 'Arial, sans-serif', fontSize: '1.5em', fontWeight: 'bold' }}>No company selected</p>}
+                <div id="IndicatorTable" >
+                    <div id="CompanyName&year" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px' }}>
+                        <h2 style={{ marginRight: '5px' }}>{selectedCompany ? selectedCompany.label : 'No company selected'}</h2>
+                        <h2 style={{ marginLeft: '5px' }}>{selectedYear ? selectedYear.label : 'No year selected'}</h2>
                     </div>
-                </div>
-                <div id="IndicatorTable" style={{ display: 'none' }}>
                     <table className="table table-striped">
                         <thead>
                             <tr>
@@ -120,11 +95,6 @@ const SingleModeData = () => {
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div id="Rating" style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', padding: '10px', margin: '10px', width: '95%', height: '90%', border: '1px solid black' }}>
-                    <div>
-                        <h1 style={{ margin: '0px', fontFamily: 'Arial, sans-serif', fontSize: '3em', fontWeight: 'bold' }}>Rating:</h1>
-                    </div>
                 </div>
             </div>
         </div>
