@@ -4,6 +4,7 @@ import About from './About';
 import Contact from './Contact';
 import SingleMode from './SingleMode';
 import Header from './Header';
+import Subheader from "./Subheader";
 import Footer from './Footer';
 import HelpPage from './HelpingPage';
 import DownloadPage from './DownloadPage';
@@ -25,7 +26,7 @@ const PageList = () => {
 
         <div>   
             {showHeaderAndFooter && <Header />}
-
+            {showHeaderAndFooter && <Subheader />}
             {/* pages added here */}
             <Routes>
                 <Route path="/login" element={<Login />} />
