@@ -13,6 +13,7 @@ import SignUp from "./SignUp.jsx";
 import Setting from "./Setting.jsx";
 import FrameSelect from "./FrameSelect.jsx";
 import CompanySearch from "./CompanySearch.jsx";
+import ComparisonMode from "./ComparisonMode.jsx";
 const PageList = () => {
 
     //If there is no token jump to login page
@@ -39,6 +40,7 @@ const PageList = () => {
                 <Route path="/SingleMode" element={<SingleMode />} />
                 <Route path="/help" element={<HelpPage />} />
                 <Route path="/download-report" element={<DownloadPage />} />
+                <Route path="/comparisonMode" element={<ComparisonMode />} />
             </Routes>
 
             {showHeaderAndFooter && <Footer />}
