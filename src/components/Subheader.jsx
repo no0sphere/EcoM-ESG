@@ -11,6 +11,12 @@ function Subheader() {
         if (buttonName === 'Frame select') {
             navigate('/frameSelect');
         }
+        else if (buttonName === 'Single mode') {
+            navigate('/SingleMode');
+        }
+        else if (buttonName === 'Compare mode') {
+            navigate('/ComparisonMode');
+        }
     };
 
     const buttonStyle = {
