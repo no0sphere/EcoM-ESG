@@ -156,10 +156,10 @@ const ComparisonModeData = () => {
                 </div>
             ))}
             <div id="CompanySelecting" style={{
-                display: popWindowVisible ? 'block' : 'none' , position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000
+                display: popWindowVisible ? 'flex' : 'none' , position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000 , justifyContent: 'center', alignItems: 'center'
             }}>
                 <div style={{ width: '50%', height: '50%', backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '5px' }}>
-                    <button type="button" className="btn-close" aria-label="Close" onClick={() => document.getElementById("CompanySelecting").style.display = "none"}></button>
+                    <button type="button" className="btn-close" aria-label="Close" onClick={() => setPopWindowVisible(false)}></button>
                     <div>
                         <h2>Company Selection</h2>
                         <Select options={options_industry} placeholder='industry '/>
