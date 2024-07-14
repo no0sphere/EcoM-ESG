@@ -35,7 +35,7 @@ const Login = () => {
       if (response.status === 200) {
         localStorage.setItem('username', userData.username);
         console.log("login success");
-        navigate('/singlemode'); 
+        navigate('/SingleMode'); 
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
