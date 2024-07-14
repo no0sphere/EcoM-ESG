@@ -213,33 +213,7 @@ const FrameSelect = () => {
             </div>
         </div>
     );
-    // return (
-    //     <div className="container  mt-5">
-    //       <div className="row mb-4">
-    //         <div className="col-md-3 mb-3">
-    //           <div className="card border-primary">
-    //             <div className="card-body text-center">
-    //               <div className="card-title">Create your frame</div>
-    //               <button className="btn btn-outline-primary" onClick={() => window.location.href = '/frameCustom'}>
-    //                 +
-    //               </button>
-    //             </div>
-    //           </div>
-    //         </div>
-    //         {frameworks.map((framework, index) => (
-    //           <div key={index} className="col-md-3 mb-3">
-    //             <div className="card">
-    //               <div className="card-body">
-    //                 <h5 className="card-title">Frame {index + 1}</h5>
-    //                 <p className="card-text">intro: {framework.framework_name}</p>
-    //                 <button className="btn btn-outline-primary">Select</button>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         ))}
-    //       </div>
-    //     </div>
-    //   );
+   
 
 
 };
