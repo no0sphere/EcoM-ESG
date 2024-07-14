@@ -5,12 +5,18 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 const FrameSelect = () => {
     const mock = new MockAdapter(axios);
-    mock.onGet('/api/current_framework?user_name="qq"').reply(200, {
-        "code" : 200,
-        "status": "succeed",
-        "message": "Found frameworks for this user.",
-        "timestamp": 1718203200000,
-        "data": [
+
+    
+    mock.onGet(/\/api\/current_framework\?user_name=.+/).reply(config => {
+        const urlParams = new URLSearchParams(config.url.split('?')[1]);
+        const user_name = urlParams.get('user_name');
+        if (user_name === "qq" || user_name === "ww" || user_name === "ee") {
+          return [200, {
+            code: 200,
+            status: "succeed",
+            message: "Found frameworks for this user.",
+            timestamp: 1718203200000,
+            data: [
             {
                 "framework_name": "framework1",
                 "creation_date": "2021-10-05",
@@ -92,22 +98,35 @@ const FrameSelect = () => {
                 }
             }
         ]
-    });
-    
+          }];
+        } else {
+          return [404, {
+            code: 404,
+            status: "failed",
+            message: "User name does not exist.",
+            timestamp: 1718203200000,
+            data: null
+          }];
+        }
+      });
+
+
+
+
+
     const [frameworks, setFrameworks] = useState([]);
     useEffect(() => {
         const fetchFrameworks = async () => {
           try {
             const user_name = localStorage.getItem('username');
-            console.log("frameworks page GET user_name",user_name)
-            const response = await axios.get(`/api/current_framework?user_name="${user_name}"`);
+            const response = await axios.get(`/api/current_framework?user_name=${user_name}`);
             console.log("frameworks page GET response",response)
             if (response.status === 200) {
-                console.log("frameworks page GET response.data.data",response.data.data)
                 const sortedFrameworks = response.data.data.sort((a, b) => new Date(b.creation_date) - new Date(a.creation_date));
               setFrameworks(sortedFrameworks);
             } else {
               console.error('Failed to fetch frameworks:', response.data.message);
+              alert('Failed to fetch frameworks:', response.data.message);
             }
           } catch (error) {
             console.error('Error fetching frameworks:', error);
@@ -131,7 +150,7 @@ const FrameSelect = () => {
 
 
 
-    console.log("frameworks",frameworks)
+    
     return (
         <div className="container mt-5">
             <div className="row mb-4">
