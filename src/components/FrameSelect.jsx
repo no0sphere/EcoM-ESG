@@ -100,13 +100,13 @@ const FrameSelect = () => {
         ]
           }];
         } else {
-          return [404, {
-            code: 404,
-            status: "failed",
-            message: "User name does not exist.",
-            timestamp: 1718203200000,
-            data: null
-          }];
+            return [200, {
+                code: 200,
+                status: "succeed",
+                message: "no frameworks for this user.",
+                timestamp: 1718203200000,
+                data: []
+            }];
         }
       });
 
@@ -115,6 +115,10 @@ const FrameSelect = () => {
 
 
     const [frameworks, setFrameworks] = useState([]);
+    
+      
+
+
     useEffect(() => {
         const fetchFrameworks = async () => {
           try {
@@ -124,6 +128,27 @@ const FrameSelect = () => {
             if (response.status === 200) {
                 const sortedFrameworks = response.data.data.sort((a, b) => new Date(b.creation_date) - new Date(a.creation_date));
               setFrameworks(sortedFrameworks);
+              const fixedFrameworks = [
+                { framework_name: "Fixed framework1",
+                    creation_date: "2020-10-05",
+                    environmental_risk_metrics: {
+                        "indicator_er_weight": 0.3,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },},
+                {framework_name: "Fixed framework2",
+                        creation_date: "2019-10-05",
+                        environmental_risk_metrics: {
+                            "indicator_er_weight": 0.3,
+                            "metric1": 0.5,
+                            "metric2": 0.3,
+                            "metric3": 0.2
+                        },}
+                
+              ];
+              
+              setFrameworks(previousFrameworks => [...previousFrameworks, ...fixedFrameworks]);
             } else {
               console.error('Failed to fetch frameworks:', response.data.message);
               alert('Failed to fetch frameworks:', response.data.message);
