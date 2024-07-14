@@ -7,7 +7,7 @@ import ComparisonModeData from './ComparisonModeData';
 const ComparisonMode = () => {
 
     const styleComparisonMode = {
-        display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '10px', margin: '20px'
+        display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '10px', margin: '5px'
     };
 
     return (

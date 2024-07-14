@@ -9,7 +9,7 @@ const SingleModeData = () => {
 
     const mock = new MockAdapter(axios);
 
-    mock.onGet('/.*/').reply(401, {
+    mock.onGet('/.*/').reply(404, {
         "success": false,
         "data": null,
         "error": {
@@ -18,7 +18,7 @@ const SingleModeData = () => {
         }
     }
 );
-    mock.onGet('GET/api/esg-data?industry=Information%20Technology&company=Apple&year=2023').reply(200, {
+    mock.onGet('GET/api/esg-data?industry="Information%20Technology"&company="Apple"&year=2023').reply(200, {
         "success": true,
         "data": {
             "industry": "Information Technology",
@@ -27,7 +27,17 @@ const SingleModeData = () => {
             "indicators": [
                 { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
                 { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
+                { "metric": "Employee Turnover", "value": 5, "unit": "%" },
+                { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
+                { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
+                { "metric": "Employee Turnover", "value": 5, "unit": "%" },
+                { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
+                { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
+                { "metric": "Employee Turnover", "value": 5, "unit": "%" },
+                { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
+                { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
                 { "metric": "Employee Turnover", "value": 5, "unit": "%" }
+
             ]
         },
         "error": null
@@ -37,16 +47,17 @@ const SingleModeData = () => {
 
     const handleCompanySelecting = async (e) => {
         setIndicators([]);
-        e.preventDefault();
+        e.preventDefault(); // prevent refresh
         try {
             console.log("selectedIndustry", selectedIndustry);
             console.log("selectedCompany", selectedCompany);
             console.log("selectedYear", selectedYear);
-            console.log("get", `GET/api/esg-data?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany.value)}&year=${selectedYear.value}`);
-            const response = await axios.get(`GET/api/esg-data?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany.value)}&year=${selectedYear.value}`);
+            console.log("get", `GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany.value)}"&year=${selectedYear.value}`);
+            const response = await axios.get(`GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany.value)}"&year=${selectedYear.value}`);
             if (response.status === 200) {
                 console.log("response", response);
                 setIndicators(response.data.data.indicators);
+                console.log("Indicators", Indicators);
             }
         } catch (error) {
             if (error.response && error.response.status === 404) {
@@ -139,10 +150,10 @@ const SingleModeData = () => {
             </form>
             {error && <div className="alert alert-danger mt-2">{error}</div>}
             <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', margin: '10px', width: '100%', height: '40vw' }}>
-                <div id="IndicatorTable" >
+                <div id="IndicatorTable" style={{ overflow: 'auto' }}>
                     <div id="CompanyName&year" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px' }}>
                         <h2 style={{ marginRight: '5px' }}>{selectedCompany ? selectedCompany.label : 'No company selected'}</h2>
-                        <h2 style={{ marginLeft: '5px' }}>{selectedYear ? selectedYear.label : 'No year selected'}</h2>
+                        <h5 style={{ marginLeft: '5px' }}>{selectedYear ? "(" + selectedYear.label + ")" : '(No year selected)'}</h5>
                     </div>
                     <table className="table table-striped">
                         <thead>
