@@ -116,9 +116,7 @@ const FrameSelect = () => {
 
     const [frameworks, setFrameworks] = useState([]);
     
-      
-
-
+    
     useEffect(() => {
         const fetchFrameworks = async () => {
           try {
@@ -160,9 +158,6 @@ const FrameSelect = () => {
     
         fetchFrameworks();
       }, []);
-
-
-
 
     const handleCreateFrame = () => {
         alert('Create your frame clicked!');
