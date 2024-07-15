@@ -75,22 +75,22 @@ const ComparisonModeData = () => {
     const [error, setError] = useState('');
 
     const [selectedIndustry, setSelectedIndustry] = useState(null);
-    const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedYear, setSelectedYear] = useState(null);
 
-    const handleCompanyChange = (selectedCompany) => {
+    const handleCompanyChange = (e) => {
         error && setError('');
-        setSelectedCompany(selectedCompany);
+        setSelectedCompany(e.target.value);
     };
 
-    const handleYearChange = (selectedYear) => {
+    const handleYearChange = (e) => {
         error && setError('');
-        setSelectedYear(selectedYear);
+        setSelectedYear(e);
     }
 
-    const handleIndustryChange = (selectedIndustry) => {
+    const handleIndustryChange = (e) => {
         error && setError('');
-        setSelectedIndustry(selectedIndustry);
+        setSelectedIndustry(e);
     }
 
 
@@ -148,8 +148,8 @@ const UserItem = ({ user }) => (
             console.log("selectedIndustry", selectedIndustry);
             console.log("selectedCompany", selectedCompany);
             console.log("selectedYear", selectedYear);
-            console.log("get", `GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany.value)}"&year=${selectedYear.value}`);
-            const response = await axios.get(`GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany.value)}"&year=${selectedYear.value}`);
+            console.log("get", `GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany)}"&year=${selectedYear.value}`);
+            const response = await axios.get(`GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany)}"&year=${selectedYear.value}`);
             if (response.status === 200) {
                 console.log("response", response);
                 console.log("response.data.data.indicators", response.data.data.indicators);
@@ -162,7 +162,7 @@ const UserItem = ({ user }) => (
                 NewSlotContentVisible[CurrentSlotIndex] = true;
                 setSlotContentVisible(NewSlotContentVisible);
                 let NewCompanySelected = [...ChosenCompanyNames];
-                NewCompanySelected[CurrentSlotIndex] = selectedCompany.label;
+                NewCompanySelected[CurrentSlotIndex] = selectedCompany;
                 setChosenCompanyNames(NewCompanySelected);
                 let NewCompanyYear = [...ChosenCompanyYears];
                 NewCompanyYear[CurrentSlotIndex] = selectedYear.label;
@@ -253,7 +253,10 @@ const UserItem = ({ user }) => (
                             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Select Company</h2>
                             {error && <div className="alert alert-danger mt-2">{error}</div>}
                             <Select options={options_industry} placeholder='industry ' onChange={handleIndustryChange} value={selectedIndustry} />
-                            <Select options={options_company} placeholder='company' onChange={handleCompanyChange} value={selectedCompany} />
+                            <input className="form-control me-2" type="search" aria-label="Search" placeholder='company'
+                                onChange={handleCompanyChange}
+                                value={selectedCompany}>
+                            </input>
                             <Select options={options_year} placeholder='year' onChange={handleYearChange} value={selectedYear} />
                             <Button variant="contained" size="medium" id="CompanySelectingConfirm" style={{ marginTop: '10px' }} onClick={handleCompanySelectingConfirm}>Confirm</Button>
                         </form>

@@ -52,8 +52,8 @@ const SingleModeData = () => {
             console.log("selectedIndustry", selectedIndustry);
             console.log("selectedCompany", selectedCompany);
             console.log("selectedYear", selectedYear);
-            console.log("get", `GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany.value)}"&year=${selectedYear.value}`);
-            const response = await axios.get(`GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany.value)}"&year=${selectedYear.value}`);
+            console.log("get", `GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany)}"&year=${selectedYear.value}`);
+            const response = await axios.get(`GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany)}"&year=${selectedYear.value}`);
             if (response.status === 200) {
                 console.log("response", response);
                 setIndicators(response.data.data.indicators);
@@ -101,22 +101,22 @@ const SingleModeData = () => {
     const [Indicators, setIndicators] = useState([]);
 
     const [selectedIndustry, setSelectedIndustry] = useState(null);
-    const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedYear, setSelectedYear] = useState(null);
 
-    const handleCompanyChange = (selectedCompany) => {
+    const handleCompanyChange = (e) => {
         error && setError('');
-        setSelectedCompany(selectedCompany);
+        setSelectedCompany(e.target.value);
     };
 
-    const handleYearChange = (selectedYear) => {
+    const handleYearChange = (e) => {
         error && setError('');
-        setSelectedYear(selectedYear);
+        setSelectedYear(e);
     }
 
-    const handleIndustryChange = (selectedIndustry) => {
+    const handleIndustryChange = (e) => {
         error && setError('');
-        setSelectedIndustry(selectedIndustry);
+        setSelectedIndustry(e);
         }
 
     return (
@@ -130,11 +130,10 @@ const SingleModeData = () => {
                             value={selectedIndustry} />
                     </div>
                     <div style={{ width: '25%' }}>
-                        <Select
-                            options={options_company}
-                            placeholder='company'
+                        <input className="form-control me-2" type="search"  aria-label="Search" placeholder='company'
                             onChange={handleCompanyChange}
-                            value={selectedCompany} />
+                            value={selectedCompany}>
+                            </input>
                     </div>
                     <div style={{ width: '25%' }}>
                         <Select options={options_year}
@@ -152,7 +151,7 @@ const SingleModeData = () => {
             <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', margin: '10px', width: '100%', height: '40vw' }}>
                 <div id="IndicatorTable" style={{ overflow: 'auto' }}>
                     <div id="CompanyName&year" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px' }}>
-                        <h2 style={{ marginRight: '5px' }}>{selectedCompany ? selectedCompany.label : 'No company selected'}</h2>
+                        <h2 style={{ marginRight: '5px' }}>{selectedCompany ? selectedCompany : 'No company selected'}</h2>
                         <h5 style={{ marginLeft: '5px' }}>{selectedYear ? "(" + selectedYear.label + ")" : '(No year selected)'}</h5>
                     </div>
                     <table className="table table-striped">
