@@ -42,16 +42,27 @@ const ComparisonModeData = () => {
     const mock = new MockAdapter(axios);
 
     mock.onGet('/.*/').reply(404, {
-        "success": false,
+        "code": 404,
+        "status": "failed",
+        "message": "Didn¡¯t find any data for this company in this industry for this year.",
+        "timestamp": 1718203200000,
+        "data": null
+    });
+
+    //year out of range
+    mock.onGet('GET/api/esg-data?industry="Information%20Technology"&company="Apple"&year=1000').reply(400, {
+        "code": 400,
+        "status": "failed",
+        "message": "'year' must be a valid number representing the year.",
+        "timestamp": 1718203200000,
         "data": null,
-        "error": {
-            "code": 404,
-            "message": "Can¡¯t find data of this company"
-        }
-    }
-    );
+    });
+
     mock.onGet('GET/api/esg-data?industry="Information%20Technology"&company="Apple"&year=2023').reply(200, {
-        "success": true,
+        "code": 200,
+        "status": "succeed",
+        "message": "Found data for this company.",
+        "timestamp": 1718203200000,
         "data": {
             "industry": "Information Technology",
             "company": "Apple",
@@ -172,6 +183,9 @@ const UserItem = ({ user }) => (
             if (error.response && error.response.status === 404) {
                 console.log("error", error.response);
                 setError('Can\'t find data of this company');
+            } else if (error.response && error.response.status === 400) {
+                console.log("error", error.response);
+                setError('Year must be a valid number representing the year.');
             } else {
                 setError('An unexpected error occurred. Please try again.');
             }
@@ -252,12 +266,12 @@ const UserItem = ({ user }) => (
                         <form>
                             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Select Company</h2>
                             {error && <div className="alert alert-danger mt-2">{error}</div>}
-                            <Select options={options_industry} placeholder='industry ' onChange={handleIndustryChange} value={selectedIndustry} />
-                            <input className="form-control me-2" type="search" aria-label="Search" placeholder='company'
+                            <Select options={options_industry} placeholder='industry ' onChange={handleIndustryChange} value={selectedIndustry} className = "mb-3" />
+                            <input className="form-control mb-3" type="search" aria-label="Search" placeholder='company'
                                 onChange={handleCompanyChange}
                                 value={selectedCompany}>
                             </input>
-                            <Select options={options_year} placeholder='year' onChange={handleYearChange} value={selectedYear} />
+                            <Select options={options_year} placeholder='year' onChange={handleYearChange} value={selectedYear} className = "mb-3" />
                             <Button variant="contained" size="medium" id="CompanySelectingConfirm" style={{ marginTop: '10px' }} onClick={handleCompanySelectingConfirm}>Confirm</Button>
                         </form>
                     </div>
