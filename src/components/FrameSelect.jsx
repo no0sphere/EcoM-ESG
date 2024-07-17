@@ -327,9 +327,9 @@ const FrameSelect = () => {
                   },
                   "social_opportunity_metrics": {
                       "indicator so weight": 0.125,
-                      "analytic employment creation": 0.2,
+                      
                       "employee health safety policy": 0.25,
-                      "trade union rep": 0.15,
+                      "trade union rep": 0.35,
                       "women employees": 0.2,
                       "women managers": 0.2
                   },
@@ -387,9 +387,9 @@ const FrameSelect = () => {
                 },
                 "social_opportunity_metrics": {
                     "indicator so weight": 0.1,
-                    "analytic employment creation": 0.2,
+                    
                     "employee health safety policy": 0.25,
-                    "trade union rep": 0.15,
+                    "trade union rep": 0.35,
                     "women employees": 0.2,
                     "women managers": 0.2
                 },
@@ -446,9 +446,9 @@ const FrameSelect = () => {
               },
               "social_opportunity_metrics": {
                   "indicator so weight": 0.05,
-                  "analytic employment creation": 0.2,
+                  
                   "employee health safety policy": 0.25,
-                  "trade union rep": 0.15,
+                  "trade union rep": 0.35,
                   "women employees": 0.2,
                   "women managers": 0.2
               },
@@ -505,9 +505,9 @@ const FrameSelect = () => {
             },
             "social_opportunity_metrics": {
                 "indicator so weight": 0.05,
-                "analytic employment creation": 0.2,
+                
                 "employee health safety policy": 0.25,
-                "trade union rep": 0.15,
+                "trade union rep": 0.35,
                 "women employees": 0.2,
                 "women managers": 0.2
             },
@@ -564,9 +564,9 @@ const FrameSelect = () => {
           },
           "social_opportunity_metrics": {
               "indicator so weight": 0.1,
-              "analytic employment creation": 0.2,
+              
               "employee health safety policy": 0.25,
-              "trade union rep": 0.15,
+              "trade union rep": 0.35,
               "women employees": 0.2,
               "women managers": 0.2
           },
