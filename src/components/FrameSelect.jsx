@@ -724,9 +724,11 @@ const FrameSelect = () => {
                 <div style={{
                     width: '70%', height: '80%', backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '5px'
                 }}>
+                    <div style={{display: 'flex', flexDirection: 'row',  alignItems: 'center' }}>
                     <button type="button" className="btn-close" aria-label="Close"
-                        onClick={() => setPopWindowVisible(false)}></button>
-                    {CustomError && <Alert severity="error">{CustomError}</Alert>}
+                            onClick={() => setPopWindowVisible(false)}></button>
+                        {CustomError && <Alert severity="error" sx={{ width: "90%", margin:"auto"}}>{CustomError}</Alert>}
+                 </div>
                     <div style={{overflow: 'auto', height: '90%'}}>
                         <Box component="form" noValidate autoComplete="off" style={{
                             display: 'flex',
