@@ -295,7 +295,7 @@ const FrameSelect = () => {
                   "framework_name": "IFRS S1",
                   "creation_date": "2021-10-05",
                   "environmental_risk_metrics": {
-                      "environmental risk weight": 0.175,
+                      "indicator er weight": 0.175,
                       "co2directscope1": 0.1,
                       "co2indirectscope2": 0.1,
                       "co2indirectscope3": 0.1,
@@ -355,7 +355,7 @@ const FrameSelect = () => {
                 "framework_name": "IFRS S2",
                 "creation_date": "2022-10-05",
                 "environmental_risk_metrics": {
-                    "environmental risk weight": 0.25,
+                    "indicator er weight": 0.25,
                     "co2directscope1": 0.1,
                     "co2indirectscope2": 0.1,
                     "co2indirectscope3": 0.1,
@@ -414,7 +414,7 @@ const FrameSelect = () => {
               "framework_name": "TCFD",
               "creation_date": "2023-10-05",
               "environmental_risk_metrics": {
-                  "environmental risk weight": 0.35,
+                  "indicator er weight": 0.35,
                   "co2directscope1": 0.1,
                   "co2indirectscope2": 0.1,
                   "co2indirectscope3": 0.1,
@@ -473,7 +473,7 @@ const FrameSelect = () => {
             "framework_name": "TNFD",
             "creation_date": "2020-10-05",
             "environmental_risk_metrics": {
-                "environmental risk weight": 0.4,
+                "indicator er weight": 0.4,
                 "co2directscope1": 0.1,
                 "co2indirectscope2": 0.1,
                 "co2indirectscope3": 0.1,
@@ -532,7 +532,7 @@ const FrameSelect = () => {
           "framework_name": "APRA-CPG",
           "creation_date": "2019-10-05",
           "environmental_risk_metrics": {
-              "environmental risk weight": 0.3,
+              "indicator er weight": 0.3,
               "co2directscope1": 0.1,
               "co2indirectscope2": 0.1,
               "co2indirectscope3": 0.1,
@@ -615,7 +615,7 @@ const FrameSelect = () => {
 
     const simplifyFrame = (frame) => {
         let simplified = {};
-        const weightRegex = /^indicator_[a-z]{2}_weight$/;
+        const weightRegex = /^indicator [a-z]{2} weight$/; //change based on the format of the weight key
 
         Object.keys(frame).forEach(key => {
             if (typeof frame[key] === 'object') {
