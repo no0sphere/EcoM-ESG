@@ -6,6 +6,8 @@ import Select from "react-select";
 import { useParams, useLocation } from 'react-router-dom';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { useNavigate } from 'react-router-dom';
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -14,7 +16,7 @@ const CompanySearch = () => {
     const userName = localStorage.getItem('username');
     const location = useLocation();
     const { simplifiedFrame } = location.state || {};
-
+    const navigate = useNavigate();
     const mock = new MockAdapter(axios);
 
     // 400 Bad Request
@@ -124,6 +126,9 @@ const CompanySearch = () => {
         }
     };
 
+    const handleDownload = () => {
+        navigate(`/download-report`);
+    };
     return (
         <div className="container" style={{ minHeight: '100vh' }}>
             <form>
@@ -154,6 +159,7 @@ const CompanySearch = () => {
             {error && <div className="alert alert-danger mt-2">{error}</div>}
             {isSubmitted ? (
                 rating !== null && (
+                    <div >
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <div style={{width: '45%'}}>
                             <h3>
@@ -174,11 +180,17 @@ const CompanySearch = () => {
                                 ))}
                                 </tbody>
                             </table>
+                    
                         </div>
                         <div style={{width: '45%'}}>
                             <Pie data={pieData} options={pieOptions} />
                         </div>
+                    
                     </div>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} onClick={handleDownload}>
+                    <button className="btn btn-primary">Download report</button>
+                </div>
+                </div>
                 )
             ) : (
                 <div className="container my-5">
