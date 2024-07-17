@@ -20,7 +20,7 @@ const PageList = () => {
     //otherwise jump to the dashboard
     //temporary solution for header and footer not showing in the login and signup page
     const location = useLocation();
-    const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup';
+    const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup'&& location.pathname !== '/';
     return (
        
      
@@ -30,6 +30,7 @@ const PageList = () => {
             {showHeaderAndFooter && <Subheader />}
             {/* pages added here */}
             <Routes>
+                <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/frameSelect" element={<FrameSelect />} />
                 <Route path="/companySearch/:frameworkName" element={<CompanySearch />} />
