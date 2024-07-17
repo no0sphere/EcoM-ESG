@@ -354,7 +354,7 @@ const FrameSelect = () => {
                       "board meeting attendance avg": 0.15,
                       "comp comm nonexec members": 0.1,
                       "analytic indep board": 0.15,
-                      "analytic nonexec board": 0.15
+                      "analytic nonexec board": 0.05
                   }
               },
               
@@ -414,7 +414,7 @@ const FrameSelect = () => {
                     "board meeting attendance avg": 0.15,
                     "comp comm nonexec members": 0.1,
                     "analytic indep board": 0.15,
-                    "analytic nonexec board": 0.15
+                    "analytic nonexec board": 0.05
                 }
             },
             {
@@ -473,7 +473,7 @@ const FrameSelect = () => {
                   "board meeting attendance avg": 0.15,
                   "comp comm nonexec members": 0.1,
                   "analytic indep board": 0.15,
-                  "analytic nonexec board": 0.15
+                  "analytic nonexec board": 0.05
               }
           },
           {
@@ -532,7 +532,7 @@ const FrameSelect = () => {
                 "board meeting attendance avg": 0.15,
                 "comp comm nonexec members": 0.1,
                 "analytic indep board": 0.15,
-                "analytic nonexec board": 0.15
+                "analytic nonexec board": 0.05
             }
           },
           {
@@ -591,7 +591,7 @@ const FrameSelect = () => {
               "board meeting attendance avg": 0.15,
               "comp comm nonexec members": 0.1,
               "analytic indep board": 0.15,
-              "analytic nonexec board": 0.15
+              "analytic nonexec board": 0.05
           }
           }
           
