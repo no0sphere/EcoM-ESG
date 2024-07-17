@@ -279,7 +279,7 @@ const FrameSelect = () => {
         setNestedIndicators(newNestedIndicators);
     };
 
-
+  
 
     useEffect(() => {
         const fetchFrameworks = async () => {
@@ -291,55 +291,305 @@ const FrameSelect = () => {
                 const sortedFrameworks = response.data.data.sort((a, b) => new Date(b.creation_date) - new Date(a.creation_date));
               setFrameworks(sortedFrameworks);
               const fixedFrameworks = [
-                  {
-                      "framework_name": "framework1",
-                      "creation_date": "2021-10-05",
-                      "environmental_risk_metrics": {
-                          "indicator_er_weight": 0.3,
-                          "metric1": 0.5,
-                          "metric2": 0.3,
-                          "metric3": 0.2
-                      },
-                      "environmental_opportunity_metrics": {
-                          "indicator_eo_weight": 0.2,
-                          "metric1": 0.5,
-                          "metric2": 0.3,
-                          "metric3": 0.2
-                      },
-                      "social_risk_metrics": {
-                          "indicator_sr_weight": 0.25,
-                          "metric1": 0.5,
-                          "metric2": 0.3,
-                          "metric3": 0.2
-                      },
-                      "social_opportunity_metrics": {
-                          "indicator_so_weight": 0.15,
-                          "metric1": 0.5,
-                          "metric2": 0.3,
-                          "metric3": 0.2
-                      },
-                      "governance_risk_metrics": {
-                          "indicator_gr_weight": 0.05,
-                          "metric1": 0.5,
-                          "metric2": 0.3,
-                          "metric3": 0.2
-                      },
-                      "governance_opportunity_metrics": {
-                          "indicator_go_weight": 0.05,
-                          "metric1": 0.5,
-                          "metric2": 0.3,
-                          "metric3": 0.2
-                      }
+                {
+                  "framework_name": "IFRS S1",
+                  "creation_date": "2021-10-05",
+                  "environmental_risk_metrics": {
+                      "environmental risk weight": 0.175,
+                      "co2directscope1": 0.1,
+                      "co2indirectscope2": 0.1,
+                      "co2indirectscope3": 0.1,
+                      "noxemissions": 0.05,
+                      "soxemissions": 0.05,
+                      "vocemissions": 0.05,
+                      "particulate matter emissions": 0.05,
+                      "wastetotal": 0.1,
+                      "hazardouswaste": 0.1,
+                      "airpollutants direct": 0.1,
+                      "airpollutants indirect": 0.1,
+                      "waterwithdrawaltotal": 0.1
                   },
-                {framework_name: "Fixed framework2",
-                        creation_date: "2019-10-05",
-                        environmental_risk_metrics: {
-                            "indicator_er_weight": 0.3,
-                            "metric1": 0.5,
-                            "metric2": 0.3,
-                            "metric3": 0.2
-                        },}
-
+                  "environmental_opportunity_metrics": {
+                      "indicator eo weight": 0.175,
+                      "climate change risks opp": 0.2,
+                      "organic products initiatives": 0.15,
+                      "analyticwasterecyclingratio": 0.2,
+                      "waste recycled": 0.15,
+                      "water technologies": 0.15,
+                      "tranalyicrenewenergyuse": 0.15
+                  },
+                  "social_risk_metrics": {
+                      "indicator sr weight": 0.125,
+                      "employee fatalities": 0.25,
+                      "turnover employees": 0.2,
+                      "human rights violation pai": 0.3,
+                      "tir total": 0.25
+                  },
+                  "social_opportunity_metrics": {
+                      "indicator so weight": 0.125,
+                      "analytic employment creation": 0.2,
+                      "employee health safety policy": 0.25,
+                      "trade union rep": 0.15,
+                      "women employees": 0.2,
+                      "women managers": 0.2
+                  },
+                  "governance_risk_metrics": {
+                      "indicator gr weight": 0.2,
+                      "bribery and corruption pai insufficient actions": 1  //yes or no
+                  },
+                  "governance_opportunity_metrics": {
+                      "indicator go weight": 0.2,
+                      "analytic audit commind": 0.15,
+                      "analytic board female": 0.1,
+                      "analytic comp commind": 0.1,
+                      "analytic nomination commind": 0.1,
+                      "audit comm nonexec members": 0.1,
+                      "board meeting attendance avg": 0.15,
+                      "comp comm nonexec members": 0.1,
+                      "analytic indep board": 0.15,
+                      "analytic nonexec board": 0.15
+                  }
+              },
+              
+              {
+                "framework_name": "IFRS S2",
+                "creation_date": "2022-10-05",
+                "environmental_risk_metrics": {
+                    "environmental risk weight": 0.25,
+                    "co2directscope1": 0.1,
+                    "co2indirectscope2": 0.1,
+                    "co2indirectscope3": 0.1,
+                    "noxemissions": 0.05,
+                    "soxemissions": 0.05,
+                    "vocemissions": 0.05,
+                    "particulate matter emissions": 0.05,
+                    "wastetotal": 0.1,
+                    "hazardouswaste": 0.1,
+                    "airpollutants direct": 0.1,
+                    "airpollutants indirect": 0.1,
+                    "waterwithdrawaltotal": 0.1
+                },
+                "environmental_opportunity_metrics": {
+                    "indicator eo weight": 0.25,
+                    "climate change risks opp": 0.2,
+                    "organic products initiatives": 0.15,
+                    "analyticwasterecyclingratio": 0.2,
+                    "waste recycled": 0.15,
+                    "water technologies": 0.15,
+                    "tranalyicrenewenergyuse": 0.15
+                },
+                "social_risk_metrics": {
+                    "indicator sr weight": 0.1,
+                    "employee fatalities": 0.25,
+                    "turnover employees": 0.2,
+                    "human rights violation pai": 0.3,
+                    "tir total": 0.25
+                },
+                "social_opportunity_metrics": {
+                    "indicator so weight": 0.1,
+                    "analytic employment creation": 0.2,
+                    "employee health safety policy": 0.25,
+                    "trade union rep": 0.15,
+                    "women employees": 0.2,
+                    "women managers": 0.2
+                },
+                "governance_risk_metrics": {
+                    "indicator gr weight": 0.15,
+                    "bribery and corruption pai insufficient actions": 1  //yes or no
+                },
+                "governance_opportunity_metrics": {
+                    "indicator go weight": 0.15,
+                    "analytic audit commind": 0.15,
+                    "analytic board female": 0.1,
+                    "analytic comp commind": 0.1,
+                    "analytic nomination commind": 0.1,
+                    "audit comm nonexec members": 0.1,
+                    "board meeting attendance avg": 0.15,
+                    "comp comm nonexec members": 0.1,
+                    "analytic indep board": 0.15,
+                    "analytic nonexec board": 0.15
+                }
+            },
+            {
+              "framework_name": "TCFD",
+              "creation_date": "2023-10-05",
+              "environmental_risk_metrics": {
+                  "environmental risk weight": 0.35,
+                  "co2directscope1": 0.1,
+                  "co2indirectscope2": 0.1,
+                  "co2indirectscope3": 0.1,
+                  "noxemissions": 0.05,
+                  "soxemissions": 0.05,
+                  "vocemissions": 0.05,
+                  "particulate matter emissions": 0.05,
+                  "wastetotal": 0.1,
+                  "hazardouswaste": 0.1,
+                  "airpollutants direct": 0.1,
+                  "airpollutants indirect": 0.1,
+                  "waterwithdrawaltotal": 0.1
+              },
+              "environmental_opportunity_metrics": {
+                  "indicator eo weight": 0.35,
+                  "climate change risks opp": 0.2,
+                  "organic products initiatives": 0.15,
+                  "analyticwasterecyclingratio": 0.2,
+                  "waste recycled": 0.15,
+                  "water technologies": 0.15,
+                  "tranalyicrenewenergyuse": 0.15
+              },
+              "social_risk_metrics": {
+                  "indicator sr weight": 0.05,
+                  "employee fatalities": 0.25,
+                  "turnover employees": 0.2,
+                  "human rights violation pai": 0.3,
+                  "tir total": 0.25
+              },
+              "social_opportunity_metrics": {
+                  "indicator so weight": 0.05,
+                  "analytic employment creation": 0.2,
+                  "employee health safety policy": 0.25,
+                  "trade union rep": 0.15,
+                  "women employees": 0.2,
+                  "women managers": 0.2
+              },
+              "governance_risk_metrics": {
+                  "indicator gr weight": 0.1,
+                  "bribery and corruption pai insufficient actions": 1  //yes or no
+              },
+              "governance_opportunity_metrics": {
+                  "indicator go weight": 0.1,
+                  "analytic audit commind": 0.15,
+                  "analytic board female": 0.1,
+                  "analytic comp commind": 0.1,
+                  "analytic nomination commind": 0.1,
+                  "audit comm nonexec members": 0.1,
+                  "board meeting attendance avg": 0.15,
+                  "comp comm nonexec members": 0.1,
+                  "analytic indep board": 0.15,
+                  "analytic nonexec board": 0.15
+              }
+          },
+          {
+            "framework_name": "TNFD",
+            "creation_date": "2020-10-05",
+            "environmental_risk_metrics": {
+                "environmental risk weight": 0.4,
+                "co2directscope1": 0.1,
+                "co2indirectscope2": 0.1,
+                "co2indirectscope3": 0.1,
+                "noxemissions": 0.05,
+                "soxemissions": 0.05,
+                "vocemissions": 0.05,
+                "particulate matter emissions": 0.05,
+                "wastetotal": 0.1,
+                "hazardouswaste": 0.1,
+                "airpollutants direct": 0.1,
+                "airpollutants indirect": 0.1,
+                "waterwithdrawaltotal": 0.1
+            },
+            "environmental_opportunity_metrics": {
+                "indicator eo weight": 0.35,
+                "climate change risks opp": 0.2,
+                "organic products initiatives": 0.15,
+                "analyticwasterecyclingratio": 0.2,
+                "waste recycled": 0.15,
+                "water technologies": 0.15,
+                "tranalyicrenewenergyuse": 0.15
+            },
+            "social_risk_metrics": {
+                "indicator sr weight": 0.05,
+                "employee fatalities": 0.25,
+                "turnover employees": 0.2,
+                "human rights violation pai": 0.3,
+                "tir total": 0.25
+            },
+            "social_opportunity_metrics": {
+                "indicator so weight": 0.05,
+                "analytic employment creation": 0.2,
+                "employee health safety policy": 0.25,
+                "trade union rep": 0.15,
+                "women employees": 0.2,
+                "women managers": 0.2
+            },
+            "governance_risk_metrics": {
+                "indicator gr weight": 0.1,
+                "bribery and corruption pai insufficient actions": 1  //yes or no
+            },
+            "governance_opportunity_metrics": {
+                "indicator go weight": 0.05,
+                "analytic audit commind": 0.15,
+                "analytic board female": 0.1,
+                "analytic comp commind": 0.1,
+                "analytic nomination commind": 0.1,
+                "audit comm nonexec members": 0.1,
+                "board meeting attendance avg": 0.15,
+                "comp comm nonexec members": 0.1,
+                "analytic indep board": 0.15,
+                "analytic nonexec board": 0.15
+            }
+          },
+          {
+          "framework_name": "APRA-CPG",
+          "creation_date": "2019-10-05",
+          "environmental_risk_metrics": {
+              "environmental risk weight": 0.3,
+              "co2directscope1": 0.1,
+              "co2indirectscope2": 0.1,
+              "co2indirectscope3": 0.1,
+              "noxemissions": 0.05,
+              "soxemissions": 0.05,
+              "vocemissions": 0.05,
+              "particulate matter emissions": 0.05,
+              "wastetotal": 0.1,
+              "hazardouswaste": 0.1,
+              "airpollutants direct": 0.1,
+              "airpollutants indirect": 0.1,
+              "waterwithdrawaltotal": 0.1
+          },
+          "environmental_opportunity_metrics": {
+              "indicator eo weight": 0.2,
+              "climate change risks opp": 0.2,
+              "organic products initiatives": 0.15,
+              "analyticwasterecyclingratio": 0.2,
+              "waste recycled": 0.15,
+              "water technologies": 0.15,
+              "tranalyicrenewenergyuse": 0.15
+          },
+          "social_risk_metrics": {
+              "indicator sr weight": 0.1,
+              "employee fatalities": 0.25,
+              "turnover employees": 0.2,
+              "human rights violation pai": 0.3,
+              "tir total": 0.25
+          },
+          "social_opportunity_metrics": {
+              "indicator so weight": 0.1,
+              "analytic employment creation": 0.2,
+              "employee health safety policy": 0.25,
+              "trade union rep": 0.15,
+              "women employees": 0.2,
+              "women managers": 0.2
+          },
+          "governance_risk_metrics": {
+              "indicator gr weight": 0.15,
+              "bribery and corruption pai insufficient actions": 1  //yes or no
+          },
+          "governance_opportunity_metrics": {
+              "indicator go weight": 0.15,
+              "analytic audit commind": 0.15,
+              "analytic board female": 0.1,
+              "analytic comp commind": 0.1,
+              "analytic nomination commind": 0.1,
+              "audit comm nonexec members": 0.1,
+              "board meeting attendance avg": 0.15,
+              "comp comm nonexec members": 0.1,
+              "analytic indep board": 0.15,
+              "analytic nonexec board": 0.15
+          }
+          }
+          
+          
+          
               ];
 
               setFrameworks(previousFrameworks => [...previousFrameworks, ...fixedFrameworks]);
