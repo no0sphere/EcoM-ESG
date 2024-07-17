@@ -156,6 +156,7 @@ const FrameSelect = () => {
     const validateCustomFrameworkData = data => {
         if (!data.framework_name) {
             alert('Please input the frame name!');
+            setCustomError('Please input the frame name!');
             return false;
         }
 
@@ -163,6 +164,7 @@ const FrameSelect = () => {
         for (let category of top_categories) {
             if (isNaN(parseFloat(data[category].indicator_weight)) || parseFloat(data[category].indicator_weight) < 0 || parseFloat(data[category].indicator_weight) > 1) {
                 alert('Please input the correct weight!');
+                setCustomError('Please input the correct weight!');
                 return false;
             }}
 
@@ -174,6 +176,7 @@ const FrameSelect = () => {
         }
         if (sum !== 1) {
             alert('The sum of the weights of each category must be 1!');
+            setCustomError('The sum of the weights of each category must be 1!');
             return false;
         }
 
@@ -182,6 +185,7 @@ const FrameSelect = () => {
             for (let metric in data[category].metrics) {
                 if (isNaN(parseFloat(data[category].metrics[metric])) || parseFloat(data[category].metrics[metric]) < 0 || parseFloat(data[category].metrics[metric]) > 1) {
                     alert('Please input the correct metric!');
+                    setCustomError('Please input the correct metric!');
                     return false;
                 }
             }
@@ -195,6 +199,7 @@ const FrameSelect = () => {
             }
             if (sum !== 1) {
                 alert('The sum of the metrics in each category must be 1!');
+                setCustomError('The sum of the metrics in each category must be 1!');
                 return false;
             }
         }
@@ -272,6 +277,8 @@ const FrameSelect = () => {
     const [refreshKey, setRefreshKey] = useState(0); // Used to force a re-render of the component
 
     const [viewWindowVisible, setViewWindowVisible] = useState(false);
+
+    const [CustomError, setCustomError] = useState('');
 
     const handleNestedIndicator = (index) => {
         let newNestedIndicators = [...nestedIndicators];
@@ -659,6 +666,7 @@ const FrameSelect = () => {
         } catch (error) {
             console.error('Failed to create custom framework:', error.response.data.message);
             alert(error.response.data.message);
+            setCustomError(error.response.data.message);
 
         }
     }
@@ -716,8 +724,11 @@ const FrameSelect = () => {
                 <div style={{
                     width: '70%', height: '80%', backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '5px'
                 }}>
+                    <div style={{display: 'flex', flexDirection: 'row',  alignItems: 'center' }}>
                     <button type="button" className="btn-close" aria-label="Close"
                             onClick={() => setPopWindowVisible(false)}></button>
+                        {CustomError && <Alert severity="error" sx={{ width: "90%", margin:"auto"}}>{CustomError}</Alert>}
+                 </div>
                     <div style={{overflow: 'auto', height: '90%'}}>
                         <Box component="form" noValidate autoComplete="off" style={{
                             display: 'flex',
@@ -726,8 +737,8 @@ const FrameSelect = () => {
                             alignItems: 'center'
                         }}>
                             <h2 style={{marginBottom: '40px', marginTop: '20px', display: 'flex' }}>Custom Framework Setting</h2>
-                        <TextField id="framework_name" sx={{ width: '80%', maxWidth: '80%' }}
-                            label="Framework Name" value={CustomFramework.framework_name} onChange={(e) => setCustomFramework({ ...CustomFramework, framework_name: e.target.value })} required />
+                            <TextField id="framework_name" sx={{ width: '80%', maxWidth: '80%' }}
+                                label="Framework Name" value={CustomFramework.framework_name} onClick={() => setCustomError('')} onChange={(e) => setCustomFramework({ ...CustomFramework, framework_name: e.target.value })} required />
                             <List
                                 sx={{ width: '80%', maxWidth: '80%', bgcolor: 'background.paper' }}
                                 component="nav"
@@ -743,7 +754,7 @@ const FrameSelect = () => {
                                             onClick={() => handleNestedIndicator(index)}>
                                             <ListItemText primary={category} />
                                             <input type="number" className="form-control" id={"indicator_weight" + index} name="indicator_weight" style={{ width: '20%' }}
-                                                value={CustomFramework[category].indicator_weight} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], indicator_weight: e.target.value } })} required />
+                                                value={CustomFramework[category].indicator_weight} onClick={() => setCustomError('')} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], indicator_weight: e.target.value } })} required />
                                         {nestedIndicators[index] ? <ExpandLess /> : <ExpandMore />}
                                     </ListItemButton>
                                         <Collapse in={nestedIndicators[index]} timeout="auto" unmountOnExit>
@@ -752,7 +763,7 @@ const FrameSelect = () => {
                                             <ListItemButton key={index} sx={{ pl: 4 }}>
                                                 <ListItemText primary={metric} />
                                             <input type="number" className="form-control" id={"metric" + index} name="metric" style={{ width: '20%' }}
-                                                value={CustomFramework[category].metrics[metric]} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], metrics: { ...CustomFramework[category].metrics, [metric]: e.target.value } } })} required />
+                                                value={CustomFramework[category].metrics[metric]} onClick={() => setCustomError('')} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], metrics: { ...CustomFramework[category].metrics, [metric]: e.target.value } } })} required />
                                             </ListItemButton>
                                         ))}
                                         </List>
