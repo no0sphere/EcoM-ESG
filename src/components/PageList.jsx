@@ -7,9 +7,9 @@ import Header from './Header';
 import Subheader from "./Subheader";
 import Footer from './Footer';
 import HelpPage from './HelpingPage';
-import DownloadPage from './DownloadPage';
 import Login from "./Login.jsx";
 import SignUp from "./SignUp.jsx";
+import DownloadReport from "./DownloadReport.jsx";
 import Setting from "./Setting.jsx";
 import FrameSelect from "./FrameSelect.jsx";
 import CompanySearch from "./CompanySearch.jsx";
@@ -40,7 +40,7 @@ const PageList = () => {
                 <Route path="/setting" element={<Setting />} />
                 <Route path="/SingleMode" element={<SingleMode />} />
                 <Route path="/help" element={<HelpPage />} />
-                <Route path="/download-report" element={<DownloadPage />} />
+                <Route path="/downloadreport" element={<DownloadReport />} />
                 <Route path="/comparisonMode" element={<ComparisonMode />} />
             </Routes>
 

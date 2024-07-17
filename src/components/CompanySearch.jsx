@@ -1,3 +1,5 @@
+import RatingReport from './RatingReport';
+import DownloadReport from './DownloadReport';
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MockAdapter from "axios-mock-adapter";
@@ -127,7 +129,7 @@ const CompanySearch = () => {
     };
 
     const handleDownload = () => {
-        navigate(`/download-report`);
+        navigate('/downloadreport', { state: { rating, simplifiedFrame, pieData, pieOptions, selectedIndustry, selectedCompany,selectedYear } });
     };
     return (
         <div className="container" style={{ minHeight: '100vh' }}>
@@ -159,38 +161,20 @@ const CompanySearch = () => {
             {error && <div className="alert alert-danger mt-2">{error}</div>}
             {isSubmitted ? (
                 rating !== null && (
-                    <div >
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <div style={{width: '45%'}}>
-                            <h3>
-                                ESG Rating: {rating}
-                            </h3>
-                            <table className="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Details of Rating</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {Object.entries(simplifiedFrame || {}).map(([key, value], index) => (
-                                    <tr key={index}>
-                                        <td>{key}</td>
-                                        <td>{typeof value === 'object' ? JSON.stringify(value) : value}</td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                    
+                    <div>
+                        <RatingReport 
+                            rating={rating} 
+                            simplifiedFrame={simplifiedFrame} 
+                            pieData={pieData} 
+                            pieOptions={pieOptions} 
+                            Industry={selectedIndustry}
+                            Company={selectedCompany}
+                            Year={selectedYear}
+                        />
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <button className="btn btn-primary" onClick={handleDownload}>Download report</button>
                         </div>
-                        <div style={{width: '45%'}}>
-                            <Pie data={pieData} options={pieOptions} />
-                        </div>
-                    
                     </div>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} onClick={handleDownload}>
-                    <button className="btn btn-primary">Download report</button>
-                </div>
-                </div>
                 )
             ) : (
                 <div className="container my-5">

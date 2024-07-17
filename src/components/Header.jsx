@@ -11,9 +11,7 @@ function Header() {
                 <Link to="/help">Help</Link> 
             </button>
             <div>
-                <button className="btn btn-primary mr-3">
-                    <Link className="text-white" to="/download-report" style={{ textDecoration: 'none' }}>Download Report</Link>
-                </button>
+                
             </div>
 
 
