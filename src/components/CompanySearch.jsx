@@ -49,13 +49,12 @@ const CompanySearch = () => {
     const [selectedIndustry, setSelectedIndustry] = useState(null);
     const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false); // 新增状态变量
-
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const handleCompanySelecting = async (e) => {
         setRating(null);
         setError('');
         e.preventDefault(); // prevent refresh
-        setIsSubmitted(true); // 表单提交时更新状态
+        setIsSubmitted(true);
         try {
             const response = await axios.get(`/api/rating?framework_name=${frameworkName}&user_name=${userName}&industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear}`);
             if (response.status === 200) {
@@ -101,7 +100,7 @@ const CompanySearch = () => {
         setSelectedIndustry(e);
     };
 
-    // Prepare data for the pie chart
+
     const pieData = {
         labels: Object.keys(simplifiedFrame || {}).filter(key => key.includes('metrics')),
         datasets: [{
@@ -117,7 +116,6 @@ const CompanySearch = () => {
         }]
     };
 
-    // Options for the pie chart without legend and tooltip
     const pieOptions = {
         plugins: {
             legend: {

@@ -516,7 +516,6 @@ const FrameSelect = () => {
                     </div>
                 </div>
             </div>
-            //View
             {viewWindowVisible && currentFramework && (
                 <div id="ViewFrameworkSetting" style={{
                     display: 'flex', position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000, justifyContent: 'center', alignItems: 'center'
@@ -546,7 +545,7 @@ const FrameSelect = () => {
                                                     <ListItemText
                                                         primary={category}
                                                         secondary={weightKey
-                                                            ? `${weightKey}: ${currentFramework[category][weightKey]}`
+                                                            ? `Weight: ${currentFramework[category][weightKey]}`
                                                             : 'Frame does not own this type of metrics'}
                                                     />
                                                     {nestedIndicators[index] ? <ExpandLess /> : <ExpandMore />}

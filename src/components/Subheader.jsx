@@ -8,7 +8,7 @@ function Subheader() {
     const [activeButton, setActiveButton] = useState('');
 
     useEffect(() => {
-        // 根据当前路径设置activeButton
+
         switch (location.pathname) {
             case '/frameSelect':
                 setActiveButton('Frame select');
