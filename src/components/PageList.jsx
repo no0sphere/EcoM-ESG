@@ -32,7 +32,7 @@ const PageList = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/frameSelect" element={<FrameSelect />} />
-                <Route path="/companySearch" element={<CompanySearch />} />
+                <Route path="/companySearch/:frameworkName" element={<CompanySearch />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
