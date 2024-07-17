@@ -162,7 +162,7 @@ const FrameSelect = () => {
 
         // Check if any of the weights is not a number or not in the range of 0 to 1
         for (let category of top_categories) {
-            if (isNaN(parseFloat(data[category].indicator_weight)) || parseFloat(data[category].indicator_weight) < 0 || parseFloat(data[category].indicator_weight) > 1) {
+            if (isNaN(parseFloat(data[category].indicator_weight)) || parseInt(data[category].indicator_weight)*100 < 0 || parseFloat(data[category].indicator_weight)*100 > 100) { // multiply by 100 to avoid floating point errors
                 alert('Please input the correct weight!');
                 setCustomError('Please input the correct weight!');
                 return false;
@@ -172,9 +172,9 @@ const FrameSelect = () => {
         // Check if the sum of the weights of each category is not 1
         let sum = 0;
         for (let category of top_categories) {
-            sum += parseFloat(data[category].indicator_weight);
+            sum += parseFloat(data[category].indicator_weight)*100;
         }
-        if (sum !== 1) {
+        if (sum !== 100) {
             alert('The sum of the weights of each category must be 1!');
             setCustomError('The sum of the weights of each category must be 1!');
             return false;
@@ -183,7 +183,7 @@ const FrameSelect = () => {
         // Check if any of the metrics is not a number or not in the range of 0 to 1
         for (let category of top_categories) {
             for (let metric in data[category].metrics) {
-                if (isNaN(parseFloat(data[category].metrics[metric])) || parseFloat(data[category].metrics[metric]) < 0 || parseFloat(data[category].metrics[metric]) > 1) {
+                if (isNaN(parseFloat(data[category].metrics[metric])) || parseFloat(data[category].metrics[metric])*100 < 0 || parseFloat(data[category].metrics[metric])*100 > 100) {
                     alert('Please input the correct metric!');
                     setCustomError('Please input the correct metric!');
                     return false;
@@ -195,9 +195,10 @@ const FrameSelect = () => {
         for (let category of top_categories) {
             sum = 0;
             for (let metric in data[category].metrics) {
-                sum += parseFloat(data[category].metrics[metric]);
+                console.log(data[category].metrics[metric]);
+                sum += parseFloat(data[category].metrics[metric])*100;
             }
-            if (sum !== 1) {
+            if (sum !== 100) {
                 alert('The sum of the metrics in each category must be 1!');
                 setCustomError('The sum of the metrics in each category must be 1!');
                 return false;
@@ -218,53 +219,71 @@ const FrameSelect = () => {
     const [CustomFramework, setCustomFramework] = useState(
         {
         "framework_name": "framework1",
-        "user_name": "framework1",
+        "user_name": localStorage.getItem('username'),
         "environmental_risk_metrics": {
-        "indicator_weight": 0.3,
+        "indicator_weight": 0.175,
         "metrics": {
-            "metric1": 0.5,
-            "metric2": 0.3,
-            "metric3": 0.2
+            "co2directscope1": 0.1,
+            "co2indirectscope2": 0.1,
+            "co2indirectscope3": 0.1,
+            "noxemissions": 0.05,
+            "soxemissions": 0.05,
+            "vocemissions": 0.05,
+            "particulate matter emissions": 0.05,
+            "wastetotal": 0.1,
+            "hazardouswaste": 0.1,
+            "airpollutants direct": 0.1,
+            "airpollutants indirect": 0.1,
+            "waterwithdrawaltotal": 0.1
         }
     },
         "environmental_opportunity_metrics": {
-        "indicator_weight": 0.2,
+        "indicator_weight": 0.175,
         "metrics": {
-            "metric1": 0.5,
-            "metric2": 0.3,
-            "metric3": 0.2
+            "climate change risks opp": 0.2,
+            "organic products initiatives": 0.15,
+            "analyticwasterecyclingratio": 0.2,
+            "waste recycled": 0.15,
+            "water technologies": 0.15,
+            "tranalyicrenewenergyuse": 0.15
         }
     },
         "social_risk_metrics": {
-        "indicator_weight": 0.25,
+        "indicator_weight": 0.125,
         "metrics": {
-            "metric1": 0.5,
-            "metric2": 0.3,
-            "metric3": 0.2
+            "employee fatalities": 0.25,
+            "turnover employees": 0.2,
+            "human rights violation pai": 0.3,
+            "tir total": 0.25
         }
     },
         "social_opportunity_metrics": {
-        "indicator_weight": 0.15,
+        "indicator_weight": 0.125,
         "metrics": {
-            "metric1": 0.5,
-            "metric2": 0.3,
-            "metric3": 0.2
+            "employee health safety policy": 0.25,
+            "trade union rep": 0.35,
+            "women employees": 0.2,
+            "women managers": 0.2
         }
     },
         "governance_risk_metrics": {
-        "indicator_weight": 0.05,
+        "indicator_weight": 0.2,
         "metrics": {
-            "metric1": 0.5,
-            "metric2": 0.3,
-            "metric3": 0.2
+            "bribery and corruption pai insufficient actions": 1  //yes or no
         }
     },
             "governance_opportunity_metrics": {
-                "indicator_weight": 0.05,
+                "indicator_weight": 0.2,
                 "metrics": {
-                    "metric1": 0.5,
-                    "metric2": 0.3,
-                    "metric3": 0.2
+                    "analytic audit commind": 0.15,
+                    "analytic board female": 0.1,
+                    "analytic comp commind": 0.1,
+                    "analytic nomination commind": 0.1,
+                    "audit comm nonexec members": 0.1,
+                    "board meeting attendance avg": 0.15,
+                    "comp comm nonexec members": 0.1,
+                    "analytic indep board": 0.15,
+                    "analytic nonexec board": 0.05
                 }
             }
     });
