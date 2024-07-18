@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import Papa from 'papaparse';
 
 
 const SingleModeData = () => {
@@ -44,12 +45,36 @@ const SingleModeData = () => {
                 { "metric": "Employee Turnover", "value": 5, "unit": "%" },
                 { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
                 { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
-                { "metric": "Employee Turnover", "value": 5, "unit": "%" },
+                { "metric": "AIRPOLLUTANTS_DIRECT", "value": 114514, "unit": "USD" },
             ]
         },
         "error": null
     });
 
+    //Read the Description from the csv file in public folder
+    const [Description, setDescription] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('/MetricDescription.csv');
+            const reader = response.body.getReader();
+            const result = await reader.read(); // raw read of the stream
+            const decoder = new TextDecoder('utf-8');
+            const csv = decoder.decode(result.value); // convert stream to text
+            Papa.parse(csv, {
+                complete: function (results) {
+                    console.log('Parsed results:', results);
+                    setDescription(results.data);
+                },
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true
+            });
+            console.log("Description", Description[0]);
+        }
+
+        fetchData();
+    }, []);
 
 
     const [error, setError] = useState('');
@@ -98,12 +123,6 @@ const SingleModeData = () => {
         { value: 'Information Technology', label: 'Information Technology' }
     ];
 
-    const options_company = [
-        { value: 'Apple', label: 'Apple' },
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ];
 
     const options_year = [
         { value: '2022', label: '2022' },
@@ -171,14 +190,18 @@ const SingleModeData = () => {
                         <thead>
                             <tr>
                                 <th scope="col">Indicator</th>
+                                <th scope="col">Pillar</th>
+                                <th scope="col">Description</th>
                                 <th scope="col">Value</th>
                             </tr>
                         </thead>
                         <tbody>
                             {Indicators.map((indicator, index) => (
                             <tr key={index}>
-                                <td>{indicator.metric}</td>
-                                <td>{indicator.value} {indicator.unit}</td>
+                                    <td style= {{ width: '20%' }}>{indicator.metric}</td>
+                                    <td style= {{ width: '15%' }}>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</td>
+                                    <td style= {{ width: '40%' }}>{Description.find((item) => item.metric_name === indicator.metric)?.metric_description}</td>
+                                    <td style= {{ width: '25%' }}>{indicator.value} {indicator.unit}</td>
                             </tr>
                         ))}
                         </tbody>
