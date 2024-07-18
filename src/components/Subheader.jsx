@@ -35,13 +35,13 @@ function Subheader() {
                 className={`btn ${activeButton === 'Single mode' ? 'btn-primary' : 'btn-link'}`}
                 onClick={() => handleButtonClick('Single mode', '/SingleMode')}
             >
-                Single mode
+                Single Mode
             </button>
             <button
                 className={`btn ${activeButton === 'Compare mode' ? 'btn-primary' : 'btn-link'}`}
                 onClick={() => handleButtonClick('Compare mode', '/ComparisonMode')}
             >
-                Compare mode
+                Comparison Mode
             </button>
             <button
                 className={`btn ${activeButton === 'Frame select' ? 'btn-primary' : 'btn-link'}`}
