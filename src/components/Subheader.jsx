@@ -47,7 +47,7 @@ function Subheader() {
                 className={`btn ${activeButton === 'Frame select' ? 'btn-primary' : 'btn-link'}`}
                 onClick={() => handleButtonClick('Frame select', '/frameSelect')}
             >
-                Frame select
+                Framework Selection
             </button>
         </div>
     );
