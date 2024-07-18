@@ -7,18 +7,14 @@ function Header() {
             <Link to="/SingleMode" className="text-dark" style={{ textDecoration: 'none' }}> 
                 <div className="h3 mb-0">EcoM ESG Platform</div>
             </Link>
-            <button className="btn btn-link">
-                <Link to="/help">Help</Link> 
-            </button>
+            
             <div>
                 
             </div>
 
 
             <div>
-                <button className="btn btn-primary mr-3">
-                    <Link className="text-white" to="/setting" style={{ textDecoration: 'none' }}>Setting</Link>
-                </button>
+                
             </div>
             <div>
                 <button className="btn btn-secondary">
