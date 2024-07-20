@@ -239,7 +239,7 @@ const UserItem = ({ user }) => (
     return (
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '10px', margin: '5px', width: '100%', height: '100%'}}>
             {CompanySlots.map((element, index) => (
-                <div id={element} key={index} style={{ textAlign: 'center', height: '100%', width: '24%', backgroundColor: backgroundColors[index % 2] , padding: '10px', border : 'darkgrey 1px solid', borderRadius: '10px'}}>
+                <div id={element} key={index} style={{ textAlign: 'center', height: '100%', width: '24%', backgroundColor: backgroundColors[index % 2] , padding: '5px', border : 'darkgrey 1px solid', borderRadius: '10px'}}>
                     <div id={element + "Content"} style={{ display: SlotContentVisible[index] ? 'none' : 'block', height: '100%'}}>
                         <div style={{ marginBottom: '10px', color: '#555' }}>{element}</div>
                         <Button variant="contained" size="medium" id={element + "AddCompany"} style={{ cursor: 'pointer' }} onClick={() => handleSlotClick(element, index)}>
@@ -256,7 +256,7 @@ const UserItem = ({ user }) => (
                             <h6 id={element + "Company" + "Year"} style={{ marginLeft: '5px' }}>{ChosenCompanyYears[index] ? "(" + ChosenCompanyYears[index] + ")" : '(No year selected)'}</h6>
                         </div>
                         <div className="scrollable-div" id={element + "Company" + "IndicatorTable"} style={{
-                            display: 'flex', flexDirection: 'column', paddingRight: '5px', width: '100%', overflow: 'auto', height: '85%', borderTop: '1px solid #000000',
+                            display: 'flex', flexDirection: 'column', paddingRight: '5px', width: '100%', height: '85%', borderTop: '1px solid #000000', overflowY : 'auto', overflowX: 'hidden'
                         }}>
                             <table className="table table-striped">
                                 <thead>
@@ -270,10 +270,10 @@ const UserItem = ({ user }) => (
                                     {ChosenCompanyData[index] && ChosenCompanyData[index].map((indicator, index) => (
                                         <tr key={index} style={{ border: '1px solid #000000'}}>
                                             <Tooltip title={Description.find((item) => item.metric_name === indicator.metric)?.metric_description} arrow>
-                                                <td>{indicator.metric}</td>
+                                                <td style={{ fontSize: '1vw' }}>{indicator.metric}</td>
                                             </Tooltip>
-                                            <td>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</td>
-                                            <td>{indicator.value} {indicator.unit}</td>
+                                            <td style={{ fontSize: '1vw' }}>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</td>
+                                            <td style={{ fontSize: '1vw' }}>{indicator.value} {indicator.unit}</td>
                                         </tr>
                                     ))}
                                 </tbody>
