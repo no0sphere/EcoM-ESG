@@ -958,7 +958,7 @@ const FrameSelect = () => {
                                         </ListSubheader>
                                     }>
                                     {top_categories.map((category, index) => {
-                                        const weightKey = Object.keys(currentFramework[category] || {}).find(key => /^indicator_[a-z]{2}_weight$/.test(key));
+                                        const weightKey = Object.keys(currentFramework[category] || {}).find(key => /^indicator [a-z]{2} weight$/.test(key));
                                         return (
                                             <List key={index}>
                                                 <ListItemButton sx={{ border: '1px solid darkgrey', borderRadius: '5px', marginBottom: '5px', padding: '10px' }}
@@ -967,7 +967,7 @@ const FrameSelect = () => {
                                                         primary={category}
                                                         secondary={weightKey
                                                             ? `Weight: ${currentFramework[category][weightKey]}`
-                                                            : ' '}
+                                                            : 'Frame does not own this type of metrics'}
                                                     />
                                                     {nestedIndicators[index] ? <ExpandLess /> : <ExpandMore />}
                                                 </ListItemButton>
