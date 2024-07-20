@@ -23,55 +23,74 @@ const FrameSelect = () => {
     mock.onGet(/\/api\/current_framework\?user_name=.+/).reply(config => {
         const urlParams = new URLSearchParams(config.url.split('?')[1]);
         const user_name = urlParams.get('user_name');
-        if (user_name === "qq" || user_name === "ww" || user_name === "ee") {
+        if (user_name === "Jim" || user_name === "jim" || user_name === "qq") {
           return [200, {
             code: 200,
             status: "succeed",
             message: "Found frameworks for this user.",
             timestamp: 1718203200000,
             data: [
+                {
+                    "framework_name": "Jim's Framework1",
+                    "creation_date": "2024-06-05",
+                    "environmental_risk_metrics": {
+                        "indicator er weight": 0.175,
+                        "co2directscope1": 0.1,
+                        "co2indirectscope2": 0.1,
+                        "co2indirectscope3": 0.1,
+                        "noxemissions": 0.05,
+                        "soxemissions": 0.05,
+                        "vocemissions": 0.05,
+                        "particulate matter emissions": 0.05,
+                        "wastetotal": 0.1,
+                        "hazardouswaste": 0.1,
+                        "airpollutants direct": 0.1,
+                        "airpollutants indirect": 0.1,
+                        "waterwithdrawaltotal": 0.1
+                    },
+                    "environmental_opportunity_metrics": {
+                        "indicator eo weight": 0.175,
+                        "climate change risks opp": 0.2,
+                        "organic products initiatives": 0.15,
+                        "analyticwasterecyclingratio": 0.2,
+                        "waste recycled": 0.15,
+                        "water technologies": 0.15,
+                        "tranalyicrenewenergyuse": 0.15
+                    },
+                    "social_risk_metrics": {
+                        "indicator sr weight": 0.125,
+                        "employee fatalities": 0.25,
+                        "turnover employees": 0.2,
+                        "human rights violation pai": 0.3,
+                        "tir total": 0.25
+                    },
+                    "social_opportunity_metrics": {
+                        "indicator so weight": 0.125,
+                        
+                        "employee health safety policy": 0.25,
+                        "trade union rep": 0.35,
+                        "women employees": 0.2,
+                        "women managers": 0.2
+                    },
+                    "governance_risk_metrics": {
+                        "indicator gr weight": 0.2,
+                        "bribery and corruption pai insufficient actions": 1  //yes or no
+                    },
+                    "governance_opportunity_metrics": {
+                        "indicator go weight": 0.2,
+                        "analytic audit commind": 0.15,
+                        "analytic board female": 0.1,
+                        "analytic comp commind": 0.1,
+                        "analytic nomination commind": 0.1,
+                        "audit comm nonexec members": 0.1,
+                        "board meeting attendance avg": 0.15,
+                        "comp comm nonexec members": 0.1,
+                        "analytic indep board": 0.15,
+                        "analytic nonexec board": 0.05
+                    }
+                },
             {
-                "framework_name": "framework1",
-                "creation_date": "2021-10-05",
-                "environmental_risk_metrics": {
-                    "indicator_er_weight": 0.3,
-                    "metric1": 0.5,
-                    "metric2": 0.3,
-                    "metric3": 0.2
-                },
-                "environmental_opportunity_metrics": {
-                    "indicator_eo_weight": 0.2,
-                    "metric1": 0.5,
-                    "metric2": 0.3,
-                    "metric3": 0.2
-                },
-                "social_risk_metrics": {
-                    "indicator_sr_weight": 0.25,
-                    "metric1": 0.5,
-                    "metric2": 0.3,
-                    "metric3": 0.2
-                },
-                "social_opportunity_metrics": {
-                    "indicator_so_weight": 0.15,
-                    "metric1": 0.5,
-                    "metric2": 0.3,
-                    "metric3": 0.2
-                },
-                "governance_risk_metrics": {
-                    "indicator_gr_weight": 0.05,
-                    "metric1": 0.5,
-                    "metric2": 0.3,
-                    "metric3": 0.2
-                },
-                "governance_opportunity_metrics": {
-                    "indicator_go_weight": 0.05,
-                    "metric1": 0.5,
-                    "metric2": 0.3,
-                    "metric3": 0.2
-                }
-            },
-            {
-                "framework_name": "framework2",
+                "framework_name": "Find Fish's Framework",
                 "creation_date": "2023-10-07",
                 "environmental_risk_metrics": {
                     "indicator_er_weight": 0.3,
@@ -110,15 +129,137 @@ const FrameSelect = () => {
                     "metric3": 0.2
                 }
             }
+            
         ]
           }];
         } else {
             return [200, {
                 code: 200,
                 status: "succeed",
-                message: "no frameworks for this user.",
+                message: "one frameworks for this user.",
                 timestamp: 1718203200000,
-                data: []
+                data: [ 
+                    {
+                    "framework_name": "Ray's Framework",
+                    "creation_date": "2023-10-07",
+                    "environmental_risk_metrics": {
+                        "indicator_er_weight": 0.3,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "environmental_opportunity_metrics": {
+                        "indicator_eo_weight": 0.2,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "social_risk_metrics": {
+                        "indicator_sr_weight": 0.25,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "social_opportunity_metrics": {
+                        "indicator_so_weight": 0.15,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "governance_risk_metrics": {
+                        "indicator_gr_weight": 0.05,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "governance_opportunity_metrics": {
+                        "indicator_go_weight": 0.05,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    }
+                },
+                {
+                    "framework_name": "Hao's Framework",
+                    "creation_date": "2023-10-07",
+                    "environmental_risk_metrics": {
+                        "indicator_er_weight": 0.3,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "environmental_opportunity_metrics": {
+                        "indicator_eo_weight": 0.2,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "social_risk_metrics": {
+                        "indicator_sr_weight": 0.25,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "social_opportunity_metrics": {
+                        "indicator_so_weight": 0.15,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "governance_risk_metrics": {
+                        "indicator_gr_weight": 0.05,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "governance_opportunity_metrics": {
+                        "indicator_go_weight": 0.05,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    }
+                },
+                {
+                    "framework_name": "6Yan's Framework",
+                    "creation_date": "2023-10-07",
+                    "environmental_risk_metrics": {
+                        "indicator_er_weight": 0.3,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "environmental_opportunity_metrics": {
+                        "indicator_eo_weight": 0.2,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "social_risk_metrics": {
+                        "indicator_sr_weight": 0.25,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "social_opportunity_metrics": {
+                        "indicator_so_weight": 0.15,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "governance_risk_metrics": {
+                        "indicator_gr_weight": 0.05,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    },
+                    "governance_opportunity_metrics": {
+                        "indicator_go_weight": 0.05,
+                        "metric1": 0.5,
+                        "metric2": 0.3,
+                        "metric3": 0.2
+                    }
+                }
+            ]
             }];
         }
     });
@@ -713,7 +854,7 @@ const FrameSelect = () => {
                     <div key={index} className="col-3 mb-4">
                         <div className="card h-100 d-flex flex-column justify-content-between">
                             <div className="card-body">
-                                <h5 className="card-title">Frame name: {framework.framework_name}</h5>
+                                <h5 className="card-title">{framework.framework_name}</h5>
                                 <p className="card-text">Creation Date: {framework.creation_date}</p>
                             </div>
                             <div className="card-footer bg-transparent border-0 d-flex justify-content-around">
