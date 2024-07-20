@@ -261,9 +261,9 @@ const UserItem = ({ user }) => (
                             <table className="table table-striped">
                                 <thead>
                                     <tr style={{ border: '1px solid #000000' }}>
-                                        <th scope="col">Indicator</th>
-                                        <th scope="col">Pillar</th>
-                                        <th scope="col">Value</th>
+                                        <th style={{ fontSize: '1vw'}} scope="col">Indicator</th>
+                                        <th style={{ fontSize: '1vw' }} scope="col">Pillar</th>
+                                        <th style={{ fontSize: '1vw' }} scope="col">Value</th>
                                     </tr>
                                 </thead>
                                 <tbody>
