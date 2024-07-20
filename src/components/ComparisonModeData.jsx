@@ -3,14 +3,43 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import Papa from 'papaparse';
 import '../styles/Scroll.css';
 
 import Button from '@mui/material/Button';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 
 
 
 
 const ComparisonModeData = () => {
+
+
+    //Read the Description from the csv file in public folder
+    const [Description, setDescription] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('/MetricDescription.csv');
+            const reader = response.body.getReader();
+            const result = await reader.read(); // raw read of the stream
+            const decoder = new TextDecoder('utf-8');
+            const csv = decoder.decode(result.value); // convert stream to text
+            Papa.parse(csv, {
+                complete: function (results) {
+                    console.log('Parsed results:', results);
+                    setDescription(results.data);
+                },
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true
+            });
+            console.log("Description", Description[0]);
+        }
+
+        fetchData();
+    }, []);
 
     const options_industry = [
         { value: 'financials', label: 'Financials' },
@@ -26,12 +55,6 @@ const ComparisonModeData = () => {
         { value: 'Information Technology', label: 'Information Technology' }
     ];
 
-    const options_company = [
-        { value: 'Apple', label: 'Apple' },
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ];
 
     const options_year = [
         { value: '2022', label: '2022' },
@@ -76,7 +99,7 @@ const ComparisonModeData = () => {
                 { "metric": "Employee Turnover", "value": 5, "unit": "%" },
                 { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
                 { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
-                { "metric": "Employee Turnover", "value": 5, "unit": "%" },
+                { "metric": "AIRPOLLUTANTS_DIRECT", "value": 114514, "unit": "USD" },
             ]
         },
         "error": null
@@ -213,11 +236,10 @@ const UserItem = ({ user }) => (
     }
 
 
-
     return (
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '10px', margin: '5px', width: '100%', height: '100%'}}>
             {CompanySlots.map((element, index) => (
-                <div id={element} key={index} style={{ textAlign: 'center', height: '50vh', width: '20vw', backgroundColor: backgroundColors[index % 2] , padding: '10px', border : 'darkgrey 1px solid', borderRadius: '10px'}}>
+                <div id={element} key={index} style={{ textAlign: 'center', height: '100%', width: '24%', backgroundColor: backgroundColors[index % 2] , padding: '10px', border : 'darkgrey 1px solid', borderRadius: '10px'}}>
                     <div id={element + "Content"} style={{ display: SlotContentVisible[index] ? 'none' : 'block', height: '100%'}}>
                         <div style={{ marginBottom: '10px', color: '#555' }}>{element}</div>
                         <Button variant="contained" size="medium" id={element + "AddCompany"} style={{ cursor: 'pointer' }} onClick={() => handleSlotClick(element, index)}>
@@ -228,25 +250,29 @@ const UserItem = ({ user }) => (
                     <div id={element + "Company"} style={{ display: SlotContentVisible[index] ? 'block' : 'none', height: '100%' }}>
                         <button type="button" className="btn-close" aria-label="Close" onClick={() => RemoveCompany(index)} style={{ float: 'right' }}></button>
                         <div id={element + "Company" + "Name&year"} style={{
-                            display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px', height: '15%', flexDirection: 'row', 
+                            display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px', height: '10%', flexDirection: 'row', 
                         }}>
                             <h5 id={element + "Company" + "Name"} style={{ marginRight: '5px' }}>{ChosenCompanyNames[index] ? ChosenCompanyNames[index] : 'No company selected'}</h5>
                             <h6 id={element + "Company" + "Year"} style={{ marginLeft: '5px' }}>{ChosenCompanyYears[index] ? "(" + ChosenCompanyYears[index] + ")" : '(No year selected)'}</h6>
                         </div>
                         <div className="scrollable-div" id={element + "Company" + "IndicatorTable"} style={{
-                            display: 'flex', flexDirection: 'column', padding: '10px', margin: '10px', width: '95%', alignItems: 'center', overflow: 'auto', height: '75%', borderTop: '1px solid #000000', 
+                            display: 'flex', flexDirection: 'column', paddingRight: '5px', width: '100%', overflow: 'auto', height: '85%', borderTop: '1px solid #000000',
                         }}>
                             <table className="table table-striped">
                                 <thead>
                                     <tr style={{ border: '1px solid #000000' }}>
                                         <th scope="col">Indicator</th>
+                                        <th scope="col">Pillar</th>
                                         <th scope="col">Value</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {ChosenCompanyData[index] && ChosenCompanyData[index].map((indicator, index) => (
-                                        <tr key={index} style={{ border : '1px solid #000000' }}>
-                                            <td>{indicator.metric}</td>
+                                        <tr key={index} style={{ border: '1px solid #000000'}}>
+                                            <Tooltip title={Description.find((item) => item.metric_name === indicator.metric)?.metric_description} arrow>
+                                                <td>{indicator.metric}</td>
+                                            </Tooltip>
+                                            <td>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</td>
                                             <td>{indicator.value} {indicator.unit}</td>
                                         </tr>
                                     ))}

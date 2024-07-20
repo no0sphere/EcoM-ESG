@@ -6,7 +6,7 @@ import ComparisonModeData from './ComparisonModeData';
 const ComparisonMode = () => {
 
     const styleComparisonMode = {
-        display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '10px', margin: '5px'
+        display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '10px', margin: '5px', height: '80vh'
     };
 
     return (
