@@ -967,7 +967,7 @@ const FrameSelect = () => {
                                                         primary={category}
                                                         secondary={weightKey
                                                             ? `Weight: ${currentFramework[category][weightKey]}`
-                                                            : 'Frame does not own this type of metrics'}
+                                                            : ' '}
                                                     />
                                                     {nestedIndicators[index] ? <ExpandLess /> : <ExpandMore />}
                                                 </ListItemButton>
