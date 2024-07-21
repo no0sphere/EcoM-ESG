@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import Checkbox from '@mui/material/Checkbox';
+import Tooltip from '@mui/material/Tooltip';
 import {Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import MockAdapter from 'axios-mock-adapter';
@@ -353,32 +354,34 @@ const FrameSelect = () => {
         'governance_risk_metrics',
         'governance_opportunity_metrics'];
 
-    useEffect(() => {
+
+    const [MetricsList, setMetricsList] = useState([]);
+    useEffect(() => {   //get data from csv file and set the initial state of the custom framework
         async function fetchData() {
             const response = await fetch('/MetricDescription.csv');
             const reader = response.body.getReader();
             const result = await reader.read(); // raw read of the stream
             const decoder = new TextDecoder('utf-8');
             const csv = decoder.decode(result.value); // convert stream to text
-            let MetricList = [];
+            let MetricsList = [];
             Papa.parse(csv, {
                 complete: function (results) {
                     console.log('Parsed results:', results);
-                    MetricList = results.data;
+                    setMetricsList(results.data);
+                    MetricsList = results.data; // local variable has higher priority than state variable
                 },
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true
             });
-            console.log("MetricList", MetricList[0]);
-            for (let i = 0; i < MetricList.length; i++) {
-                //console.log(MetricList[i].pillar, MetricList[i].metric_name);
-                if (MetricList[i].pillar === "E") {
+            for (let i = 0; i < MetricsList.length; i++) {
+                //console.log(MetricsList[i].pillar, MetricsList[i].metric_name);
+                if (MetricsList[i].pillar === "E") {
                     setCustomMetricOppOrRisk(prevState => { 
                         return {
                             ...prevState,
-                            environmental_risk_metrics: { ...prevState.environmental_risk_metrics, [MetricList[i].metric_name]: false },
-                            environmental_opportunity_metrics: { ...prevState.environmental_opportunity_metrics, [MetricList[i].metric_name]: true }
+                            environmental_risk_metrics: { ...prevState.environmental_risk_metrics, [MetricsList[i].metric_name]: false },
+                            environmental_opportunity_metrics: { ...prevState.environmental_opportunity_metrics, [MetricsList[i].metric_name]: true }
                         }
                     });
                     setCustomFramework(prevState => {
@@ -386,21 +389,21 @@ const FrameSelect = () => {
                             ...prevState,
                             environmental_risk_metrics: {
                                 ...prevState.environmental_risk_metrics,
-                                metrics: { ...prevState.environmental_risk_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                                metrics: { ...prevState.environmental_risk_metrics.metrics, [MetricsList[i].metric_name]: 0 }
                             },
                             environmental_opportunity_metrics: {
                                 ...prevState.environmental_opportunity_metrics,
-                                metrics: { ...prevState.environmental_opportunity_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                                metrics: { ...prevState.environmental_opportunity_metrics.metrics, [MetricsList[i].metric_name]: 0 }
                             }
                         }
                     });
 
-                } else if (MetricList[i].pillar === "S") {
+                } else if (MetricsList[i].pillar === "S") {
                     setCustomMetricOppOrRisk(prevState => { 
                         return {
                             ...prevState,
-                            social_risk_metrics: { ...prevState.social_risk_metrics, [MetricList[i].metric_name]: false },
-                            social_opportunity_metrics: { ...prevState.social_opportunity_metrics, [MetricList[i].metric_name]: true }
+                            social_risk_metrics: { ...prevState.social_risk_metrics, [MetricsList[i].metric_name]: false },
+                            social_opportunity_metrics: { ...prevState.social_opportunity_metrics, [MetricsList[i].metric_name]: true }
                         }
                     });
                     setCustomFramework(prevState => {
@@ -408,20 +411,20 @@ const FrameSelect = () => {
                             ...prevState,
                             social_risk_metrics: {
                                 ...prevState.social_risk_metrics,
-                                metrics: { ...prevState.social_risk_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                                metrics: { ...prevState.social_risk_metrics.metrics, [MetricsList[i].metric_name]: 0 }
                             },
                             social_opportunity_metrics: {
                                 ...prevState.social_opportunity_metrics,
-                                metrics: { ...prevState.social_opportunity_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                                metrics: { ...prevState.social_opportunity_metrics.metrics, [MetricsList[i].metric_name]: 0 }
                             }
                         }
                     });
-                } else if (MetricList[i].pillar === "G") {
+                } else if (MetricsList[i].pillar === "G") {
                     setCustomMetricOppOrRisk(prevState => { 
                         return {
                             ...prevState,
-                            governance_risk_metrics: { ...prevState.governance_risk_metrics, [MetricList[i].metric_name]: false },
-                            governance_opportunity_metrics: { ...prevState.governance_opportunity_metrics, [MetricList[i].metric_name]: true }
+                            governance_risk_metrics: { ...prevState.governance_risk_metrics, [MetricsList[i].metric_name]: false },
+                            governance_opportunity_metrics: { ...prevState.governance_opportunity_metrics, [MetricsList[i].metric_name]: true }
                         }
                     });
                     setCustomFramework(prevState => {
@@ -429,11 +432,11 @@ const FrameSelect = () => {
                             ...prevState,
                             governance_risk_metrics: {
                                 ...prevState.governance_risk_metrics,
-                                metrics: { ...prevState.governance_risk_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                                metrics: { ...prevState.governance_risk_metrics.metrics, [MetricsList[i].metric_name]: 0 }
                             },
                             governance_opportunity_metrics: {
                                 ...prevState.governance_opportunity_metrics,
-                                metrics: { ...prevState.governance_opportunity_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                                metrics: { ...prevState.governance_opportunity_metrics.metrics, [MetricsList[i].metric_name]: 0 }
                             }
                         }
                     });
@@ -1031,7 +1034,9 @@ const FrameSelect = () => {
                                     {Object.keys(CustomFramework[category].metrics).map((metric, index) => (
                                         <ListItemButton key={index} sx={{ pl: 4 }}>
                                             <Checkbox checked={CustomMetricOppOrRisk[category][metric]} onClick={() => handleCustomMetricOppOrRisk(category, metric)} />
-                                            <ListItemText primary={metric} />
+                                            <Tooltip title={MetricsList.find((item) => item.metric_name === metric)?.metric_description} arrow>
+                                                <ListItemText primary={metric} />
+                                            </Tooltip>
                                             <input type="number" className="form-control" id={category + "_" + metric} name={category} style={{ width: '20%' }} min="0" max="1" step="0.01"
                                                 value={CustomFramework[category].metrics[metric]} disabled={!CustomMetricOppOrRisk[category][metric]}
                                                 onClick={() => setCustomError('')} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], metrics: { ...CustomFramework[category].metrics, [metric]: e.target.value } } })} required />
