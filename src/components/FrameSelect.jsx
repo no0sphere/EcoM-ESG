@@ -10,10 +10,12 @@ import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import Checkbox from '@mui/material/Checkbox';
 import {Link} from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
+import Papa from 'papaparse';
 import React, { useEffect, useState } from 'react';
 
 const FrameSelect = () => {
@@ -296,7 +298,6 @@ const FrameSelect = () => {
 
     const validateCustomFrameworkData = data => {
         if (!data.framework_name) {
-            alert('Please input the frame name!');
             setCustomError('Please input the frame name!');
             return false;
         }
@@ -304,7 +305,6 @@ const FrameSelect = () => {
         // Check if any of the weights is not a number or not in the range of 0 to 1
         for (let category of top_categories) {
             if (isNaN(parseFloat(data[category].indicator_weight)) || parseInt(data[category].indicator_weight)*100 < 0 || parseFloat(data[category].indicator_weight)*100 > 100) { // multiply by 100 to avoid floating point errors
-                alert('Please input the correct weight!');
                 setCustomError('Please input the correct weight!');
                 return false;
             }}
@@ -316,7 +316,6 @@ const FrameSelect = () => {
             sum += parseFloat(data[category].indicator_weight)*100;
         }
         if (sum !== 100) {
-            alert('The sum of the weights of each category must be 1!');
             setCustomError('The sum of the weights of each category must be 1!');
             return false;
         }
@@ -325,7 +324,6 @@ const FrameSelect = () => {
         for (let category of top_categories) {
             for (let metric in data[category].metrics) {
                 if (isNaN(parseFloat(data[category].metrics[metric])) || parseFloat(data[category].metrics[metric])*100 < 0 || parseFloat(data[category].metrics[metric])*100 > 100) {
-                    alert('Please input the correct metric!');
                     setCustomError('Please input the correct metric!');
                     return false;
                 }
@@ -340,7 +338,6 @@ const FrameSelect = () => {
                 sum += parseFloat(data[category].metrics[metric])*100;
             }
             if (sum !== 100) {
-                alert('The sum of the metrics in each category must be 1!');
                 setCustomError('The sum of the metrics in each category must be 1!');
                 return false;
             }
@@ -356,77 +353,183 @@ const FrameSelect = () => {
         'governance_risk_metrics',
         'governance_opportunity_metrics'];
 
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('/MetricDescription.csv');
+            const reader = response.body.getReader();
+            const result = await reader.read(); // raw read of the stream
+            const decoder = new TextDecoder('utf-8');
+            const csv = decoder.decode(result.value); // convert stream to text
+            let MetricList = [];
+            Papa.parse(csv, {
+                complete: function (results) {
+                    console.log('Parsed results:', results);
+                    MetricList = results.data;
+                },
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true
+            });
+            console.log("MetricList", MetricList[0]);
+            for (let i = 0; i < MetricList.length; i++) {
+                //console.log(MetricList[i].pillar, MetricList[i].metric_name);
+                if (MetricList[i].pillar === "E") {
+                    setCustomMetricOppOrRisk(prevState => { 
+                        return {
+                            ...prevState,
+                            environmental_risk_metrics: { ...prevState.environmental_risk_metrics, [MetricList[i].metric_name]: false },
+                            environmental_opportunity_metrics: { ...prevState.environmental_opportunity_metrics, [MetricList[i].metric_name]: true }
+                        }
+                    });
+                    setCustomFramework(prevState => {
+                        return {
+                            ...prevState,
+                            environmental_risk_metrics: {
+                                ...prevState.environmental_risk_metrics,
+                                metrics: { ...prevState.environmental_risk_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                            },
+                            environmental_opportunity_metrics: {
+                                ...prevState.environmental_opportunity_metrics,
+                                metrics: { ...prevState.environmental_opportunity_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                            }
+                        }
+                    });
+
+                } else if (MetricList[i].pillar === "S") {
+                    setCustomMetricOppOrRisk(prevState => { 
+                        return {
+                            ...prevState,
+                            social_risk_metrics: { ...prevState.social_risk_metrics, [MetricList[i].metric_name]: false },
+                            social_opportunity_metrics: { ...prevState.social_opportunity_metrics, [MetricList[i].metric_name]: true }
+                        }
+                    });
+                    setCustomFramework(prevState => {
+                        return {
+                            ...prevState,
+                            social_risk_metrics: {
+                                ...prevState.social_risk_metrics,
+                                metrics: { ...prevState.social_risk_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                            },
+                            social_opportunity_metrics: {
+                                ...prevState.social_opportunity_metrics,
+                                metrics: { ...prevState.social_opportunity_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                            }
+                        }
+                    });
+                } else if (MetricList[i].pillar === "G") {
+                    setCustomMetricOppOrRisk(prevState => { 
+                        return {
+                            ...prevState,
+                            governance_risk_metrics: { ...prevState.governance_risk_metrics, [MetricList[i].metric_name]: false },
+                            governance_opportunity_metrics: { ...prevState.governance_opportunity_metrics, [MetricList[i].metric_name]: true }
+                        }
+                    });
+                    setCustomFramework(prevState => {
+                        return {
+                            ...prevState,
+                            governance_risk_metrics: {
+                                ...prevState.governance_risk_metrics,
+                                metrics: { ...prevState.governance_risk_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                            },
+                            governance_opportunity_metrics: {
+                                ...prevState.governance_opportunity_metrics,
+                                metrics: { ...prevState.governance_opportunity_metrics.metrics, [MetricList[i].metric_name]: 0 }
+                            }
+                        }
+                    });
+
+                } else {
+                    console.log("Error: Invalid category");
+                }
+            }
+
+        }
+
+        fetchData();
+    }, []);
+
+    const [CustomMetricOppOrRisk, setCustomMetricOppOrRisk] = useState({
+        "environmental_risk_metrics": {},
+        "environmental_opportunity_metrics": {},
+        "social_risk_metrics": {},
+        "social_opportunity_metrics": {},
+        "governance_risk_metrics": {},
+        "governance_opportunity_metrics": {}
+    });
+
+    const handleCustomMetricOppOrRisk = (category, metric) => {
+        if (category === "environmental_risk_metrics" || category === "environmental_opportunity_metrics") {
+            setCustomMetricOppOrRisk(prevState => {
+                return {
+                    ...prevState,
+                    environmental_risk_metrics: { ...prevState.environmental_risk_metrics, [metric]: !prevState.environmental_risk_metrics[metric] },
+                    environmental_opportunity_metrics: { ...prevState.environmental_opportunity_metrics, [metric]: !prevState.environmental_opportunity_metrics[metric] }
+                }
+            });
+        }
+        else if (category === "social_risk_metrics" || category === "social_opportunity_metrics") {
+            setCustomMetricOppOrRisk(prevState => {
+                return {
+                    ...prevState,
+                    social_risk_metrics: { ...prevState.social_risk_metrics, [metric]: !prevState.social_risk_metrics[metric] },
+                    social_opportunity_metrics: { ...prevState.social_opportunity_metrics, [metric]: !prevState.social_opportunity_metrics[metric] }
+                }
+            });
+        }
+        else if (category === "governance_risk_metrics" || category === "governance_opportunity_metrics") {
+            setCustomMetricOppOrRisk(prevState => {
+                return {
+                    ...prevState,
+                    governance_risk_metrics: { ...prevState.governance_risk_metrics, [metric]: !prevState.governance_risk_metrics[metric] },
+                    governance_opportunity_metrics: { ...prevState.governance_opportunity_metrics, [metric]: !prevState.governance_opportunity_metrics[metric] }
+                }
+            });
+        }
+    };
+
+
+
 
     const [CustomFramework, setCustomFramework] = useState(
         {
-        "framework_name": "framework1",
+            "framework_name": "New CustomFramework",
         "user_name": localStorage.getItem('username'),
         "environmental_risk_metrics": {
         "indicator_weight": 0.175,
         "metrics": {
-            "co2directscope1": 0.1,
-            "co2indirectscope2": 0.1,
-            "co2indirectscope3": 0.1,
-            "noxemissions": 0.05,
-            "soxemissions": 0.05,
-            "vocemissions": 0.05,
-            "particulate matter emissions": 0.05,
-            "wastetotal": 0.1,
-            "hazardouswaste": 0.1,
-            "airpollutants direct": 0.1,
-            "airpollutants indirect": 0.1,
-            "waterwithdrawaltotal": 0.1
+
         }
     },
         "environmental_opportunity_metrics": {
         "indicator_weight": 0.175,
         "metrics": {
-            "climate change risks opp": 0.2,
-            "organic products initiatives": 0.15,
-            "analyticwasterecyclingratio": 0.2,
-            "waste recycled": 0.15,
-            "water technologies": 0.15,
-            "tranalyicrenewenergyuse": 0.15
+
         }
     },
         "social_risk_metrics": {
         "indicator_weight": 0.125,
         "metrics": {
-            "employee fatalities": 0.25,
-            "turnover employees": 0.2,
-            "human rights violation pai": 0.3,
-            "tir total": 0.25
+
         }
     },
         "social_opportunity_metrics": {
         "indicator_weight": 0.125,
         "metrics": {
-            "employee health safety policy": 0.25,
-            "trade union rep": 0.35,
-            "women employees": 0.2,
-            "women managers": 0.2
+
         }
     },
         "governance_risk_metrics": {
         "indicator_weight": 0.2,
         "metrics": {
-            "bribery and corruption pai insufficient actions": 1  //yes or no
+
         }
     },
-            "governance_opportunity_metrics": {
-                "indicator_weight": 0.2,
-                "metrics": {
-                    "analytic audit commind": 0.15,
-                    "analytic board female": 0.1,
-                    "analytic comp commind": 0.1,
-                    "analytic nomination commind": 0.1,
-                    "audit comm nonexec members": 0.1,
-                    "board meeting attendance avg": 0.15,
-                    "comp comm nonexec members": 0.1,
-                    "analytic indep board": 0.15,
-                    "analytic nonexec board": 0.05
-                }
-            }
+        "governance_opportunity_metrics": {
+        "indicator_weight": 0.2,
+        "metrics": {
+
+        }
+    }
     });
 
 
@@ -816,9 +919,19 @@ const FrameSelect = () => {
             return;
         }
         try {
-            const response = await axios.post('/api/custom', CustomFramework);
+            // skip 0 weights
+            let filteredCustomFramework = JSON.parse(JSON.stringify(CustomFramework)); // deep copy
+            for (let category of top_categories) {
+                for (let metric in filteredCustomFramework[category].metrics) {
+                    if (parseFloat(filteredCustomFramework[category].metrics[metric]) === 0 || CustomMetricOppOrRisk[category][metric] === false) {
+                        delete filteredCustomFramework[category].metrics[metric];
+                    }
+                }
+            }
+            const response = await axios.post('/api/custom', filteredCustomFramework);
             if (response.status === 200) {
                 console.log('Custom framework created successfully:', response.data.message);
+                console.log('Custom framework:', filteredCustomFramework);
                 alert('Custom framework created successfully!');
                 setRefreshKey(refreshKey + 1);
                 setPopWindowVisible(false);
@@ -884,7 +997,7 @@ const FrameSelect = () => {
                 <div style={{
                     width: '70%', height: '80%', backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '5px'
                 }}>
-                    <div style={{display: 'flex', flexDirection: 'row',  alignItems: 'center' }}>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', height: '8%' }}>
                     <button type="button" className="btn-close" aria-label="Close"
                             onClick={() => setPopWindowVisible(false)}></button>
                         {CustomError && <Alert severity="error" sx={{ width: "90%", margin:"auto"}}>{CustomError}</Alert>}
@@ -902,28 +1015,26 @@ const FrameSelect = () => {
                             <List
                                 sx={{ width: '80%', maxWidth: '80%', bgcolor: 'background.paper' }}
                                 component="nav"
-                                aria-labelledby="nested-list-subheader"
-                                subheader={
-                                    <ListSubheader component="div" id="nested-list-subheader">
-                                        Indicator Weights
-                                    </ListSubheader>
-                                }>
+                                aria-labelledby="nested-list-subheader">
                                 {top_categories.map((category, index) => (
-                                    <List key={index}>
+                                    <List key={index} subheader={<ListSubheader component="div" id="nested-list-subheader">{category}</ListSubheader>}>
                                         <ListItemButton key={index} sx={{ border: '1px solid darkgrey', borderRadius: '5px', marginBottom: '5px'}}
                                             onClick={() => handleNestedIndicator(index)}>
                                             <ListItemText primary={category} />
-                                            <input type="number" className="form-control" id={"indicator_weight" + index} name="indicator_weight" style={{ width: '20%' }}
-                                                value={CustomFramework[category].indicator_weight} onClick={() => setCustomError('')} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], indicator_weight: e.target.value } })} required />
+                                            <input type="number" className="form-control" id={"indicator_weight_" + category} name="indicator_weight" style={{ width: '20%' }}
+                                                value={CustomFramework[category].indicator_weight} min="0" max="1" step="0.01"
+                                                onClick={(event) => { setCustomError(''); event.stopPropagation(); }} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], indicator_weight: e.target.value } })} required />
                                         {nestedIndicators[index] ? <ExpandLess /> : <ExpandMore />}
                                     </ListItemButton>
                                         <Collapse in={nestedIndicators[index]} timeout="auto" unmountOnExit>
                                             <List component="div" disablePadding>
                                     {Object.keys(CustomFramework[category].metrics).map((metric, index) => (
-                                            <ListItemButton key={index} sx={{ pl: 4 }}>
-                                                <ListItemText primary={metric} />
-                                            <input type="number" className="form-control" id={"metric" + index} name="metric" style={{ width: '20%' }}
-                                                value={CustomFramework[category].metrics[metric]} onClick={() => setCustomError('')} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], metrics: { ...CustomFramework[category].metrics, [metric]: e.target.value } } })} required />
+                                        <ListItemButton key={index} sx={{ pl: 4 }}>
+                                            <Checkbox checked={CustomMetricOppOrRisk[category][metric]} onClick={() => handleCustomMetricOppOrRisk(category, metric)} />
+                                            <ListItemText primary={metric} />
+                                            <input type="number" className="form-control" id={category + "_" + metric} name={category} style={{ width: '20%' }} min="0" max="1" step="0.01"
+                                                value={CustomFramework[category].metrics[metric]} disabled={!CustomMetricOppOrRisk[category][metric]}
+                                                onClick={() => setCustomError('')} onChange={(e) => setCustomFramework({ ...CustomFramework, [category]: { ...CustomFramework[category], metrics: { ...CustomFramework[category].metrics, [metric]: e.target.value } } })} required />
                                             </ListItemButton>
                                         ))}
                                         </List>

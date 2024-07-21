@@ -7,8 +7,7 @@ import Papa from 'papaparse';
 import '../styles/Scroll.css';
 
 import Button from '@mui/material/Button';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 
 
 
@@ -35,7 +34,6 @@ const ComparisonModeData = () => {
                 dynamicTyping: true,
                 skipEmptyLines: true
             });
-            console.log("Description", Description[0]);
         }
 
         fetchData();
