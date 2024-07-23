@@ -8,6 +8,15 @@ import '../styles/Scroll.css';
 
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Alert from '@mui/material/Alert';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 
 
@@ -40,7 +49,7 @@ const ComparisonModeData = () => {
     }, []);
 
     const options_industry = [
-        { value: 'financials', label: 'Financials' },
+        { value: 'Finance', label: 'Finance' },
         { value: 'health care', label: 'Health Care' },
         { value: 'energy', label: 'Energy' },
         { value: 'industrials', label: 'Industrials' },
@@ -54,52 +63,154 @@ const ComparisonModeData = () => {
     ];
 
 
-    const options_year = [
-        { value: '2022', label: '2022' },
-        { value: '2023', label: '2023' },
-        { value: '2024', label: '2024' }
-    ];
+    const options_year = [...Array(2022 - 2000).keys()].map((i) => {
+        return { value: 2000 + i, label: 2000 + i };
+    });
+
 
     const mock = new MockAdapter(axios);
 
-    mock.onGet('/.*/').reply(404, {
-        "code": 404,
-        "status": "failed",
-        "message": "Didn¡¯t find any data for this company in this industry for this year.",
-        "timestamp": 1718203200000,
-        "data": null
-    });
-
     //year out of range
-    mock.onGet('GET/api/esg-data?industry="Information%20Technology"&company="Apple"&year=1000').reply(400, {
-        "code": 400,
-        "status": "failed",
-        "message": "'year' must be a valid number representing the year.",
-        "timestamp": 1718203200000,
+    mock.onGet('/single?industry=Information%20Technology&company=Apple&year=1000').reply(1002, {
+        "code": "1002",
+        "status": 1002,
+        "message": "The year entered is out of range or out of format.",
+        "timestamp": 1721670835582,
         "data": null,
+        "error": null
     });
 
-    mock.onGet('GET/api/esg-data?industry="Information%20Technology"&company="Apple"&year=2023').reply(200, {
-        "code": 200,
-        "status": "succeed",
-        "message": "Found data for this company.",
-        "timestamp": 1718203200000,
+    mock.onGet('/single?industry=Finance&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(200, {
+        "code": "200",
+        "status": 200,
+        "message": "Success",
+        "timestamp": 1721671831632,
         "data": {
-            "industry": "Information Technology",
-            "company": "Apple",
-            "year": 2023,
-            "indicators": [
-                { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
-                { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
-                { "metric": "Employee Turnover", "value": 5, "unit": "%" },
-                { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
-                { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
-                { "metric": "Employee Turnover", "value": 5, "unit": "%" },
-                { "metric": "CO2 Emissions", "value": 14000, "unit": "tonnes" },
-                { "metric": "Water Usage", "value": 5000, "unit": "cubic meters" },
-                { "metric": "AIRPOLLUTANTS_DIRECT", "value": 114514, "unit": "USD" },
+            "industry": "Finance",
+            "company": "Aspen Pharmacare Holdings Ltd",
+            "year": 2018,
+            "metrics": [
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
+                {
+                    "metric": "TURNOVEREMPLOYEES",
+                    "value": 12.3,
+                    "unit": "%"
+                },
+                {
+                    "metric": "AIRPOLLUTANTS_INDIRECT",
+                    "value": 1.74725E7,
+                    "unit": "USD (000)"
+                },
             ]
         },
+        "error": null
+    });
+
+    mock.onGet(/.*/).reply(1004, {
+        "code": "1004",
+        "status": 1004,
+        "message": "Can't find any data for this company in this industry for this year.",
+        "timestamp": 1721670835582,
+        "data": null,
         "error": null
     });
 
@@ -180,13 +291,13 @@ const UserItem = ({ user }) => (
             console.log("selectedIndustry", selectedIndustry);
             console.log("selectedCompany", selectedCompany);
             console.log("selectedYear", selectedYear);
-            console.log("get", `GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany)}"&year=${selectedYear.value}`);
-            const response = await axios.get(`GET/api/esg-data?industry="${encodeURIComponent(selectedIndustry.value)}"&company="${encodeURIComponent(selectedCompany)}"&year=${selectedYear.value}`);
+            console.log("get", `single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`);
+            const response = await axios.get(`single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`);
             if (response.status === 200) {
                 console.log("response", response);
-                console.log("response.data.data.indicators", response.data.data.indicators);
+                console.log("response.data.data.indicators", response.data.data.metrics);
                 let NewCompanyData = [...ChosenCompanyData];
-                NewCompanyData[CurrentSlotIndex] = response.data.data.indicators;
+                NewCompanyData[CurrentSlotIndex] = response.data.data.metrics;
                 setChosenCompanyData(NewCompanyData);
                 console.log("ChosenCompanyData: ", ChosenCompanyData);
                 setPopWindowVisible(false);
@@ -201,16 +312,23 @@ const UserItem = ({ user }) => (
                 setChosenCompanyYears(NewCompanyYear);
             }
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.log("error", error.response);
-                setError('Can\'t find data of this company');
-            } else if (error.response && error.response.status === 400) {
-                console.log("error", error.response);
-                setError('Year must be a valid number representing the year.');
-            } else {
-                setError('An unexpected error occurred. Please try again.');
+            console.log("error", error);
+            if (error.response && error.response.status === 1000) { //input company is out of format
+                setError('The company name entered does not conform to the format.');
+            } else if (error.response && error.response.status === 1001) {
+                setError('The industry entered does not conform to the format.');
+            } else if (error.response && error.response.status === 1002) {
+                setError('The year entered is out of range or out of format.');
             }
-            return;
+            else if (error.response && error.response.status === 1003) {
+                setError('There is no such company under this industry.');
+            }
+            else if (error.response && error.response.status === 1004) {
+                setError('Can\'t find any data for this company in this industry for this year.');
+            }
+            else {
+                setError('Something went wrong. Please try again later.');
+            }
         }
 
     }
@@ -234,10 +352,31 @@ const UserItem = ({ user }) => (
     }
 
 
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 13
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
+
     return (
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '10px', margin: '5px', width: '100%', height: '100%'}}>
             {CompanySlots.map((element, index) => (
-                <div id={element} key={index} style={{ textAlign: 'center', height: '100%', width: '24%', backgroundColor: backgroundColors[index % 2] , padding: '5px', border : 'darkgrey 1px solid', borderRadius: '10px'}}>
+                <div id={element} key={index} style={{ textAlign: 'center', height: '100%', width: '24%', backgroundColor: backgroundColors[index % 2] , border : 'darkgrey 1px solid', borderRadius: '10px'}}>
                     <div id={element + "Content"} style={{ display: SlotContentVisible[index] ? 'none' : 'block', height: '100%'}}>
                         <div style={{ marginBottom: '10px', color: '#555' }}>{element}</div>
                         <Button variant="contained" size="medium" id={element + "AddCompany"} style={{ cursor: 'pointer' }} onClick={() => handleSlotClick(element, index)}>
@@ -245,38 +384,42 @@ const UserItem = ({ user }) => (
                             Add Company
                         </Button>
                     </div>
-                    <div id={element + "Company"} style={{ display: SlotContentVisible[index] ? 'block' : 'none', height: '100%' }}>
-                        <button type="button" className="btn-close" aria-label="Close" onClick={() => RemoveCompany(index)} style={{ float: 'right' }}></button>
+                    <div id={element + "Company"} style={{ display: SlotContentVisible[index] ? 'block' : 'none', height: '100%', position: 'relative',paddingTop: '25px' }}>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={() => RemoveCompany(index)} style={{ position: 'absolute', top: '8px', right: '8px' }}></button>
                         <div id={element + "Company" + "Name&year"} style={{
-                            display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px', height: '10%', flexDirection: 'row', 
+                            display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10%', flexDirection: 'row',
                         }}>
                             <h5 id={element + "Company" + "Name"} style={{ marginRight: '5px' }}>{ChosenCompanyNames[index] ? ChosenCompanyNames[index] : 'No company selected'}</h5>
                             <h6 id={element + "Company" + "Year"} style={{ marginLeft: '5px' }}>{ChosenCompanyYears[index] ? "(" + ChosenCompanyYears[index] + ")" : '(No year selected)'}</h6>
                         </div>
-                        <div className="scrollable-div" id={element + "Company" + "IndicatorTable"} style={{
-                            display: 'flex', flexDirection: 'column', paddingRight: '5px', width: '100%', height: '85%', borderTop: '1px solid #000000', overflowY : 'auto', overflowX: 'hidden'
-                        }}>
-                            <table className="table table-striped">
-                                <thead>
-                                    <tr style={{ border: '1px solid #000000' }}>
-                                        <th style={{ fontSize: '1vw'}} scope="col">Indicator</th>
-                                        <th style={{ fontSize: '1vw' }} scope="col">Pillar</th>
-                                        <th style={{ fontSize: '1vw' }} scope="col">Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+
+                        <TableContainer component={Paper} sx={{
+                            display: 'flex', justifyContent: 'center', width: '100%', height: '90%', overflow: 'auto'
+                        }} className="scrollable-div">
+                            <Table sx={{ width: '100%' }}>
+                                <TableHead>
+                                   <TableRow>
+                                            <StyledTableCell sx={{ fontSize: '1vw' }}
+                                                scope="col">Indicator</StyledTableCell>
+                                            <StyledTableCell sx={{ fontSize: '1vw' }}
+                                                scope="col">Pillar</StyledTableCell>
+                                            <StyledTableCell sx={{ fontSize: '1vw' }}
+                                                scope="col">Value</StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                    <TableBody>
                                     {ChosenCompanyData[index] && ChosenCompanyData[index].map((indicator, index) => (
-                                        <tr key={index} style={{ border: '1px solid #000000'}}>
+                                        <StyledTableRow key={index}>
                                             <Tooltip title={Description.find((item) => item.metric_name === indicator.metric)?.metric_description} arrow>
-                                                <td style={{ fontSize: '1vw' }}>{indicator.metric}</td>
+                                                <StyledTableCell>{indicator.metric}</StyledTableCell>
                                             </Tooltip>
-                                            <td style={{ fontSize: '1vw' }}>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</td>
-                                            <td style={{ fontSize: '1vw' }}>{indicator.value} {indicator.unit}</td>
-                                        </tr>
+                                            <StyledTableCell>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</StyledTableCell>
+                                            <StyledTableCell>{indicator.value} {indicator.unit}</StyledTableCell>
+                                        </StyledTableRow>
                                     ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                </TableBody>
+                                </Table>
+                            </TableContainer>
 
                     </div>
                 </div>
@@ -284,12 +427,17 @@ const UserItem = ({ user }) => (
             <div id="CompanySelecting" style={{
                 display: popWindowVisible ? 'flex' : 'none' , position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000 , justifyContent: 'center', alignItems: 'center'
             }}>
-                <div style={{ width: '50%', height: '50%', backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '5px' }}>
-                    <button type="button" className="btn-close" aria-label="Close" onClick={() => setPopWindowVisible(false)}></button>
+                <div style={{ width: '50%', height: '50%', backgroundColor: '#FFFFFF', padding: '15px', borderRadius: '5px', position: 'relative' }}>
+                    <button type="button" className="btn-close" aria-label="Close" style={{ position: 'absolute', top: '15px', right: '15px' }}
+                        onClick={() => setPopWindowVisible(false)}></button>
+                    <div style={{
+                        height: '10%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px'
+                    }}>
+                        {error && <Alert severity="error" sx={{ width: "85%", margin: "auto" }}>{error}</Alert>}
+                    </div>
                     <div>
                         <form>
                             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Select Company</h2>
-                            {error && <div className="alert alert-danger mt-2">{error}</div>}
                             <Select options={options_industry} placeholder='industry ' onChange={handleIndustryChange} value={selectedIndustry} className = "mb-3" />
                             <input className="form-control mb-3" type="search" aria-label="Search" placeholder='company'
                                 onChange={handleCompanyChange}

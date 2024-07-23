@@ -267,32 +267,35 @@ const FrameSelect = () => {
         }
     });
 
-    mock.onPost('/api/custom').reply(config => {
+    mock.onPost('/insert_framework').reply(config => {
         const data = JSON.parse(config.data);
         if (!validateCustomFrameworkData(data)) {
-            return [400, {
-                "code": 400,
-                "status": "failed",
-                "message": "Invalid custom weights. All weights must sum up to 1 and be non-negative.",
-                "timestamp": 1718203200000,
+            return [4007, {
+                "code": "4007",
+                "status": 4001,
+                "message": "Existence of categories whose weights do not sum to 1",
+                "timestamp": 1721668449393,
                 "data": null,
+                "error": null
             }];
         }
         else if (data.framework_name === "framework1" || data.framework_name === "framework2") {
-            return [409, {
-                "code": 409,
-                "status": "failed",
-                "message": "Framework creation failed. The framework name already exists.",
-                "timestamp": 1718203200000,
-                "data": null
+            return [4001, {
+                "code": "4001",
+                "status": 4001,
+                "message": "Framework name already used",
+                "timestamp": 1721668449393,
+                "data": null,
+                "error": null
             }];
         }
         return [200, {
-            "code": 200,
-            "status": "succeed",
-            "message": "Framework created successfully.",
+            "code": "200",
+            "status": 200,
+            "message": "Success",
             "timestamp": 1718203200000,
-            "data": null
+            "data": null,
+            "error": null
         }];
 
     });
@@ -931,7 +934,7 @@ const FrameSelect = () => {
                     }
                 }
             }
-            const response = await axios.post('/api/custom', filteredCustomFramework);
+            const response = await axios.post('insert_framework', filteredCustomFramework);
             if (response.status === 200) {
                 console.log('Custom framework created successfully:', response.data.message);
                 console.log('Custom framework:', filteredCustomFramework);
@@ -998,11 +1001,11 @@ const FrameSelect = () => {
                 alignItems: 'center'
             }}>
                 <div style={{
-                    width: '70%', height: '80%', backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '5px'
+                    width: '70%', height: '80%', backgroundColor: '#FFFFFF', padding: '20px', borderRadius: '5px', position: 'relative'
                 }}>
-                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', height: '8%' }}>
-                    <button type="button" className="btn-close" aria-label="Close"
-                            onClick={() => setPopWindowVisible(false)}></button>
+                    <button type="button" className="btn-close" aria-label="Close" style={{ position: 'absolute', top: '15px', right: '15px' }}
+                        onClick={() => setPopWindowVisible(false)}></button>
+                    <div style={{height: '8%' }}>
                         {CustomError && <Alert severity="error" sx={{ width: "90%", margin:"auto"}}>{CustomError}</Alert>}
                  </div>
                     <div style={{overflow: 'auto', height: '90%'}}>
