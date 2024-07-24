@@ -14,6 +14,7 @@ import Setting from "./Setting.jsx";
 import FrameSelect from "./FrameSelect.jsx";
 import CompanySearch from "./CompanySearch.jsx";
 import ComparisonMode from "./ComparisonMode.jsx";
+import ChatBot from './ChatBox.jsx';
 const PageList = () => {
 
     //If there is no token jump to login page
@@ -43,7 +44,8 @@ const PageList = () => {
                 <Route path="/downloadreport" element={<DownloadReport />} />
                 <Route path="/comparisonMode" element={<ComparisonMode />} />
             </Routes>
-
+            {showHeaderAndFooter && <ChatBot/>}
+            
             {showHeaderAndFooter && <Footer />}
  
 
