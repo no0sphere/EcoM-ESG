@@ -10,7 +10,7 @@ const DownloadReport = () => {
     const [previewSrc, setPreviewSrc] = useState(null);
     const location = useLocation();
 
-    const { rating, simplifiedFrame, pieData, pieOptions, selectedIndustry, selectedCompany,selectedYear } = location.state || {};
+    const { rating, simplifiedFrame, pieData, pieOptions, barData, barOptions,descriptions,selectedIndustry, selectedCompany, selectedYear } = location.state || {};
 
     useEffect(() => {
         if (rating) {
@@ -44,14 +44,17 @@ const DownloadReport = () => {
         <div className="container mt-3">
             <h3>Preview:</h3>
             <div className="container mt-4" ref={reportRef}>
-                <RatingReport 
-                   rating={rating} 
-                   simplifiedFrame={simplifiedFrame} 
-                   pieData={pieData} 
-                   pieOptions={pieOptions} 
-                   Industry={selectedIndustry}
-                   Company={selectedCompany}
-                   Year={selectedYear}
+                <RatingReport
+                    data={rating}
+                    simplifiedFrame={simplifiedFrame}
+                    pieData={pieData}
+                    pieOptions={pieOptions}
+                    barData={barData}
+                    barOptions={barOptions}
+                    descriptions={descriptions}
+                    Industry={selectedIndustry}
+                    Company={selectedCompany}
+                    Year={selectedYear}
                 />
             </div>
             

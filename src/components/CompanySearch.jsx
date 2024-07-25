@@ -6,12 +6,11 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 import Select from "react-select";
 import { useParams, useLocation } from 'react-router-dom';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useNavigate } from 'react-router-dom';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const CompanySearch = () => {
     const { frameworkName } = useParams();
@@ -36,7 +35,26 @@ const CompanySearch = () => {
         "status": "succeed",
         "message": "ESG Rating calculated successfully.",
         "timestamp": 1718203200000,
-        "data": 17.96
+        "data": [
+            {
+                "er_weight": "0.0007",
+                "eo_weight": "0.0007",
+                "sr_weight": "0.1000",
+                "so_weight": "0.7848",
+                "gr_weight": "0.2238",
+                "go_weight": "0.8000",
+                "Rating of Company": "3.1215"
+            },
+            {
+                "er_weight": "0.0009",
+                "eo_weight": "0.0050",
+                "sr_weight": "0.1000",
+                "so_weight": "0.7848",
+                "gr_weight": "0.2238",
+                "go_weight": "0.7383",
+                "Average Rating of Industry": "3.1192"
+            }
+        ]
     });
 
     // 404 Not Found
@@ -54,6 +72,7 @@ const CompanySearch = () => {
     const [selectedCompany, setSelectedCompany] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+
     const handleCompanySelecting = async (e) => {
         setRating(null);
         setError('');
@@ -106,9 +125,17 @@ const CompanySearch = () => {
 
 
     const pieData = {
-        labels: Object.keys(simplifiedFrame || {}).filter(key => key.includes('metrics')),
+        labels: ['er_weight', 'eo_weight', 'sr_weight', 'so_weight', 'gr_weight', 'go_weight'],
         datasets: [{
-            data: Object.keys(simplifiedFrame || {}).filter(key => key.includes('metrics')).map(key => simplifiedFrame[key]),
+            label: 'Company',
+            data: [
+                rating && parseFloat(rating[0].er_weight),
+                rating && parseFloat(rating[0].eo_weight),
+                rating && parseFloat(rating[0].sr_weight),
+                rating && parseFloat(rating[0].so_weight),
+                rating && parseFloat(rating[0].gr_weight),
+                rating && parseFloat(rating[0].go_weight),
+            ],
             backgroundColor: [
                 '#FF6384',
                 '#36A2EB',
@@ -116,7 +143,8 @@ const CompanySearch = () => {
                 '#4BC0C0',
                 '#9966FF',
                 '#FF9F40'
-            ]
+            ],
+            hoverOffset:15
         }]
     };
 
@@ -125,17 +153,80 @@ const CompanySearch = () => {
             legend: {
                 display: false
             }
-        }
+        },
+        cutout: '50%'
     };
 
-    const handleDownload = () => {
-        navigate('/downloadreport', { state: { rating, simplifiedFrame, pieData, pieOptions, selectedIndustry, selectedCompany,selectedYear } });
+    const barData = {
+        labels: ['er_weight', 'eo_weight', 'sr_weight', 'so_weight', 'gr_weight', 'go_weight'],
+        datasets: [
+            {
+                label: 'Company',
+                data: rating ? [
+                    parseFloat(rating[0].er_weight),
+                    parseFloat(rating[0].eo_weight),
+                    parseFloat(rating[0].sr_weight),
+                    parseFloat(rating[0].so_weight),
+                    parseFloat(rating[0].gr_weight),
+                    parseFloat(rating[0].go_weight),
+                ] : [],
+                backgroundColor: '#FF9F40',
+            },
+            {
+                label: 'Industry',
+                data: rating ? [
+                    parseFloat(rating[1].er_weight),
+                    parseFloat(rating[1].eo_weight),
+                    parseFloat(rating[1].sr_weight),
+                    parseFloat(rating[1].so_weight),
+                    parseFloat(rating[1].gr_weight),
+                    parseFloat(rating[1].go_weight),
+                ] : [],
+                backgroundColor: '#36A2EB',
+            },
+        ],
     };
+
+    const barOptions = {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+    };
+
+    const descriptions = [
+        "This metric represents the environmental risk weight of the company.",
+        "This metric indicates the environmental opportunity weight of the company.",
+        "This metric shows the social risk weight of the company.",
+        "This metric reflects the social opportunity weight of the company.",
+        "This metric denotes the governance risk weight of the company.",
+        "This metric signifies the governance opportunity weight of the company.",
+        "Rating of Company: This is the overall ESG rating of the company.",
+    ];
+
+
+    const handleDownload = () => {
+        const dataToSend = {
+            rating,
+            simplifiedFrame,
+            pieData,
+            pieOptions,
+            barData,
+            barOptions,
+            descriptions,
+            selectedIndustry,
+            selectedCompany,
+            selectedYear
+        };
+        navigate('/downloadreport', { state: dataToSend });
+    };
+
     return (
         <div className="container" style={{ minHeight: '100vh' }}>
             <form>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: '10px', margin: '20px', width: '95%' }}>
-                    <div style={{ width:'25%' }}>
+                    <div style={{ width: '25%' }}>
                         <Select options={options_industry}
                                 placeholder='industry'
                                 onChange={handleIndustry}
@@ -162,11 +253,14 @@ const CompanySearch = () => {
             {isSubmitted ? (
                 rating !== null && (
                     <div>
-                        <RatingReport 
-                            rating={rating} 
-                            simplifiedFrame={simplifiedFrame} 
-                            pieData={pieData} 
-                            pieOptions={pieOptions} 
+                        <RatingReport
+                            data={rating}
+                            simplifiedFrame={simplifiedFrame}
+                            pieData={pieData}
+                            pieOptions={pieOptions}
+                            barData={barData}
+                            barOptions={barOptions}
+                            descriptions={descriptions}
                             Industry={selectedIndustry}
                             Company={selectedCompany}
                             Year={selectedYear}
