@@ -125,6 +125,7 @@ const ChatBot = () => {
   }, [messages]);
 
   const fetchChatHistory = async () => {
+    console.log("fetchChatHistory");
     setIsLoading(true);
     try {
       const user_name = localStorage.getItem("username");

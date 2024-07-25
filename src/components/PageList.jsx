@@ -1,12 +1,12 @@
-import React from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import About from './About';
-import Contact from './Contact';
-import SingleMode from './SingleMode';
-import Header from './Header';
+import React from "react";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
+import About from "./About";
+import Contact from "./Contact";
+import SingleMode from "./SingleMode";
+import Header from "./Header";
 import Subheader from "./Subheader";
-import Footer from './Footer';
-import HelpPage from './HelpingPage';
+import Footer from "./Footer";
+import HelpPage from "./HelpingPage";
 import Login from "./Login.jsx";
 import SignUp from "./SignUp.jsx";
 import DownloadReport from "./DownloadReport.jsx";
@@ -14,43 +14,43 @@ import Setting from "./Setting.jsx";
 import FrameSelect from "./FrameSelect.jsx";
 import CompanySearch from "./CompanySearch.jsx";
 import ComparisonMode from "./ComparisonMode.jsx";
-import ChatBot from './ChatBox.jsx';
+import ChatBot from "./ChatBox.jsx";
 const PageList = () => {
+  //If there is no token jump to login page
+  //otherwise jump to the dashboard
+  //temporary solution for header and footer not showing in the login and signup page
+  const location = useLocation();
+  const showHeaderAndFooter =
+    location.pathname !== "/login" &&
+    location.pathname !== "/signup" &&
+    location.pathname !== "/";
+  return (
+    <div>
+      {showHeaderAndFooter && <Header />}
+      {showHeaderAndFooter && <Subheader />}
+      {/* pages added here */}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/frameSelect" element={<FrameSelect />} />
+        <Route
+          path="/companySearch/:frameworkName"
+          element={<CompanySearch />}
+        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/setting" element={<Setting />} />
+        <Route path="/SingleMode" element={<SingleMode />} />
+        <Route path="/help" element={<HelpPage />} />
+        <Route path="/downloadreport" element={<DownloadReport />} />
+        <Route path="/comparisonMode" element={<ComparisonMode />} />
+      </Routes>
+      {/* {showHeaderAndFooter && <ChatBot/>} */}
 
-    //If there is no token jump to login page
-    //otherwise jump to the dashboard
-    //temporary solution for header and footer not showing in the login and signup page
-    const location = useLocation();
-    const showHeaderAndFooter = location.pathname !== '/login' && location.pathname !== '/signup'&& location.pathname !== '/';
-    return (
-       
-     
-
-        <div>   
-            {showHeaderAndFooter && <Header />}
-            {showHeaderAndFooter && <Subheader />}
-            {/* pages added here */}
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/frameSelect" element={<FrameSelect />} />
-                <Route path="/companySearch/:frameworkName" element={<CompanySearch />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/setting" element={<Setting />} />
-                <Route path="/SingleMode" element={<SingleMode />} />
-                <Route path="/help" element={<HelpPage />} />
-                <Route path="/downloadreport" element={<DownloadReport />} />
-                <Route path="/comparisonMode" element={<ComparisonMode />} />
-            </Routes>
-            {showHeaderAndFooter && <ChatBot/>}
-            
-            {showHeaderAndFooter && <Footer />}
- 
-
-        </div>
-    );
-}
+      {showHeaderAndFooter && <Footer />}
+    </div>
+  );
+};
 
 export default PageList;
