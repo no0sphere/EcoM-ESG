@@ -48,19 +48,28 @@ const ComparisonModeData = () => {
         fetchData();
     }, []);
 
-    const options_industry = [
-        { value: 'Finance', label: 'Finance' },
-        { value: 'health care', label: 'Health Care' },
-        { value: 'energy', label: 'Energy' },
-        { value: 'industrials', label: 'Industrials' },
-        { value: 'materials', label: 'Materials' },
-        { value: 'utilities', label: 'Utilities' },
-        { value: 'telecommunication services', label: 'Telecommunication Services' },
-        { value: 'real estate', label: 'Real Estate' },
-        { value: 'consumer staples', label: 'Consumer Staples' },
-        { value: 'consumer discretionary', label: 'Consumer Discretionary' },
-        { value: 'Information Technology', label: 'Information Technology' }
-    ];
+    //Read the Industry from the csv file in public folder
+    const [options_industry, setOptions_Industry] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('/industry.csv');
+            const reader = response.body.getReader();
+            const result = await reader.read(); // raw read of the stream
+            const decoder = new TextDecoder('utf-8');
+            const csv = decoder.decode(result.value); // convert stream to text
+            Papa.parse(csv, {
+                complete: function (results) {
+                    console.log('Parsed results:', results);
+                    setOptions_Industry(results.data);
+                },
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true
+            });
+        }
+        fetchData();
+    }, []);
 
 
     const options_year = [...Array(2022 - 2000).keys()].map((i) => {
@@ -80,7 +89,7 @@ const ComparisonModeData = () => {
         "error": null
     });
 
-    mock.onGet('/single?industry=Finance&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(200, {
+    mock.onGet('/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(200, { //'&' is encoded as %26
         "code": "200",
         "status": 200,
         "message": "Success",
@@ -438,7 +447,8 @@ const UserItem = ({ user }) => (
                     <div>
                         <form>
                             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Select Company</h2>
-                            <Select options={options_industry} placeholder='industry ' onChange={handleIndustryChange} value={selectedIndustry} className = "mb-3" />
+                            <Select options={options_industry.map((item) => { return { value: item.industry_name, label: item.industry_name } })}
+                                placeholder='industry ' onChange={handleIndustryChange} value={selectedIndustry} className="mb-3" />
                             <input className="form-control mb-3" type="search" aria-label="Search" placeholder='company'
                                 onChange={handleCompanyChange}
                                 value={selectedCompany}>

@@ -28,13 +28,13 @@ const SingleModeData = () => {
         "error": null
     });
 
-    mock.onGet('/single?industry=Finance&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(200, {
+    mock.onGet('/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(200, { //'&' is encoded as %26
         "code": "200",
         "status": 200,
         "message": "Success",
         "timestamp": 1721671831632,
         "data": {
-            "industry": "Finance",
+            "industry": "Financial Technology (Fintech) & Infrastructure",
             "company": "Aspen Pharmacare Holdings Ltd",
             "year": 2018,
             "metrics": [
@@ -131,9 +131,31 @@ const SingleModeData = () => {
                 dynamicTyping: true,
                 skipEmptyLines: true
             });
-            console.log("Description", Description[0]);
         }
 
+        fetchData();
+    }, []);
+
+    //Read the Industry from the csv file in public folder
+    const [options_industry, setOptions_Industry] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('/industry.csv');
+            const reader = response.body.getReader();
+            const result = await reader.read(); // raw read of the stream
+            const decoder = new TextDecoder('utf-8');
+            const csv = decoder.decode(result.value); // convert stream to text
+            Papa.parse(csv, {
+                complete: function (results) {
+                    console.log('Parsed results:', results);
+                    setOptions_Industry(results.data);
+                },
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true
+            });
+        }
         fetchData();
     }, []);
 
@@ -174,22 +196,6 @@ const SingleModeData = () => {
             }
         }
     };
-
-
-
-    const options_industry = [
-        { value: 'Finance', label: 'Finance' },
-        { value: 'health care', label: 'Health Care' },
-        { value: 'energy', label: 'Energy' },
-        { value: 'industrials', label: 'Industrials' },
-        { value: 'materials', label: 'Materials' },
-        { value: 'utilities', label: 'Utilities' },
-        { value: 'telecommunication services', label: 'Telecommunication Services' },
-        { value: 'real estate', label: 'Real Estate' },
-        { value: 'consumer staples', label: 'Consumer Staples' },
-        { value: 'consumer discretionary', label: 'Consumer Discretionary' },
-        { value: 'Information Technology', label: 'Information Technology' }
-    ];
 
 
     const options_year = [...Array(2022 - 2000).keys()].map((i) => {
@@ -245,7 +251,7 @@ const SingleModeData = () => {
             <form>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', padding: '10px', margin: '20px', width: '95%' }}>
                     <div style={{ width:'25%'}}>
-                        <Select options={options_industry}
+                        <Select options={options_industry.map((item) => { return { value: item.industry_name, label: item.industry_name } }) }
                             placeholder='industry'
                             onChange={handleIndustryChange}
                             value={selectedIndustry} />
