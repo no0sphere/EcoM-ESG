@@ -4,6 +4,7 @@ import Select from 'react-select';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Papa from 'papaparse';
+import { useNavigate } from "react-router-dom";
 import '../styles/Scroll.css';
 
 import Button from '@mui/material/Button';
@@ -23,6 +24,14 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 const ComparisonModeData = () => {
 
+    const navigate = useNavigate();
+
+    useEffect(() => { // get token from local storage
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     //Read the Description from the csv file in public folder
     const [Description, setDescription] = useState([]);
@@ -89,129 +98,93 @@ const ComparisonModeData = () => {
         "error": null
     });
 
-    mock.onGet('/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(200, { //'&' is encoded as %26
-        "code": "200",
-        "status": 200,
-        "message": "Success",
-        "timestamp": 1721671831632,
-        "data": {
-            "industry": "Finance",
-            "company": "Aspen Pharmacare Holdings Ltd",
-            "year": 2018,
-            "metrics": [
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
+    mock.onGet('/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(config => {
+        if (config.headers && config.headers.Authorization === 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
+            return [200, {
+                "code": "200",
+                "status": 200,
+                "message": "Success",
+                "timestamp": 1721671831632,
+                "data": {
+                    "industry": "Financial Technology (Fintech) & Infrastructure",
+                    "company": "Aspen Pharmacare Holdings Ltd",
+                    "year": 2018,
+                    "metrics": [
+                        {
+                            "metric": "TURNOVEREMPLOYEES",
+                            "value": 12.3,
+                            "unit": "%"
+                        },
+                        {
+                            "metric": "AIRPOLLUTANTS_INDIRECT",
+                            "value": 1.74725E7,
+                            "unit": "USD (000)"
+                        },
+                        {
+                            "metric": "TURNOVEREMPLOYEES",
+                            "value": 12.3,
+                            "unit": "%"
+                        },
+                        {
+                            "metric": "AIRPOLLUTANTS_INDIRECT",
+                            "value": 1.74725E7,
+                            "unit": "USD (000)"
+                        },
+                        {
+                            "metric": "TURNOVEREMPLOYEES",
+                            "value": 12.3,
+                            "unit": "%"
+                        },
+                        {
+                            "metric": "AIRPOLLUTANTS_INDIRECT",
+                            "value": 1.74725E7,
+                            "unit": "USD (000)"
+                        },
+                        {
+                            "metric": "TURNOVEREMPLOYEES",
+                            "value": 12.3,
+                            "unit": "%"
+                        },
+                        {
+                            "metric": "AIRPOLLUTANTS_INDIRECT",
+                            "value": 1.74725E7,
+                            "unit": "USD (000)"
+                        },
+                        {
+                            "metric": "TURNOVEREMPLOYEES",
+                            "value": 12.3,
+                            "unit": "%"
+                        },
+                        {
+                            "metric": "AIRPOLLUTANTS_INDIRECT",
+                            "value": 1.74725E7,
+                            "unit": "USD (000)"
+                        },
+                        {
+                            "metric": "TURNOVEREMPLOYEES",
+                            "value": 12.3,
+                            "unit": "%"
+                        },
+                        {
+                            "metric": "AIRPOLLUTANTS_INDIRECT",
+                            "value": 1.74725E7,
+                            "unit": "USD (000)"
+                        },
+                    ]
                 },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-                {
-                    "metric": "TURNOVEREMPLOYEES",
-                    "value": 12.3,
-                    "unit": "%"
-                },
-                {
-                    "metric": "AIRPOLLUTANTS_INDIRECT",
-                    "value": 1.74725E7,
-                    "unit": "USD (000)"
-                },
-            ]
-        },
-        "error": null
+                "error": null
+            }];
+        } else {
+
+            return [500, {
+                "code": "500",
+                "status": 500,
+                "message": "Authentication failed. Please log in first.",
+                "timestamp": 1721670835582,
+                "data": null,
+                "error": null
+            }];
+        }
     });
 
     mock.onGet(/.*/).reply(1004, {
@@ -300,8 +273,12 @@ const UserItem = ({ user }) => (
             console.log("selectedIndustry", selectedIndustry);
             console.log("selectedCompany", selectedCompany);
             console.log("selectedYear", selectedYear);
-            console.log("get", `single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`);
-            const response = await axios.get(`single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`);
+            console.log("get", `/single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`,
+                { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }
+            );
+            const response = await axios.get(`/single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`,
+                { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }
+            );
             if (response.status === 200) {
                 console.log("response", response);
                 console.log("response.data.data.indicators", response.data.data.metrics);

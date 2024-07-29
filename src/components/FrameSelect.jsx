@@ -271,9 +271,33 @@ const FrameSelect = () => {
     }
   });
 
-  mock.onPost("/insert_framework").reply((config) => {
-    const data = JSON.parse(config.data);
-    if (!validateCustomFrameworkData(data)) {
+    mock.onPost("/insert_framework").reply((config) => {
+        const data = JSON.parse(config.data);
+      if (config.headers && config.headers.Authorization != 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') { 
+          return [500, {
+              "code": "500",
+              "status": 500,
+              "message": "Authentication failed. Please log in first.",
+              "timestamp": 1721670835582,
+              "data": null,
+              "error": null
+          }];
+      } else if (
+          data.framework_name === "framework1" ||
+          data.framework_name === "framework2"
+      ) {
+          return [
+              4001,
+              {
+                  code: "4001",
+                  status: 4001,
+                  message: "Framework name already used",
+                  timestamp: 1721668449393,
+                  data: null,
+                  error: null,
+              },
+          ];
+      }else if (!validateCustomFrameworkData(data)) {
       return [
         4007,
         {
@@ -285,22 +309,7 @@ const FrameSelect = () => {
           error: null,
         },
       ];
-    } else if (
-      data.framework_name === "framework1" ||
-      data.framework_name === "framework2"
-    ) {
-      return [
-        4001,
-        {
-          code: "4001",
-          status: 4001,
-          message: "Framework name already used",
-          timestamp: 1721668449393,
-          data: null,
-          error: null,
-        },
-      ];
-    }
+    } 
     return [
       200,
       {
@@ -314,9 +323,11 @@ const FrameSelect = () => {
     ];
   });
 
-  const validateCustomFrameworkData = (data) => {
+    const validateCustomFrameworkData = (data) => {
+        console.log(data);
     if (!data.framework_name) {
-      setCustomError("Please input the frame name!");
+        setCustomError("Please input the frame name!");
+        console.log("Please input the frame name!" + data.framework_name);
       return false;
     }
 
@@ -328,7 +339,8 @@ const FrameSelect = () => {
         parseFloat(data[category].indicator_weight) * 100 > 100
       ) {
         // multiply by 100 to avoid floating point errors
-        setCustomError("Please input the correct weight!");
+          setCustomError("Please input the correct weight!");
+          console.log("Please input the correct weight!");
         return false;
       }
     }
@@ -339,7 +351,8 @@ const FrameSelect = () => {
       sum += parseFloat(data[category].indicator_weight) * 100;
     }
     if (sum !== 100) {
-      setCustomError("The sum of the weights of each category must be 1!");
+        setCustomError("The sum of the weights of each category must be 1!");
+        console.log("The sum of the weights of each category must be 1!" + sum);
       return false;
     }
 
@@ -361,11 +374,12 @@ const FrameSelect = () => {
     for (let category of top_categories) {
       sum = 0;
       for (let metric in data[category].metrics) {
-        console.log(data[category].metrics[metric]);
+          console.log(data[category].metrics[metric]);
         sum += parseFloat(data[category].metrics[metric]) * 100;
       }
       if (sum !== 100) {
-        setCustomError("The sum of the metrics in each category must be 1!");
+          setCustomError("The sum of the metrics in each category must be 1!");
+          console.log("The sum of the metrics in each category must be 1!" + sum);
         return false;
       }
     }
@@ -380,7 +394,16 @@ const FrameSelect = () => {
     "social_opportunity_metrics",
     "governance_risk_metrics",
     "governance_opportunity_metrics",
-  ];
+    ];
+
+    const navigate = useNavigate();
+
+    useEffect(() => { // get token from local storage
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
   const [MetricsList, setMetricsList] = useState([]);
   useEffect(() => {
@@ -956,7 +979,6 @@ const FrameSelect = () => {
     fetchFrameworks();
   }, [refreshKey]); // Re-fetch frameworks when the refreshKey changes(when a new framework is created)
 
-  const navigate = useNavigate();
 
   const [currentFramework, setCurrentFramework] = useState([]);
 
@@ -1016,8 +1038,9 @@ const FrameSelect = () => {
         }
       }
       const response = await axios.post(
-        "insert_framework",
-        filteredCustomFramework
+          "insert_framework", // url
+          filteredCustomFramework, // data to be sent
+          { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }, // token
       );
       if (response.status === 200) {
         console.log(
@@ -1033,7 +1056,7 @@ const FrameSelect = () => {
       console.error(
         "Failed to create custom framework:",
         error.response.data.message
-      );
+        );
       alert(error.response.data.message);
       setCustomError(error.response.data.message);
     }
