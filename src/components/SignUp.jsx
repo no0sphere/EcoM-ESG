@@ -35,7 +35,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       console.log("post userData", userData);
-      const response = await axios.post("/api/auth/register", userData);
+      const response = await axios.post("/user/register", userData);
       console.log("response", response);
       if (response.status === 200) {
         localStorage.setItem("username", userData.username);
