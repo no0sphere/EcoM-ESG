@@ -715,7 +715,7 @@ const FrameSelect = () => {
       try {
         const user_name = localStorage.getItem("username");
         const response = await axios.get(
-          `/get_framework?user_name=${user_name}`
+          `http://localhost:9090/get_framework?user_name=${user_name}`
         );
         console.log("frameworks page GET response", response);
         if (response.status === 200) {
@@ -1220,7 +1220,7 @@ const FrameSelect = () => {
   const handleDelete = async (user_name, frameworkName) => {
     try {
       const response = await axios.delete(
-        `/delete_framework?user_name=${user_name}&framework_name=${frameworkName}`,
+        `http://localhost:9090/delete_framework?user_name=${user_name}&framework_name=${frameworkName}`,
         {
           headers: {
             "Content-Type": "application/json",
