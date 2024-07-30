@@ -149,40 +149,59 @@ const FrameSelect = () => {
               framework_name: "Ray's Framework",
               creation_date: "2023-10-07",
               environmental_risk_metrics: {
-                indicator_er_weight: 0.3,
-                metric1: 0.5,
-                metric2: 0.3,
-                metric3: 0.2,
+                "indicator er weight": 0.175,
+                co2directscope1: 0.1,
+                co2indirectscope2: 0.1,
+                co2indirectscope3: 0.1,
+                noxemissions: 0.05,
+                soxemissions: 0.05,
+                vocemissions: 0.05,
+                "particulate matter emissions": 0.05,
+                wastetotal: 0.1,
+                hazardouswaste: 0.1,
+                "airpollutants direct": 0.1,
+                "airpollutants indirect": 0.1,
+                waterwithdrawaltotal: 0.1,
               },
               environmental_opportunity_metrics: {
-                indicator_eo_weight: 0.2,
-                metric1: 0.5,
-                metric2: 0.3,
-                metric3: 0.2,
+                "indicator eo weight": 0.175,
+                "climate change risks opp": 0.2,
+                "organic products initiatives": 0.15,
+                analyticwasterecyclingratio: 0.2,
+                "waste recycled": 0.15,
+                "water technologies": 0.15,
+                tranalyicrenewenergyuse: 0.15,
               },
               social_risk_metrics: {
-                indicator_sr_weight: 0.25,
-                metric1: 0.5,
-                metric2: 0.3,
-                metric3: 0.2,
+                "indicator sr weight": 0.125,
+                "employee fatalities": 0.25,
+                "turnover employees": 0.2,
+                "human rights violation pai": 0.3,
+                "tir total": 0.25,
               },
               social_opportunity_metrics: {
-                indicator_so_weight: 0.15,
-                metric1: 0.5,
-                metric2: 0.3,
-                metric3: 0.2,
+                "indicator so weight": 0.125,
+
+                "employee health safety policy": 0.25,
+                "trade union rep": 0.35,
+                "women employees": 0.2,
+                "women managers": 0.2,
               },
               governance_risk_metrics: {
-                indicator_gr_weight: 0.05,
-                metric1: 0.5,
-                metric2: 0.3,
-                metric3: 0.2,
+                "indicator gr weight": 0.2,
+                "bribery and corruption pai insufficient actions": 1, //yes or no
               },
               governance_opportunity_metrics: {
-                indicator_go_weight: 0.05,
-                metric1: 0.5,
-                metric2: 0.3,
-                metric3: 0.2,
+                "indicator go weight": 0.2,
+                "analytic audit commind": 0.15,
+                "analytic board female": 0.1,
+                "analytic comp commind": 0.1,
+                "analytic nomination commind": 0.1,
+                "audit comm nonexec members": 0.1,
+                "board meeting attendance avg": 0.15,
+                "comp comm nonexec members": 0.1,
+                "analytic indep board": 0.15,
+                "analytic nonexec board": 0.05,
               },
             },
             {
@@ -273,7 +292,7 @@ const FrameSelect = () => {
 
     mock.onPost("/insert_framework").reply((config) => {
         const data = JSON.parse(config.data);
-      if (config.headers && config.headers.Authorization != 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') { 
+      if (config.headers && config.headers.Authorization != 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
           return [500, {
               "code": "500",
               "status": 500,
@@ -309,7 +328,7 @@ const FrameSelect = () => {
           error: null,
         },
       ];
-    } 
+    }
     return [
       200,
       {
@@ -1058,7 +1077,33 @@ const FrameSelect = () => {
         error.response.data.message
         );
       alert(error.response.data.message);
+      alert(error.response.data.message);
       setCustomError(error.response.data.message);
+    }
+  };
+
+  const handleDelete = async (user_name, frameworkName) => {
+    try {
+      const response = await axios.delete(`/delete_framework?user_name=${user_name}&framework_name=${frameworkName}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // 添加token
+        }
+      });
+
+      if (response.status === 200) {
+        console.log("Framework deleted successfully:", response.data.message);
+        alert("Framework deleted successfully!");
+        setRefreshKey(refreshKey + 1);
+        setViewWindowVisible(false);
+      } else {
+        console.error("Failed to delete framework:", response.data.message);
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error("Failed to delete framework:", error.response?.data?.message || error.message);
+      alert(error.response?.data?.message || "Failed to delete framework");
     }
   };
 
@@ -1084,7 +1129,9 @@ const FrameSelect = () => {
           <div key={index} className="col-3 mb-4">
             <div className="card h-100 d-flex flex-column justify-content-between">
               <div className="card-body">
-                <h5 className="card-title">{framework.framework_name}</h5>
+                <h5 className="card-title">
+                  {framework.framework_name}
+                </h5>
                 <p className="card-text">
                   Creation Date: {framework.creation_date}
                 </p>
@@ -1341,119 +1388,163 @@ const FrameSelect = () => {
               backgroundColor: "#FFFFFF",
               padding: "20px",
               borderRadius: "5px",
+              position: "relative",
             }}
           >
             <button
               type="button"
               className="btn-close"
               aria-label="Close"
+              style={{ position: "absolute", top: "15px", right: "15px" }}
               onClick={() => setViewWindowVisible(false)}
             ></button>
             <div style={{ overflow: "auto", height: "90%" }}>
               <Box
-                component="div"
-                noValidate
-                autoComplete="off"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                  component="div"
+                  noValidate
+                  autoComplete="off"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
               >
                 <h2
-                  style={{
-                    marginBottom: "20px",
-                    marginTop: "20px",
-                    display: "flex",
-                  }}
+                    style={{
+                      marginBottom: "20px",
+                      marginTop: "20px",
+                      display: "flex",
+                    }}
                 >
                   {currentFramework.framework_name}
+                  {!["IFRS S1", "IFRS S2", "TCFD", "TNFD", "APRA-CPG"].includes(currentFramework.framework_name) && (
+                      <img
+                          src="/EpEdit.png"
+                          alt="Edit"
+                          style={{
+                            width: "36px",
+                            height: "36px",
+                            marginLeft: "20px",
+                            cursor: "pointer"
+                          }}
+                          onClick={() => handleEdit(currentFramework)}
+                      />
+                  )}
                 </h2>
-                <p style={{ marginBottom: "40px", display: "flex" }}>
+                <p style={{marginBottom: "40px", display: "flex"}}>
                   Creation Date: {currentFramework.creation_date}
                 </p>
                 <List
-                  sx={{
-                    width: "80%",
-                    maxWidth: "80%",
-                    bgcolor: "background.paper",
-                  }}
-                  component="nav"
-                  aria-labelledby="nested-list-subheader"
-                  subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                      Indicator Weights
-                    </ListSubheader>
-                  }
+                    sx={{
+                      width: "80%",
+                      maxWidth: "80%",
+                      bgcolor: "background.paper",
+                    }}
+                    component="nav"
+                    aria-labelledby="nested-list-subheader"
+                    subheader={
+                      <ListSubheader component="div" id="nested-list-subheader">
+                        Indicator Weights
+                      </ListSubheader>
+                    }
                 >
                   {top_categories.map((category, index) => {
                     const weightKey = Object.keys(
-                      currentFramework[category] || {}
+                        currentFramework[category] || {}
                     ).find((key) => /^indicator [a-z]{2} weight$/.test(key));
                     return (
-                      <List key={index}>
-                        <ListItemButton
-                          sx={{
-                            border: "1px solid darkgrey",
-                            borderRadius: "5px",
-                            marginBottom: "5px",
-                            padding: "10px",
-                          }}
-                          onClick={() => handleNestedIndicator(index)}
-                        >
-                          <ListItemText
-                            primary={category}
-                            secondary={
-                              weightKey
-                                ? `Weight: ${currentFramework[category][weightKey]}`
-                                : "Frame does not own this type of metrics"
-                            }
-                          />
-                          {nestedIndicators[index] ? (
-                            <ExpandLess />
-                          ) : (
-                            <ExpandMore />
-                          )}
-                        </ListItemButton>
-                        <Collapse
-                          in={nestedIndicators[index]}
-                          timeout="auto"
-                          unmountOnExit
-                        >
-                          <List component="div" disablePadding>
-                            {currentFramework[category] &&
-                              Object.entries(currentFramework[category]).map(
-                                ([key, value], idx) =>
-                                  !/^indicator_[a-z]{2}_weight$/.test(key) && (
-                                    <ListItemText
-                                      key={idx}
-                                      primary={`${key}: ${value}`}
-                                      sx={{
-                                        pl: 4,
-                                        border: "1px solid lightgrey",
-                                        borderRadius: "5px",
-                                        marginBottom: "5px",
-                                        padding: "10px",
-                                      }}
-                                    />
-                                  )
-                              )}
-                          </List>
-                        </Collapse>
-                      </List>
+                        <List key={index}>
+                          <ListItemButton
+                              sx={{
+                                border: "1px solid darkgrey",
+                                borderRadius: "5px",
+                                marginBottom: "5px",
+                                padding: "10px",
+                              }}
+                              onClick={() => handleNestedIndicator(index)}
+                          >
+                            <ListItemText
+                                primary={category}
+                                secondary={
+                                  weightKey
+                                      ? `Weight: ${currentFramework[category][weightKey]}`
+                                      : "Frame does not own this type of metrics"
+                                }
+                            />
+                            {nestedIndicators[index] ? (
+                                <ExpandLess/>
+                            ) : (
+                                <ExpandMore/>
+                            )}
+                          </ListItemButton>
+                          <Collapse
+                              in={nestedIndicators[index]}
+                              timeout="auto"
+                              unmountOnExit
+                          >
+                            <List component="div" disablePadding>
+                              {currentFramework[category] &&
+                                  Object.entries(currentFramework[category]).map(
+                                      ([key, value], idx) =>
+                                          !/^indicator_[a-z]{2}_weight$/.test(key) && (
+                                              <ListItemText
+                                                  key={idx}
+                                                  primary={`${key}: ${value}`}
+                                                  sx={{
+                                                    pl: 4,
+                                                    border: "1px solid lightgrey",
+                                                    borderRadius: "5px",
+                                                    marginBottom: "5px",
+                                                    padding: "10px",
+                                                  }}
+                                              />
+                                          )
+                                  )}
+                            </List>
+                          </Collapse>
+                        </List>
                     );
                   })}
                 </List>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  id="CompanySelectingConfirm"
-                  style={{ marginTop: "10px" }}
-                  onClick={() => handleSelect(currentFramework)}
+                <div
+                    style={{
+                      display: "flex",
+                      justifyContent: !["IFRS S1", "IFRS S2", "TCFD", "TNFD", "APRA-CPG"].includes(
+                          currentFramework.framework_name
+                      )
+                          ? "space-between"
+                          : "center",
+                      width: "50%",
+                    }}
                 >
-                  Select
-                </Button>
+                  <Button
+                      variant="contained"
+                      size="medium"
+                      id="CompanySelectingConfirm"
+                      onClick={() => handleSelect(currentFramework)}
+                      style={{marginRight: "10px"}}
+                  >
+                    Select
+                  </Button>
+                  {!["IFRS S1", "IFRS S2", "TCFD", "TNFD", "APRA-CPG"].includes(
+                      currentFramework.framework_name
+                  ) && (
+                      <Button
+                          variant="contained"
+                          size="medium"
+                          color="primary"
+                          onClick={() =>
+                              handleDelete(
+                                  localStorage.getItem("username"),
+                                  currentFramework.framework_name
+                              )
+                          }
+                      >
+                        Delete
+                      </Button>
+                  )}
+                </div>
               </Box>
             </div>
           </div>
