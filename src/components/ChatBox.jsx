@@ -43,76 +43,76 @@ const ChatBot = () => {
 
   const mock = new MockAdapter(axios);
 
-  mock.onGet("/chat/history").reply(200, {
-    code: "200",
-    status: 200,
-    message: "Success",
-    timestamp: 1672525850000,
-    data: [
-      {
-        user_name: "ray",
-        content: "Hello, how are you?",
-        timestamp: "2024-07-15T10:00:00Z",
-        message_type: "user",
-        session_id: "session_12345",
-      },
-      {
-        user_name: "ray",
-        content: "I am doing well, thank you!",
-        timestamp: "2024-07-15T10:00:02Z",
-        message_type: "bot",
-        session_id: "session_12345",
-      },
-    ],
-  });
+  // mock.onGet("/basic/chat/history").reply(200, {
+  //   code: "200",
+  //   status: 200,
+  //   message: "Success",
+  //   timestamp: 1672525850000,
+  //   data: [
+  //     {
+  //       user_name: "ray",
+  //       content: "Hello, how are you?",
+  //       timestamp: "2024-07-15T10:00:00Z",
+  //       message_type: "user",
+  //       session_id: "session_12345",
+  //     },
+  //     {
+  //       user_name: "ray",
+  //       content: "I am doing well, thank you!",
+  //       timestamp: "2024-07-15T10:00:02Z",
+  //       message_type: "bot",
+  //       session_id: "session_12345",
+  //     },
+  //   ],
+  // });
 
-  mock.onPost("/chat/send").reply((config) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const { message } = JSON.parse(config.data);
+  // mock.onPost("/basic/chat/send").reply((config) => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       const { message } = JSON.parse(config.data);
 
-        resolve([
-          200,
-          {
-            code: "200",
-            status: 200,
-            message: "Success",
-            timestamp: Date.now(),
-            data: [
-              {
-                user_name: "ray",
-                content: "Hello, how are you?",
-                timestamp: "2024-07-15T10:00:00Z",
-                message_type: "user",
-                session_id: "session_12345",
-              },
-              {
-                user_name: "ray",
-                content: "I am doing well, thank you!",
-                timestamp: "2024-07-15T10:00:02Z",
-                message_type: "bot",
-                session_id: "session_12345",
-              },
-              {
-                user_name: "ray",
-                content: "What is the weather like today?",
-                timestamp: "2024-07-15T11:00:00Z",
-                message_type: "user",
-                session_id: "session_67890",
-              },
-              {
-                user_name: "ray",
-                content: "The weather today is sunny with a high of 25°C.",
-                timestamp: "2024-07-15T11:00:02Z",
-                message_type: "bot",
-                session_id: "session_67890",
-              },
-            ],
-          },
-        ]);
-      }, 2000); // 2秒
-    });
-  });
+  //       resolve([
+  //         200,
+  //         {
+  //           code: "200",
+  //           status: 200,
+  //           message: "Success",
+  //           timestamp: Date.now(),
+  //           data: [
+  //             {
+  //               user_name: "ray",
+  //               content: "Hello, how are you?",
+  //               timestamp: "2024-07-15T10:00:00Z",
+  //               message_type: "user",
+  //               session_id: "session_12345",
+  //             },
+  //             {
+  //               user_name: "ray",
+  //               content: "I am doing well, thank you!",
+  //               timestamp: "2024-07-15T10:00:02Z",
+  //               message_type: "bot",
+  //               session_id: "session_12345",
+  //             },
+  //             {
+  //               user_name: "ray",
+  //               content: "What is the weather like today?",
+  //               timestamp: "2024-07-15T11:00:00Z",
+  //               message_type: "user",
+  //               session_id: "session_67890",
+  //             },
+  //             {
+  //               user_name: "ray",
+  //               content: "The weather today is sunny with a high of 25°C.",
+  //               timestamp: "2024-07-15T11:00:02Z",
+  //               message_type: "bot",
+  //               session_id: "session_67890",
+  //             },
+  //           ],
+  //         },
+  //       ]);
+  //     }, 2000); // 2秒
+  //   });
+  // });
 
   useEffect(() => {
     if (showChat) {
@@ -129,10 +129,19 @@ const ChatBot = () => {
     setIsLoading(true);
     try {
       const user_name = localStorage.getItem("username");
+      const token = localStorage.getItem("token");
       console.log("user_name", user_name);
-      const response = await axios.get("/chat/history", {
-        params: { user_name: user_name },
-      });
+      const response = await axios.get(
+        "/basic/chat/history",
+        {
+          params: { user_name: user_name },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // use token to authenticate the user
+          },
+        }
+      );
       console.log("chat response", response.data.data);
       const sortedMessages = sortMessagesByTimestamp(response.data.data);
       setMessages(sortedMessages);
@@ -162,10 +171,19 @@ const ChatBot = () => {
 
     try {
       const user_name = localStorage.getItem("username");
-      const response = await axios.post("/chat/send", {
-        user_name: user_name,
-        message: input,
-      });
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "/basic/chat/send",
+        {
+          user_name: user_name,
+          message: input,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // use token to authenticate the user
+          },
+        }
+      );
       const sortedMessages = sortMessagesByTimestamp(response.data.data);
       setMessages(sortedMessages);
     } catch (error) {
