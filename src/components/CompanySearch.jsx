@@ -34,7 +34,7 @@ const CompanySearch = () => {
   const location = useLocation();
   const { simplifiedFrame } = location.state || {};
   const navigate = useNavigate();
-  const mock = new MockAdapter(axios);
+  //const mock = new MockAdapter(axios);
 
   // mock.onGet(new RegExp('/api/rating')).reply(config => {
   //     const { industry, company, year } = config.params;

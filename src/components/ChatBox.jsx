@@ -41,7 +41,7 @@ const ChatBot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const mock = new MockAdapter(axios);
+  //const mock = new MockAdapter(axios);
 
   // mock.onGet("/basic/chat/history").reply(200, {
   //   code: "200",

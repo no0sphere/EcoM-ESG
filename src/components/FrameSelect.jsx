@@ -20,7 +20,7 @@ import Papa from "papaparse";
 import React, { useEffect, useState } from "react";
 
 const FrameSelect = () => {
-  const mock = new MockAdapter(axios);
+  //const mock = new MockAdapter(axios);
 
   // mock.onGet(/\/get_framework\?user_name=.+/).reply((config) => {
   //   const urlParams = new URLSearchParams(config.url.split("?")[1]);
