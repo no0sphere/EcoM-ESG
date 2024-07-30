@@ -41,7 +41,7 @@ const SignUp = () => {
         localStorage.setItem("username", userData.username);
         console.log("register success");
         localStorage.setItem("token", response.data.data);
-        navigate("/SingleMode");
+        navigate("/dashboard");
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {

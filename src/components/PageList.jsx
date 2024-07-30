@@ -15,6 +15,7 @@ import FrameSelect from "./FrameSelect.jsx";
 import CompanySearch from "./CompanySearch.jsx";
 import ComparisonMode from "./ComparisonMode.jsx";
 import ChatBot from "./ChatBox.jsx";
+import Dashboard from "./Dashboard.jsx";
 const PageList = () => {
   //If there is no token jump to login page
   //otherwise jump to the dashboard
@@ -38,6 +39,7 @@ const PageList = () => {
           element={<CompanySearch />}
         />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/setting" element={<Setting />} />
