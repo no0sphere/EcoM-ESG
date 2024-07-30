@@ -85,7 +85,7 @@ const ComparisonModeData = () => {
         return { value: 2000 + i, label: 2000 + i };
     });
 
-
+    /*
     const mock = new MockAdapter(axios);
 
     //year out of range
@@ -187,7 +187,7 @@ const ComparisonModeData = () => {
         }
     });
 
-    mock.onGet(/.*/).reply(1004, {
+    mock.onGet(/.+/).reply(1004, {
         "code": "1004",
         "status": 1004,
         "message": "Can't find any data for this company in this industry for this year.",
@@ -195,6 +195,7 @@ const ComparisonModeData = () => {
         "data": null,
         "error": null
     });
+    */
 
 
     const [error, setError] = useState('');

@@ -290,7 +290,7 @@ const FrameSelect = () => {
       ];
     }
   });
-
+  /*
     mock.onPost("http://localhost:9090/basic/insertFramework").reply((config) => {
         const data = JSON.parse(config.data);
       if (config.headers && config.headers.Authorization != 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
@@ -379,6 +379,7 @@ const FrameSelect = () => {
             },
         ];
     });
+    */
 
     const validateCustomFrameworkData = (data, type = "Create" ) => {
         console.log(data);
