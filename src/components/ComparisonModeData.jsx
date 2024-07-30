@@ -26,7 +26,7 @@ const ComparisonModeData = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => { // get token from local storage
+    useEffect(() => { // Check if the user is logged in
         const token = localStorage.getItem('token');
         if (!token) {
             navigate('/login');
@@ -89,7 +89,7 @@ const ComparisonModeData = () => {
     const mock = new MockAdapter(axios);
 
     //year out of range
-    mock.onGet('/single?industry=Information%20Technology&company=Apple&year=1000').reply(1002, {
+    mock.onGet('http://localhost:9090/basic/single?industry=Information%20Technology&company=Apple&year=1000').reply(1002, {
         "code": "1002",
         "status": 1002,
         "message": "The year entered is out of range or out of format.",
@@ -98,7 +98,7 @@ const ComparisonModeData = () => {
         "error": null
     });
 
-    mock.onGet('/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(config => {
+    mock.onGet('http://localhost:9090/basic/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(config => {
         if (config.headers && config.headers.Authorization === 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
             return [200, {
                 "code": "200",
@@ -273,10 +273,10 @@ const UserItem = ({ user }) => (
             console.log("selectedIndustry", selectedIndustry);
             console.log("selectedCompany", selectedCompany);
             console.log("selectedYear", selectedYear);
-            console.log("get", `/single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`,
+            console.log("get", `http://localhost:9090/basic/single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`,
                 { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }
             );
-            const response = await axios.get(`/single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`,
+            const response = await axios.get(`http://localhost:9090/basic/single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`,
                 { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }
             );
             if (response.status === 200) {
