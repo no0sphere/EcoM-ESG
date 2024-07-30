@@ -132,13 +132,15 @@ const ChatBot = () => {
       const token = localStorage.getItem("token");
       console.log("user_name", user_name);
       const response = await axios.get(
-        "/basic/chat/history",
+        "http://localhost:9090/basic/chat/history",
         {
           params: { user_name: user_name },
         },
         {
           headers: {
             Authorization: `Bearer ${token}`, // use token to authenticate the user
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
         }
       );
@@ -181,6 +183,8 @@ const ChatBot = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`, // use token to authenticate the user
+            "Content-Type": "application/json",
+            Accept: "application/json",
           },
         }
       );

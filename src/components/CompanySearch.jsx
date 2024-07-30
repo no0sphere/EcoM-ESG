@@ -141,7 +141,7 @@ const CompanySearch = () => {
     console.log("Selected Company:", selectedCompany);
     console.log("Selected Year:", selectedYear);
     try {
-      const response = await axios.get(`/api/rating`, {
+      const response = await axios.get(`http://localhost:9090/basic/rating`, {
         params: {
           framework_name: frameworkName,
           user_name: userName,
