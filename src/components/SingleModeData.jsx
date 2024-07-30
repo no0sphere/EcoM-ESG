@@ -17,7 +17,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 
 const SingleModeData = () => {
-
+    /*
     const mock = new MockAdapter(axios);
 
     //year out of range
@@ -119,7 +119,7 @@ const SingleModeData = () => {
         }
     });
 
-    mock.onGet(/.*/).reply(1004, {
+    mock.onGet(/.+/).reply(1004, {
         "code": "1004",
         "status": 1004,
         "message": "Can't find any data for this company in this industry for this year.",
@@ -127,6 +127,7 @@ const SingleModeData = () => {
         "data": null,
         "error": null
     });
+    */
 
     const navigate = useNavigate();
 

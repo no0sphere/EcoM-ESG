@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import MockAdapter from "axios-mock-adapter";
 const SignUp = () => {
-  const mock = new MockAdapter(axios);
+  //const mock = new MockAdapter(axios);
 
   // mock.onPost("/api/auth/login").reply(409, {
   //   status: "error",
@@ -35,7 +35,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       console.log("post userData", userData);
-      const response = await axios.post("/api/auth/register", userData);
+      const response = await axios.post("/user/register", userData);
       console.log("response", response);
       if (response.status === 200) {
         localStorage.setItem("username", userData.username);
