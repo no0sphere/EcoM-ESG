@@ -41,7 +41,7 @@ const getTextColor = (companyValue, industryValue) => {
 };
 
 const getComparisonImage = (companyValue, industryValue) => {
-    return parseFloat(companyValue) > parseFloat(industryValue) ? '/Up.png' : '/Down.png';
+    return parseFloat(companyValue) > parseFloat(industryValue) ? '/Rise.png' : '/Decline.png';
 };
 
 const RatingReport = ({ data, pieData, pieOptions, barData, barOptions, descriptions, Industry, Company, Year }) => {
