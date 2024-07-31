@@ -1259,18 +1259,14 @@ const FrameSelect = () => {
   const handleToEditWindow = () => {
     resetCustomFramework();
     // get metrics weight from currentFramework and set to CustomFramework
-    const regex = /^indicator [a-z]{2} weight$/;
     console.log(CustomFramework);
       setCustomFramework((prevState) => {
           //set custom framework name
           prevState.framework_name = currentFramework.framework_name;
 
         for (let category of top_categories) {
-        let matchedKey = Object.keys(currentFramework[category]).find((key) =>
-          regex.test(key)
-        );
         prevState[category].indicator_weight =
-                currentFramework[category][matchedKey];
+            currentFramework[category]["indicator_weight"];
             console.log(currentFramework[category]);
         // check if metric in currentFramework is in CustomFramework
         for (let metric in currentFramework[category]) {
@@ -1286,8 +1282,19 @@ const FrameSelect = () => {
       setCustomMetricOppOrRisk((prevState) => {
           for (let category of top_categories) {
           for (let metric in prevState[category]) {
-            if (metric in currentFramework[category]) {
-              prevState[category][metric] = true;
+              if (metric in currentFramework[category]) {
+                  if (category === "environmental_risk_metrics") {
+                      prevState.environmental_risk_metrics[metric] = true;
+                      prevState.environmental_opportunity_metrics[metric] = false;
+                  }
+                   else if (category === "environmental_opportunity_metrics") {
+                        prevState.environmental_opportunity_metrics[metric] = true;
+                      prevState.environmental_risk_metrics[metric] = false;
+
+                  } else if (category === "social_risk_metrics") {
+                    prevState.social_risk_metrics[metric] = true;
+                    prevState.social_opportunity_metrics[metric] = false;
+                    }
             }
           }
         }
@@ -1805,213 +1812,6 @@ const FrameSelect = () => {
           </div>
         </div>
 
-        <div
-          id="CustomFrameworkEdit"
-          style={{
-            display: editWindowVisible ? "flex" : "none",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 1000,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "70%",
-              height: "80%",
-              backgroundColor: "#FFFFFF",
-              padding: "20px",
-              borderRadius: "5px",
-              position: "relative",
-            }}
-          >
-            <button
-              type="button"
-              className="btn-close"
-              aria-label="Close"
-              style={{ position: "absolute", top: "15px", right: "15px" }}
-              onClick={() => setEditWindowVisible(false)}
-            ></button>
-            <div style={{ height: "8%" }}>
-              {CustomError && (
-                <Alert severity="error" sx={{ width: "90%", margin: "auto" }}>
-                  {CustomError}
-                </Alert>
-              )}
-            </div>
-            <div style={{ overflow: "auto", height: "90%" }}>
-              <Box
-                component="form"
-                noValidate
-                autoComplete="off"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <h2
-                  style={{
-                    marginBottom: "40px",
-                    marginTop: "20px",
-                    display: "flex",
-                  }}
-                >
-                  Custom Framework Editing
-                </h2>
-                <TextField
-                  id="framework_to_be_mod"
-                  sx={{ width: "80%", maxWidth: "80%" }}
-                  label="Framework Name"
-                  value={currentFramework?.framework_name || ""}
-                  disabled
-                />
-                <List
-                  sx={{
-                    width: "80%",
-                    maxWidth: "80%",
-                    bgcolor: "background.paper",
-                  }}
-                  component="nav"
-                  aria-labelledby="nested-list-subheader"
-                >
-                  {top_categories.map((category, index) => (
-                    <List
-                      key={index}
-                      subheader={
-                        <ListSubheader component="div">
-                          {category}
-                        </ListSubheader>
-                      }
-                    >
-                      <ListItemButton
-                        key={index}
-                        sx={{
-                          border: "1px solid darkgrey",
-                          borderRadius: "5px",
-                          marginBottom: "5px",
-                        }}
-                        onClick={() => handleNestedIndicator(index)}
-                      >
-                        <ListItemText primary={category} />
-                        <input
-                          type="number"
-                          className="form-control"
-                          id={"edit_indicator_weight_" + category}
-                          name="indicator_weight"
-                          style={{ width: "20%" }}
-                          value={CustomFramework[category].indicator_weight}
-                          min="0"
-                          max="1"
-                          step="0.01"
-                          onClick={(event) => {
-                            setCustomError("");
-                            event.stopPropagation();
-                          }}
-                          onChange={(e) =>
-                            setCustomFramework({
-                              ...CustomFramework,
-                              [category]: {
-                                ...CustomFramework[category],
-                                indicator_weight: e.target.value,
-                              },
-                            })
-                          }
-                          required
-                        />
-                        {nestedIndicators[index] ? (
-                          <ExpandLess />
-                        ) : (
-                          <ExpandMore />
-                        )}
-                      </ListItemButton>
-                      <Collapse
-                        in={nestedIndicators[index]}
-                        timeout="auto"
-                        unmountOnExit
-                      >
-                        <List component="div" disablePadding>
-                          {Object.keys(CustomFramework[category].metrics).map(
-                            (metric, index) => (
-                              <ListItemButton key={index} sx={{ pl: 4 }}>
-                                <Checkbox
-                                  checked={
-                                    CustomMetricOppOrRisk[category][metric]
-                                  }
-                                  onClick={() =>
-                                    handleCustomMetricOppOrRisk(
-                                      category,
-                                      metric
-                                    )
-                                  }
-                                />
-                                <Tooltip
-                                  title={
-                                    MetricsList.find(
-                                      (item) => item.metric_name === metric
-                                    )?.metric_description
-                                  }
-                                  arrow
-                                >
-                                  <ListItemText primary={metric} />
-                                </Tooltip>
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  id={category + "_" + metric}
-                                  name={category}
-                                  style={{ width: "20%" }}
-                                  min="0"
-                                  max="1"
-                                  step="0.01"
-                                  value={
-                                    CustomFramework[category].metrics[metric]
-                                  }
-                                  disabled={
-                                    !CustomMetricOppOrRisk[category][metric]
-                                  }
-                                  onClick={() => setCustomError("")}
-                                  onChange={(e) =>
-                                    setCustomFramework({
-                                      ...CustomFramework,
-                                      [category]: {
-                                        ...CustomFramework[category],
-                                        metrics: {
-                                          ...CustomFramework[category].metrics,
-                                          [metric]: e.target.value,
-                                        },
-                                      },
-                                    })
-                                  }
-                                  required
-                                />
-                              </ListItemButton>
-                            )
-                          )}
-                        </List>
-                      </Collapse>
-                    </List>
-                  ))}
-                </List>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  id="EditFrameworkConfirm"
-                  style={{ marginTop: "10px" }}
-                  onClick={handleEditFrameConfirm}
-                >
-                  Confirm
-                </Button>
-              </Box>
-            </div>
-          </div>
-        </div>
         <div
           id="CustomFrameworkEdit"
           style={{
