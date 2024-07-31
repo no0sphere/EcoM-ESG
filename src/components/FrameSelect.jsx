@@ -21,9 +21,9 @@ import React, { useEffect, useState } from "react";
 import RadarChart from "./RadarChart.jsx";
 
 const FrameSelect = () => {
-  //const mock = new MockAdapter(axios);
-
-  // mock.onGet(/\/get_framework\?user_name=.+/).reply((config) => {
+  // const mock = new MockAdapter(axios);
+  //
+  // mock.onGet(/\/basic\/getFramework\?username=.+/).reply((config) => {
   //   const urlParams = new URLSearchParams(config.url.split("?")[1]);
   //   const user_name = urlParams.get("user_name");
   //   if (user_name === "Jim" || user_name === "jim" || user_name === "qq") {
@@ -1053,7 +1053,7 @@ const FrameSelect = () => {
 
   const simplifyFrame = (frame) => {
     let simplified = {};
-    const weightRegex = /^indicator [a-z]{2} weight$/; //change based on the format of the weight key
+    const weightRegex = /^indicator.*weight$/; //change based on the format of the weight key
 
     Object.keys(frame).forEach((key) => {
       if (typeof frame[key] === "object") {
@@ -1306,14 +1306,14 @@ const FrameSelect = () => {
     setEditWindowVisible(true);
   };
 
-  const cardHeight = "450px";
+  const cardHeight = "550px";
 
   return (
     <div className="container mt-5">
       <div className="row mb-4">
         <div className="col-3 mb-4">
           <div
-            className="card h-100 d-flex align-items-center justify-content-center shadow card-hover"
+            className="card d-flex align-items-center justify-content-center shadow card-hover"
             style={{
               cursor: "pointer",
               height: cardHeight,
@@ -1332,8 +1332,10 @@ const FrameSelect = () => {
         </div>
         {frameworks.map((framework, index) => (
           <div key={index} className="col-3 mb-4">
-            <div className="card h-100 d-flex flex-column justify-content-between shadow card-hover">
-              <div className="card-body" style={{ height: cardHeight }}>
+            <div className="card d-flex flex-column justify-content-between shadow card-hover"
+                 style={{ height: cardHeight }}
+            >
+              <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                   <h4 className="card-title text-center m-0">
                     {framework.framework_name}
@@ -1354,6 +1356,8 @@ const FrameSelect = () => {
                 <p className="card-text">
                   Creation Date: {framework.creation_date}
                 </p>
+                {/* if Radar isn't work for a new frame,try */}
+                {/* <RadarChart key={refreshKey} data={simplifyFrame(framework)} />*/}
                 <RadarChart data={simplifyFrame(framework)} />
               </div>
               <div
@@ -1379,7 +1383,10 @@ const FrameSelect = () => {
                       cursor: "pointer",
                       marginLeft: "60px",
                     }}
-                    onClick={() => handleDelete(framework)}
+                    onClick={() => handleDelete(
+                        localStorage.getItem("username"),
+                        framework.framework_name
+                    )}
                   />
                 )}
               </div>
@@ -1811,208 +1818,6 @@ const FrameSelect = () => {
             </div>
           </div>
         </div>
-
-        {viewWindowVisible && currentFramework && (
-          <div
-            id="ViewFrameworkSetting"
-            style={{
-              display: "flex",
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 1000,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                width: "70%",
-                height: "80%",
-                backgroundColor: "#FFFFFF",
-                padding: "20px",
-                borderRadius: "5px",
-                position: "relative",
-              }}
-            >
-              <button
-                type="button"
-                className="btn-close"
-                aria-label="Close"
-                style={{ position: "absolute", top: "15px", right: "15px" }}
-                onClick={() => setViewWindowVisible(false)}
-              ></button>
-              <div style={{ overflow: "auto", height: "90%" }}>
-                <Box
-                  component="div"
-                  noValidate
-                  autoComplete="off"
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <h2
-                    style={{
-                      marginBottom: "20px",
-                      marginTop: "20px",
-                      display: "flex",
-                    }}
-                  >
-                    {currentFramework.framework_name}
-                    {![
-                      "IFRS S1",
-                      "IFRS S2",
-                      "TCFD",
-                      "TNFD",
-                      "APRA-CPG",
-                    ].includes(currentFramework.framework_name) && (
-                      <img
-                        src="/EpEdit.png"
-                        alt="Edit"
-                        style={{
-                          width: "36px",
-                          height: "36px",
-                          marginLeft: "20px",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => handleToEditWindow(currentFramework)}
-                      />
-                    )}
-                  </h2>
-                  <p style={{ marginBottom: "40px", display: "flex" }}>
-                    Creation Date: {currentFramework.creation_date}
-                  </p>
-                  <List
-                    sx={{
-                      width: "80%",
-                      maxWidth: "80%",
-                      bgcolor: "background.paper",
-                    }}
-                    component="nav"
-                    aria-labelledby="nested-list-subheader"
-                    subheader={
-                      <ListSubheader component="div" id="nested-list-subheader">
-                        Indicator Weights
-                      </ListSubheader>
-                    }
-                  >
-                    {top_categories.map((category, index) => {
-                      const weightKey = Object.keys(
-                        currentFramework[category] || {}
-                      ).find((key) => /^indicator [a-z]{2} weight$/.test(key));
-                      return (
-                        <List key={index}>
-                          <ListItemButton
-                            sx={{
-                              border: "1px solid darkgrey",
-                              borderRadius: "5px",
-                              marginBottom: "5px",
-                              padding: "10px",
-                            }}
-                            onClick={() => handleNestedIndicator(index)}
-                          >
-                            <ListItemText
-                              primary={category}
-                              secondary={
-                                weightKey
-                                  ? `Weight: ${currentFramework[category][weightKey]}`
-                                  : "Frame does not own this type of metrics"
-                              }
-                            />
-                            {nestedIndicators[index] ? (
-                              <ExpandLess />
-                            ) : (
-                              <ExpandMore />
-                            )}
-                          </ListItemButton>
-                          <Collapse
-                            in={nestedIndicators[index]}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <List component="div" disablePadding>
-                              {currentFramework[category] &&
-                                Object.entries(currentFramework[category]).map(
-                                  ([key, value], idx) =>
-                                    !/^indicator_[a-z]{2}_weight$/.test(
-                                      key
-                                    ) && (
-                                      <ListItemText
-                                        key={idx}
-                                        primary={`${key}: ${value}`}
-                                        sx={{
-                                          pl: 4,
-                                          border: "1px solid lightgrey",
-                                          borderRadius: "5px",
-                                          marginBottom: "5px",
-                                          padding: "10px",
-                                        }}
-                                      />
-                                    )
-                                )}
-                            </List>
-                          </Collapse>
-                        </List>
-                      );
-                    })}
-                  </List>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: ![
-                        "IFRS S1",
-                        "IFRS S2",
-                        "TCFD",
-                        "TNFD",
-                        "APRA-CPG",
-                      ].includes(currentFramework.framework_name)
-                        ? "space-between"
-                        : "center",
-                      width: "50%",
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      size="medium"
-                      id="CompanySelectingConfirm"
-                      onClick={() => handleSelect(currentFramework)}
-                      style={{ marginRight: "10px" }}
-                    >
-                      Select
-                    </Button>
-                    {![
-                      "IFRS S1",
-                      "IFRS S2",
-                      "TCFD",
-                      "TNFD",
-                      "APRA-CPG",
-                    ].includes(currentFramework.framework_name) && (
-                      <Button
-                        variant="contained"
-                        size="medium"
-                        color="primary"
-                        onClick={() =>
-                          handleDelete(
-                            localStorage.getItem("username"),
-                            currentFramework.framework_name
-                          )
-                        }
-                      >
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                </Box>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
       {viewWindowVisible && currentFramework && (
         <div
