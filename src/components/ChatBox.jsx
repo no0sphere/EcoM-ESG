@@ -53,14 +53,14 @@ const ChatBot = () => {
   //       user_name: "ray",
   //       content: "Hello, how are you?",
   //       timestamp: "2024-07-15T10:00:00Z",
-  //       message_type: "user",
+  //       messageType: "user",
   //       session_id: "session_12345",
   //     },
   //     {
   //       user_name: "ray",
   //       content: "I am doing well, thank you!",
   //       timestamp: "2024-07-15T10:00:02Z",
-  //       message_type: "bot",
+  //       messageType: "bot",
   //       session_id: "session_12345",
   //     },
   //   ],
@@ -83,28 +83,28 @@ const ChatBot = () => {
   //               user_name: "ray",
   //               content: "Hello, how are you?",
   //               timestamp: "2024-07-15T10:00:00Z",
-  //               message_type: "user",
+  //               messageType: "user",
   //               session_id: "session_12345",
   //             },
   //             {
   //               user_name: "ray",
   //               content: "I am doing well, thank you!",
   //               timestamp: "2024-07-15T10:00:02Z",
-  //               message_type: "bot",
+  //               messageType: "bot",
   //               session_id: "session_12345",
   //             },
   //             {
   //               user_name: "ray",
   //               content: "What is the weather like today?",
   //               timestamp: "2024-07-15T11:00:00Z",
-  //               message_type: "user",
+  //               messageType: "user",
   //               session_id: "session_67890",
   //             },
   //             {
   //               user_name: "ray",
   //               content: "The weather today is sunny with a high of 25°C.",
   //               timestamp: "2024-07-15T11:00:02Z",
-  //               message_type: "bot",
+  //               messageType: "bot",
   //               session_id: "session_67890",
   //             },
   //           ],
@@ -130,14 +130,14 @@ const ChatBot = () => {
     try {
       const user_name = localStorage.getItem("username");
       const token = localStorage.getItem("token");
-      console.log("chat token",token);
+      console.log("chat token", token);
       console.log("user_name", user_name);
       const response = await axios.get(
         "http://localhost:9090/basic/chat/history",
         {
-          params: { 
-		user_name: user_name 
-	  },
+          params: {
+            user_name: user_name,
+          },
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
@@ -162,7 +162,7 @@ const ChatBot = () => {
       user_name: user_name,
       content: input,
       timestamp: new Date().toISOString(),
-      message_type: "user",
+      messageType: "user",
       session_id: "current_session",
     };
 
@@ -177,17 +177,17 @@ const ChatBot = () => {
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:9090/basic/chat/send",
-        { 
-            user_name: user_name,
-            message: input,
+        {
+          user_name: user_name,
+          message: input,
         },
-	{
+        {
           headers: {
             Authorization: `Bearer ${token}`, // use token to authenticate the user
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-	}
+        }
       );
       const sortedMessages = sortMessagesByTimestamp(response.data.data);
       setMessages(sortedMessages);
@@ -235,11 +235,11 @@ const ChatBot = () => {
             style={{ height: "400px", overflowY: "auto" }}
           >
             {messages.map((msg, index) => (
-              <MessageContainer key={index} className={msg.message_type || ""}>
+              <MessageContainer key={index} className={msg.messageType || ""}>
                 <MessageSender>
-                  {msg.message_type === "user" ? "You" : "AI"}
+                  {msg.messageType === "user" ? "You" : "AI"}
                 </MessageSender>
-                <MessageBubble className={msg.message_type || ""}>
+                <MessageBubble className={msg.messageType || ""}>
                   {msg.content}
                 </MessageBubble>
               </MessageContainer>
@@ -255,8 +255,8 @@ const ChatBot = () => {
           </ListGroup>
           {/* <ListGroup className="mb-3" style={{ height: '400px', overflowY: 'auto' }}>
             {messages.map((msg, index) => (
-              <ListGroup.Item key={index} className={msg.message_type === 'user' ? 'text-end' : ''}>
-                <strong>{msg.message_type === 'user' ? 'You' : 'AI'}:</strong> {msg.content}
+              <ListGroup.Item key={index} className={msg.messageType === 'user' ? 'text-end' : ''}>
+                <strong>{msg.messageType === 'user' ? 'You' : 'AI'}:</strong> {msg.content}
               </ListGroup.Item>
             ))}
             {isLoading && (
