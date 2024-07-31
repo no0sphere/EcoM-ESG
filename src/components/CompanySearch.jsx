@@ -34,20 +34,20 @@ const CompanySearch = () => {
   const location = useLocation();
   const { simplifiedFrame } = location.state || {};
   const navigate = useNavigate();
-  //const mock = new MockAdapter(axios);
+  const mock = new MockAdapter(axios);
 
-  // mock.onGet(new RegExp('/api/rating')).reply(config => {
+  // mock.onGet(new RegExp('http://localhost:9090/basic/rating')).reply(config => {
   //     const { industry, company, year } = config.params;
   //     console.log(industry)
   //     console.log(company)
   //     console.log(year)
   //     const token = config.headers['Authorization'];
   //     const decodedIndustry = decodeURIComponent(industry);
-
+  //
   //     if (token !== `Bearer ${localStorage.getItem('token')}`) {
   //         return [401, { code: 401, status: "failed", message: "Unauthorized", timestamp: Date.now(), data: null }];
   //     }
-
+  //
   //     if (decodedIndustry === 'Information Technology' && company === 'Apple' && year === '1000') {
   //         return [400, {
   //             "code": 400,
@@ -57,7 +57,7 @@ const CompanySearch = () => {
   //             "data": null
   //         }];
   //     }
-
+  //
   //     if (decodedIndustry === 'Financial Technology (Fintech) & Infrastructure' && company === 'JPMorgan' && year === '2021') {
   //         return [200, {
   //             "code": 200,
@@ -86,7 +86,7 @@ const CompanySearch = () => {
   //             ]
   //         }];
   //     }
-
+  //
   //     if (decodedIndustry === 'Information Technology' && company === 'Apple' && year === '2022') {
   //         return [404, {
   //             "code": 404,
@@ -96,7 +96,7 @@ const CompanySearch = () => {
   //             "data": null
   //         }];
   //     }
-
+  //
   //     return [500, {
   //         "code": 500,
   //         "status": "error",
