@@ -48,7 +48,7 @@ const PageList = () => {
         <Route path="/downloadreport" element={<DownloadReport />} />
         <Route path="/comparisonMode" element={<ComparisonMode />} />
       </Routes>
-      {/* {showHeaderAndFooter && <ChatBot/>} */}
+       {showHeaderAndFooter && <ChatBot/>} 
 
       {showHeaderAndFooter && <Footer />}
     </div>

@@ -130,15 +130,16 @@ const ChatBot = () => {
     try {
       const user_name = localStorage.getItem("username");
       const token = localStorage.getItem("token");
+      console.log("chat token",token);
       console.log("user_name", user_name);
       const response = await axios.get(
         "http://localhost:9090/basic/chat/history",
         {
-          params: { user_name: user_name },
-        },
-        {
+          params: { 
+		user_name: user_name 
+	  },
           headers: {
-            Authorization: `Bearer ${token}`, // use token to authenticate the user
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
             Accept: "application/json",
           },
@@ -175,18 +176,18 @@ const ChatBot = () => {
       const user_name = localStorage.getItem("username");
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "/basic/chat/send",
-        {
-          user_name: user_name,
-          message: input,
+        "http://localhost:9090/basic/chat/send",
+        { 
+            user_name: user_name,
+            message: input,
         },
-        {
+	{
           headers: {
             Authorization: `Bearer ${token}`, // use token to authenticate the user
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-        }
+	}
       );
       const sortedMessages = sortMessagesByTimestamp(response.data.data);
       setMessages(sortedMessages);
