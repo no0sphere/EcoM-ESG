@@ -34,7 +34,7 @@ const CompanySearch = () => {
   const location = useLocation();
   const { simplifiedFrame } = location.state || {};
   const navigate = useNavigate();
-  const mock = new MockAdapter(axios);
+  //const mock = new MockAdapter(axios);
 
   // mock.onGet(new RegExp('http://localhost:9090/basic/rating')).reply(config => {
   //     const { industry, company, year } = config.params;
@@ -145,8 +145,8 @@ const CompanySearch = () => {
         params: {
           framework_name: frameworkName,
           user_name: userName,
-          industry: encodeURIComponent(selectedIndustry.value),
-          company: encodeURIComponent(selectedCompany),
+          industry: selectedIndustry.value,
+          company: selectedCompany,
           year: selectedYear,
         },
         headers: {
