@@ -369,7 +369,7 @@ const UserItem = ({ user }) => (
                             Add Company
                         </Button>
                     </div>
-                    <div id={element + "Company"} style={{ display: SlotContentVisible[index] ? 'block' : 'none', height: '100%', position: 'relative',paddingTop: '25px' }}>
+                    <div id={element + "Company"} style={{ display: SlotContentVisible[index] ? 'flex' : 'none', height: '100%', position: 'relative', paddingTop: '25px', flexDirection:'column',justifyContent:'center', alignItems:'center'}}>
                         <button type="button" className="btn-close" aria-label="Close" onClick={() => RemoveCompany(index)} style={{ position: 'absolute', top: '8px', right: '8px' }}></button>
                         <div id={element + "Company" + "Name&year"} style={{
                             display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10%', flexDirection: 'row',
@@ -379,7 +379,7 @@ const UserItem = ({ user }) => (
                         </div>
 
                         <TableContainer component={Paper} sx={{
-                            display: 'flex', justifyContent: 'center', width: '100%', height: '90%', overflow: 'auto'
+                            display: 'flex', justifyContent: 'center', width: '95', height: '85%', overflow: 'auto'
                         }} className="scrollable-div">
                             <Table>
                                 <TableHead>

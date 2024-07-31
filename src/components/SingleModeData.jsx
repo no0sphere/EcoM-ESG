@@ -313,15 +313,15 @@ const SingleModeData = () => {
                         <h5 style={{ marginLeft: '5px' }}>{selectedYear ? "(" + selectedYear.label + ")" : '(No year selected)'}</h5>
                     </div>
                     <TableContainer component={Paper} sx={{
-                        display: 'flex', justifyContent: 'center', width: '100%', height: '100%', overflow: 'auto'
+                        display: 'flex', justifyContent: 'center', width: '100%', maxHeight: '100%', overflow: 'auto'
                     }}>
                         <Table>
-                            <TableHead sx={{ height: '8vh' }}>
+                            <TableHead>
                                 <TableRow>
-                                    <StyledTableCell scope="col">Indicator</StyledTableCell>
-                                    <StyledTableCell scope="col">Pillar</StyledTableCell>
-                                    <StyledTableCell scope="col">Description</StyledTableCell>
-                                    <StyledTableCell scope="col">Value</StyledTableCell>
+                                    <StyledTableCell scope="col" sx={{ maxWidth: '100px'}}>Indicator</StyledTableCell>
+                                    <StyledTableCell scope="col" sx={{ maxWidth: '100px' }}>Pillar</StyledTableCell>
+                                    <StyledTableCell scope="col" sx={{ maxWidth: '100px' }}>Description</StyledTableCell>
+                                    <StyledTableCell scope="col" sx={{ maxWidth: '100px' }}>Value</StyledTableCell>
                             </TableRow>
                         </TableHead>
                             <TableBody>
