@@ -1287,15 +1287,14 @@ const FrameSelect = () => {
                   if (category === "environmental_risk_metrics") {
                       prevState.environmental_risk_metrics[metric] = true;
                       prevState.environmental_opportunity_metrics[metric] = false;
-                  }
-                   else if (category === "environmental_opportunity_metrics") {
-                        prevState.environmental_opportunity_metrics[metric] = true;
-                      prevState.environmental_risk_metrics[metric] = false;
-
                   } else if (category === "social_risk_metrics") {
-                    prevState.social_risk_metrics[metric] = true;
-                    prevState.social_opportunity_metrics[metric] = false;
-                    }
+                      prevState.social_risk_metrics[metric] = true;
+                      prevState.social_opportunity_metrics[metric] = false;
+                  } else if (category === "governance_risk_metrics") {
+                      prevState.governance_risk_metrics[metric] = true;
+                      prevState.governance_opportunity_metrics[metric] = false;
+                  }
+
             }
           }
         }
