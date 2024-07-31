@@ -1261,23 +1261,39 @@ const FrameSelect = () => {
     // get metrics weight from currentFramework and set to CustomFramework
     const regex = /^indicator [a-z]{2} weight$/;
     console.log(CustomFramework);
-    setCustomFramework((prevState) => {
-      for (let category of top_categories) {
+      setCustomFramework((prevState) => {
+          //set custom framework name
+          prevState.framework_name = currentFramework.framework_name;
+
+        for (let category of top_categories) {
         let matchedKey = Object.keys(currentFramework[category]).find((key) =>
           regex.test(key)
         );
         prevState[category].indicator_weight =
-          currentFramework[category][matchedKey];
+                currentFramework[category][matchedKey];
+            console.log(currentFramework[category]);
         // check if metric in currentFramework is in CustomFramework
         for (let metric in currentFramework[category]) {
           if (metric in prevState[category].metrics) {
             prevState[category].metrics[metric] =
-              currentFramework[category][metric];
+                  currentFramework[category][metric];
           }
         }
       }
       return prevState;
     });
+      // set CustomMetricOppOrRisk true if the metric is in currentFramework
+      setCustomMetricOppOrRisk((prevState) => {
+          for (let category of top_categories) {
+          for (let metric in prevState[category]) {
+            if (metric in currentFramework[category]) {
+              prevState[category][metric] = true;
+            }
+          }
+        }
+        return prevState;
+      });
+
 
     setViewWindowVisible(false);
     setEditWindowVisible(true);

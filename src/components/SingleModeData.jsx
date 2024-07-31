@@ -316,7 +316,7 @@ const SingleModeData = () => {
                         display: 'flex', justifyContent: 'center', width: '100%', height: '100%', overflow: 'auto'
                     }}>
                         <Table>
-                            <TableHead style={{ height: '8vh' }}>
+                            <TableHead sx={{ height: '8vh' }}>
                                 <TableRow>
                                     <StyledTableCell scope="col">Indicator</StyledTableCell>
                                     <StyledTableCell scope="col">Pillar</StyledTableCell>

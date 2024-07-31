@@ -85,117 +85,115 @@ const ComparisonModeData = () => {
         return { value: 2000 + i, label: 2000 + i };
     });
 
-    /*
-    const mock = new MockAdapter(axios);
+    //const mock = new MockAdapter(axios);
 
-    //year out of range
-    mock.onGet('http://localhost:9090/basic/single?industry=Information%20Technology&company=Apple&year=1000').reply(1002, {
-        "code": "1002",
-        "status": 1002,
-        "message": "The year entered is out of range or out of format.",
-        "timestamp": 1721670835582,
-        "data": null,
-        "error": null
-    });
+    ////year out of range
+    //mock.onGet('http://localhost:9090/basic/single?industry=Information%20Technology&company=Apple&year=1000').reply(1002, {
+    //    "code": "1002",
+    //    "status": 1002,
+    //    "message": "The year entered is out of range or out of format.",
+    //    "timestamp": 1721670835582,
+    //    "data": null,
+    //    "error": null
+    //});
 
-    mock.onGet('http://localhost:9090/basic/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(config => {
-        if (config.headers && config.headers.Authorization === 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
-            return [200, {
-                "code": "200",
-                "status": 200,
-                "message": "Success",
-                "timestamp": 1721671831632,
-                "data": {
-                    "industry": "Financial Technology (Fintech) & Infrastructure",
-                    "company": "Aspen Pharmacare Holdings Ltd",
-                    "year": 2018,
-                    "metrics": [
-                        {
-                            "metric": "TURNOVEREMPLOYEES",
-                            "value": 12.3,
-                            "unit": "%"
-                        },
-                        {
-                            "metric": "AIRPOLLUTANTS_INDIRECT",
-                            "value": 1.74725E7,
-                            "unit": "USD (000)"
-                        },
-                        {
-                            "metric": "TURNOVEREMPLOYEES",
-                            "value": 12.3,
-                            "unit": "%"
-                        },
-                        {
-                            "metric": "AIRPOLLUTANTS_INDIRECT",
-                            "value": 1.74725E7,
-                            "unit": "USD (000)"
-                        },
-                        {
-                            "metric": "TURNOVEREMPLOYEES",
-                            "value": 12.3,
-                            "unit": "%"
-                        },
-                        {
-                            "metric": "AIRPOLLUTANTS_INDIRECT",
-                            "value": 1.74725E7,
-                            "unit": "USD (000)"
-                        },
-                        {
-                            "metric": "TURNOVEREMPLOYEES",
-                            "value": 12.3,
-                            "unit": "%"
-                        },
-                        {
-                            "metric": "AIRPOLLUTANTS_INDIRECT",
-                            "value": 1.74725E7,
-                            "unit": "USD (000)"
-                        },
-                        {
-                            "metric": "TURNOVEREMPLOYEES",
-                            "value": 12.3,
-                            "unit": "%"
-                        },
-                        {
-                            "metric": "AIRPOLLUTANTS_INDIRECT",
-                            "value": 1.74725E7,
-                            "unit": "USD (000)"
-                        },
-                        {
-                            "metric": "TURNOVEREMPLOYEES",
-                            "value": 12.3,
-                            "unit": "%"
-                        },
-                        {
-                            "metric": "AIRPOLLUTANTS_INDIRECT",
-                            "value": 1.74725E7,
-                            "unit": "USD (000)"
-                        },
-                    ]
-                },
-                "error": null
-            }];
-        } else {
+    //mock.onGet('http://localhost:9090/basic/single?industry=Financial%20Technology%20(Fintech)%20%26%20Infrastructure&company=Aspen%20Pharmacare%20Holdings%20Ltd&year=2018').reply(config => {
+    //    if (config.headers && config.headers.Authorization === 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
+    //        return [200, {
+    //            "code": "200",
+    //            "status": 200,
+    //            "message": "Success",
+    //            "timestamp": 1721671831632,
+    //            "data": {
+    //                "industry": "Financial Technology (Fintech) & Infrastructure",
+    //                "company": "Aspen Pharmacare Holdings Ltd",
+    //                "year": 2018,
+    //                "metrics": [
+    //                    {
+    //                        "metric": "TURNOVEREMPLOYEES",
+    //                        "value": 12.3,
+    //                        "unit": "%"
+    //                    },
+    //                    {
+    //                        "metric": "AIRPOLLUTANTS_INDIRECT",
+    //                        "value": 1.74725E7,
+    //                        "unit": "USD (000)"
+    //                    },
+    //                    {
+    //                        "metric": "TURNOVEREMPLOYEES",
+    //                        "value": 12.3,
+    //                        "unit": "%"
+    //                    },
+    //                    {
+    //                        "metric": "AIRPOLLUTANTS_INDIRECT",
+    //                        "value": 1.74725E7,
+    //                        "unit": "USD (000)"
+    //                    },
+    //                    {
+    //                        "metric": "TURNOVEREMPLOYEES",
+    //                        "value": 12.3,
+    //                        "unit": "%"
+    //                    },
+    //                    {
+    //                        "metric": "AIRPOLLUTANTS_INDIRECT",
+    //                        "value": 1.74725E7,
+    //                        "unit": "USD (000)"
+    //                    },
+    //                    {
+    //                        "metric": "TURNOVEREMPLOYEES",
+    //                        "value": 12.3,
+    //                        "unit": "%"
+    //                    },
+    //                    {
+    //                        "metric": "AIRPOLLUTANTS_INDIRECT",
+    //                        "value": 1.74725E7,
+    //                        "unit": "USD (000)"
+    //                    },
+    //                    {
+    //                        "metric": "TURNOVEREMPLOYEES",
+    //                        "value": 12.3,
+    //                        "unit": "%"
+    //                    },
+    //                    {
+    //                        "metric": "AIRPOLLUTANTS_INDIRECT",
+    //                        "value": 1.74725E7,
+    //                        "unit": "USD (000)"
+    //                    },
+    //                    {
+    //                        "metric": "TURNOVEREMPLOYEES",
+    //                        "value": 12.3,
+    //                        "unit": "%"
+    //                    },
+    //                    {
+    //                        "metric": "AIRPOLLUTANTS_INDIRECT",
+    //                        "value": 1.74725E7,
+    //                        "unit": "USD (000)"
+    //                    },
+    //                ]
+    //            },
+    //            "error": null
+    //        }];
+    //    } else {
 
-            return [500, {
-                "code": "500",
-                "status": 500,
-                "message": "Authentication failed. Please log in first.",
-                "timestamp": 1721670835582,
-                "data": null,
-                "error": null
-            }];
-        }
-    });
+    //        return [500, {
+    //            "code": "500",
+    //            "status": 500,
+    //            "message": "Authentication failed. Please log in first.",
+    //            "timestamp": 1721670835582,
+    //            "data": null,
+    //            "error": null
+    //        }];
+    //    }
+    //});
 
-    mock.onGet(/.+/).reply(1004, {
-        "code": "1004",
-        "status": 1004,
-        "message": "Can't find any data for this company in this industry for this year.",
-        "timestamp": 1721670835582,
-        "data": null,
-        "error": null
-    });
-    */
+    //mock.onGet(/.+/).reply(1004, {
+    //    "code": "1004",
+    //    "status": 1004,
+    //    "message": "Can't find any data for this company in this industry for this year.",
+    //    "timestamp": 1721670835582,
+    //    "data": null,
+    //    "error": null
+    //});
 
 
     const [error, setError] = useState('');
@@ -383,14 +381,14 @@ const UserItem = ({ user }) => (
                         <TableContainer component={Paper} sx={{
                             display: 'flex', justifyContent: 'center', width: '100%', height: '90%', overflow: 'auto'
                         }} className="scrollable-div">
-                            <Table sx={{ width: '100%' }}>
+                            <Table>
                                 <TableHead>
                                    <TableRow>
-                                            <StyledTableCell sx={{ fontSize: '1vw' }}
+                                        <StyledTableCell sx={{ fontSize: '1vw', maxWidth: '100px', whiteSpace: 'normal', wordWrap: 'break-word' }}
                                                 scope="col">Indicator</StyledTableCell>
-                                            <StyledTableCell sx={{ fontSize: '1vw' }}
+                                        <StyledTableCell sx={{ fontSize: '1vw', maxWidth: '100px', whiteSpace: 'normal', wordWrap: 'break-word' }}
                                                 scope="col">Pillar</StyledTableCell>
-                                            <StyledTableCell sx={{ fontSize: '1vw' }}
+                                        <StyledTableCell sx={{ fontSize: '1vw', maxWidth: '100px', whiteSpace: 'normal', wordWrap: 'break-word' }}
                                                 scope="col">Value</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
@@ -398,10 +396,10 @@ const UserItem = ({ user }) => (
                                     {ChosenCompanyData[index] && ChosenCompanyData[index].map((indicator, index) => (
                                         <StyledTableRow key={index}>
                                             <Tooltip title={Description.find((item) => item.metric_name === indicator.metric)?.metric_description} arrow>
-                                                <StyledTableCell>{indicator.metric}</StyledTableCell>
+                                                <StyledTableCell sx={{ fontSize: '1vw', maxWidth: '100px', whiteSpace: 'normal', wordWrap: 'break-word' }}>{indicator.metric}</StyledTableCell>
                                             </Tooltip>
-                                            <StyledTableCell>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</StyledTableCell>
-                                            <StyledTableCell>{indicator.value} {indicator.unit}</StyledTableCell>
+                                            <StyledTableCell sx={{ fontSize: '1vw', maxWidth: '100px', whiteSpace: 'normal', wordWrap: 'break-word' }}>{Description.find((item) => item.metric_name === indicator.metric)?.pillar}</StyledTableCell>
+                                            <StyledTableCell sx={{ fontSize: '1vw', maxWidth: '100px', whiteSpace: 'normal', wordWrap: 'break-word' }}>{indicator.value} {indicator.unit}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
