@@ -37,7 +37,7 @@ const FrameSelect = () => {
   //         data: [
   //           {
   //             framework_name: "Jim's Framework1",
-  //             creation_date: "2024-06-05",
+  //             update_date: "2024-06-05",
   //             environmental_risk_metrics: {
   //               "indicator er weight": 0.175,
   //               co2directscope1: 0.1,
@@ -97,7 +97,7 @@ const FrameSelect = () => {
   //           },
   //           {
   //             framework_name: "Find Fish's Framework",
-  //             creation_date: "2023-10-07",
+  //             update_date: "2023-10-07",
   //             environmental_risk_metrics: {
   //               indicator_er_weight: 0.3,
   //               metric1: 0.5,
@@ -149,7 +149,7 @@ const FrameSelect = () => {
   //         data: [
   //           {
   //             framework_name: "Ray's Framework",
-  //             creation_date: "2023-10-07",
+  //             update_date: "2023-10-07",
   //             environmental_risk_metrics: {
   //               "indicator er weight": 0.175,
   //               co2directscope1: 0.1,
@@ -208,7 +208,7 @@ const FrameSelect = () => {
   //           },
   //           {
   //             framework_name: "Hao's Framework",
-  //             creation_date: "2023-10-07",
+  //             update_date: "2023-10-07",
   //             environmental_risk_metrics: {
   //               indicator_er_weight: 0.3,
   //               metric1: 0.5,
@@ -248,7 +248,7 @@ const FrameSelect = () => {
   //           },
   //           {
   //             framework_name: "6Yan's Framework",
-  //             creation_date: "2023-10-07",
+  //             update_date: "2023-10-07",
   //             environmental_risk_metrics: {
   //               indicator_er_weight: 0.3,
   //               metric1: 0.5,
@@ -726,13 +726,13 @@ const FrameSelect = () => {
         console.log("frameworks page GET response", response);
         if (response.status === 200) {
           const sortedFrameworks = response.data.data.sort(
-            (a, b) => new Date(b.creation_date) - new Date(a.creation_date)
+            (a, b) => new Date(b.update_date) - new Date(a.update_date)
           );
           setFrameworks(sortedFrameworks);
           const fixedFrameworks = [
             {
               framework_name: "IFRS S1",
-              creation_date: "2021-10-05",
+              update_date: "2021-10-05",
               environmental_risk_metrics: {
                 "indicator er weight": 0.175,
                 co2directscope1: 0.1,
@@ -792,7 +792,7 @@ const FrameSelect = () => {
 
             {
               framework_name: "IFRS S2",
-              creation_date: "2022-10-05",
+              update_date: "2022-10-05",
               environmental_risk_metrics: {
                 "indicator er weight": 0.25,
                 co2directscope1: 0.1,
@@ -851,7 +851,7 @@ const FrameSelect = () => {
             },
             {
               framework_name: "TCFD",
-              creation_date: "2023-10-05",
+              update_date: "2023-10-05",
               environmental_risk_metrics: {
                 "indicator er weight": 0.35,
                 co2directscope1: 0.1,
@@ -910,7 +910,7 @@ const FrameSelect = () => {
             },
             {
               framework_name: "TNFD",
-              creation_date: "2020-10-05",
+              update_date: "2020-10-05",
               environmental_risk_metrics: {
                 "indicator er weight": 0.4,
                 co2directscope1: 0.1,
@@ -969,7 +969,7 @@ const FrameSelect = () => {
             },
             {
               framework_name: "APRA-CPG",
-              creation_date: "2019-10-05",
+              update_date: "2019-10-05",
               environmental_risk_metrics: {
                 "indicator er weight": 0.3,
                 co2directscope1: 0.1,
@@ -1354,7 +1354,7 @@ const FrameSelect = () => {
                   />
                 </div>
                 <p className="card-text">
-                  Creation Date: {framework.creation_date}
+                  Creation Date: {framework.update_date}
                 </p>
                 {/* if Radar isn't work for a new frame,try */}
                 {/* <RadarChart key={refreshKey} data={simplifyFrame(framework)} />*/}
@@ -1889,7 +1889,7 @@ const FrameSelect = () => {
                   )}
                 </h2>
                 <p style={{ marginBottom: "40px", display: "flex" }}>
-                  Creation Date: {currentFramework.creation_date}
+                  Creation Date: {currentFramework.update_date}
                 </p>
                 <List
                   sx={{
