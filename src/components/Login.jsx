@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MockAdapter from "axios-mock-adapter";
 
 const Login = () => {
-  const mock = new MockAdapter(axios);
+  //const mock = new MockAdapter(axios);
 
   // mock.onPost("/user/login").reply(401, {
   //   status: "error",
