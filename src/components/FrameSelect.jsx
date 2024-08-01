@@ -728,7 +728,15 @@ const FrameSelect = () => {
           const sortedFrameworks = response.data.data.sort(
             (a, b) => new Date(b.update_time) - new Date(a.update_time)
           );
-          setFrameworks(sortedFrameworks);
+
+          const frameworksWithFormattedDate = sortedFrameworks.map(
+            (framework) => ({
+              ...framework,
+              update_time: framework.update_time.split("T")[0],
+            })
+          );
+
+          setFrameworks(frameworksWithFormattedDate);
           const fixedFrameworks = [
             {
               framework_name: "IFRS S1",
@@ -1179,8 +1187,8 @@ const FrameSelect = () => {
 
   const resetCustomFramework = () => {
     // reset the custom framework to the initial state and zero out the metrics in each category
-      setCustomFramework((prevState) => {
-        prevState.framework_name = "New CustomFramework";
+    setCustomFramework((prevState) => {
+      prevState.framework_name = "New CustomFramework";
       for (let category of top_categories) {
         if (
           category === "environmental_risk_metrics" ||
@@ -1261,46 +1269,44 @@ const FrameSelect = () => {
     resetCustomFramework();
     // get metrics weight from currentFramework and set to CustomFramework
     console.log(CustomFramework);
-      setCustomFramework((prevState) => {
-          //set custom framework name
-          prevState.framework_name = currentFramework.framework_name;
+    setCustomFramework((prevState) => {
+      //set custom framework name
+      prevState.framework_name = currentFramework.framework_name;
 
-        for (let category of top_categories) {
+      for (let category of top_categories) {
         prevState[category].indicator_weight =
-            currentFramework[category]["indicator_weight"];
-            console.log(currentFramework[category]);
+          currentFramework[category]["indicator_weight"];
+        console.log(currentFramework[category]);
         // check if metric in currentFramework is in CustomFramework
         for (let metric in currentFramework[category]) {
           if (metric in prevState[category].metrics) {
             prevState[category].metrics[metric] =
-                  currentFramework[category][metric];
+              currentFramework[category][metric];
           }
         }
       }
       return prevState;
     });
-      // set CustomMetricOppOrRisk true if the metric is in currentFramework
-      setCustomMetricOppOrRisk((prevState) => {
-          for (let category of top_categories) {
-          for (let metric in prevState[category]) {
-              if (metric in currentFramework[category]) {
-                  if (category === "environmental_risk_metrics") {
-                      prevState.environmental_risk_metrics[metric] = true;
-                      prevState.environmental_opportunity_metrics[metric] = false;
-                  } else if (category === "social_risk_metrics") {
-                      prevState.social_risk_metrics[metric] = true;
-                      prevState.social_opportunity_metrics[metric] = false;
-                  } else if (category === "governance_risk_metrics") {
-                      prevState.governance_risk_metrics[metric] = true;
-                      prevState.governance_opportunity_metrics[metric] = false;
-                  }
-
+    // set CustomMetricOppOrRisk true if the metric is in currentFramework
+    setCustomMetricOppOrRisk((prevState) => {
+      for (let category of top_categories) {
+        for (let metric in prevState[category]) {
+          if (metric in currentFramework[category]) {
+            if (category === "environmental_risk_metrics") {
+              prevState.environmental_risk_metrics[metric] = true;
+              prevState.environmental_opportunity_metrics[metric] = false;
+            } else if (category === "social_risk_metrics") {
+              prevState.social_risk_metrics[metric] = true;
+              prevState.social_opportunity_metrics[metric] = false;
+            } else if (category === "governance_risk_metrics") {
+              prevState.governance_risk_metrics[metric] = true;
+              prevState.governance_opportunity_metrics[metric] = false;
             }
           }
         }
-        return prevState;
-      });
-
+      }
+      return prevState;
+    });
 
     setViewWindowVisible(false);
     setEditWindowVisible(true);
@@ -1332,8 +1338,9 @@ const FrameSelect = () => {
         </div>
         {frameworks.map((framework, index) => (
           <div key={index} className="col-3 mb-4">
-            <div className="card d-flex flex-column justify-content-between shadow card-hover"
-                 style={{ height: cardHeight }}
+            <div
+              className="card d-flex flex-column justify-content-between shadow card-hover"
+              style={{ height: cardHeight }}
             >
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
@@ -1383,10 +1390,12 @@ const FrameSelect = () => {
                       cursor: "pointer",
                       marginLeft: "60px",
                     }}
-                    onClick={() => handleDelete(
+                    onClick={() =>
+                      handleDelete(
                         localStorage.getItem("username"),
                         framework.framework_name
-                    )}
+                      )
+                    }
                   />
                 )}
               </div>
@@ -1394,7 +1403,7 @@ const FrameSelect = () => {
           </div>
         ))}
       </div>
-      
+
       <div className="container mt-5">
         <div
           id="CustomFrameworkSetting"
