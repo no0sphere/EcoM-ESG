@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Container,
+  Card,
+  Form,
+  Button,
+  Alert,
+  InputGroup,
+} from "react-bootstrap";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 
-import MockAdapter from "axios-mock-adapter";
 const SignUp = () => {
   //const mock = new MockAdapter(axios);
 
@@ -57,63 +64,74 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
-            name="username"
-            value={userData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            value={userData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="d-flex justify-content-between">
-          <button type="submit" className="btn btn-primary">
-            Sign up
-          </button>
-          <Link to="/login" className="btn">
-            Already have account?
-          </Link>
-        </div>
-      </form>
-
-      {error && <div className="alert alert-danger mt-2">{error}</div>}
-    </div>
+    <Container
+      className="d-flex align-items-center justify-content-center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Card style={{ width: "400px" }} className="shadow-lg">
+        <Card.Body className="p-5">
+          <h2 className="text-center mb-4">Sign Up</h2>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <InputGroup>
+                <InputGroup.Text>
+                  <FaUser />
+                </InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  value={userData.username}
+                  onChange={handleChange}
+                  required
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <InputGroup>
+                <InputGroup.Text>
+                  <FaEnvelope />
+                </InputGroup.Text>
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  value={userData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <InputGroup>
+                <InputGroup.Text>
+                  <FaLock />
+                </InputGroup.Text>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={userData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </InputGroup>
+            </Form.Group>
+            <Button variant="primary" type="submit" className="w-100 mt-3">
+              Sign Up
+            </Button>
+          </Form>
+          {error && (
+            <Alert variant="danger" className="mt-3">
+              {error}
+            </Alert>
+          )}
+          <div className="text-center mt-3">
+            <Link to="/login">Already have an account? Login</Link>
+          </div>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
 

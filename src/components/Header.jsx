@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Header() {
+  const handleLogout = () => {
+    localStorage.clear();
+  };
   return (
     <header className="d-flex justify-content-between align-items-center p-1 border-bottom">
       <Link
@@ -16,7 +19,7 @@ function Header() {
 
       <div></div>
       <div>
-        <button className="btn btn-secondary">
+        <button className="btn btn-secondary" onClick={handleLogout}>
           <Link
             className="text-white"
             to="/login"
