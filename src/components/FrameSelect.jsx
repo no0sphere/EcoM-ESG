@@ -724,7 +724,7 @@ const FrameSelect = () => {
           }
         );
         console.log("frameworks page GET response", response);
-        if (response.status === 200) {
+          if (response.status === 200 && response.data.status === 200) {
           const sortedFrameworks = response.data.data.sort(
             (a, b) => new Date(b.update_time) - new Date(a.update_time)
           );
@@ -1109,16 +1109,22 @@ const FrameSelect = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         } // token
       );
-      if (response.status === 200) {
-        console.log(
-          "Custom framework created successfully:",
-          response.data.message
-        );
-        console.log("Custom framework:", filteredCustomFramework);
-        alert("Custom framework created successfully!");
-        setRefreshKey(refreshKey + 1);
-        setCustomWindowVisible(false);
-      }
+        if (response.status === 200 && response.data.status === 200) {
+            console.log(
+                "Custom framework created successfully:",
+                response.data.message
+            );
+            console.log("Custom framework:", filteredCustomFramework);
+            alert("Custom framework created successfully!");
+            setRefreshKey(refreshKey + 1);
+            setCustomWindowVisible(false);
+        }
+        else {
+            console.error("Failed to create custom framework:", response.data.message);
+            alert(response.data.message);
+            setCustomError(response.data.message);
+        }
+
     } catch (error) {
       console.error(
         "Failed to create custom framework:",
@@ -1156,7 +1162,7 @@ const FrameSelect = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         } // token
       );
-      if (response.status === 200) {
+        if (response.status === 200 && response.data.status === 200) {
         console.log(
           "Custom framework edited successfully:",
           response.data.message
@@ -1165,6 +1171,11 @@ const FrameSelect = () => {
         alert("Custom framework created successfully!");
         setRefreshKey(refreshKey + 1);
         setEditWindowVisible(false);
+      }
+      else {
+        console.error("Failed to edit custom framework:", response.data.message);
+        alert(response.data.message);
+        setCustomError(response.data.message);
       }
     } catch (error) {
       console.error(
@@ -1237,7 +1248,7 @@ const FrameSelect = () => {
         }
       );
 
-      if (response.status === 200) {
+        if (response.status === 200 && response.data.status === 200) {
         console.log("Framework deleted successfully:", response.data.message);
         alert("Framework deleted successfully!");
         setRefreshKey(refreshKey + 1);

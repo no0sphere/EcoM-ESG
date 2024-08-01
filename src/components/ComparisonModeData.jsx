@@ -80,8 +80,8 @@ const ComparisonModeData = () => {
         fetchData();
     }, []);
 
-
-    const options_year = [...Array(2022 - 2000).keys()].map((i) => {
+    const currentYear = new Date().getFullYear(); 
+    const options_year = [...Array(currentYear - 2000 + 1).keys()].map((i) => {
         return { value: 2000 + i, label: 2000 + i };
     });
 
@@ -278,7 +278,7 @@ const UserItem = ({ user }) => (
             const response = await axios.get(`http://localhost:9090/basic/single?industry=${encodeURIComponent(selectedIndustry.value)}&company=${encodeURIComponent(selectedCompany)}&year=${selectedYear.value}`,
                 { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }
             );
-            if (response.status === 200) {
+            if (response.status === 200 && response.data.status === 200) {
                 console.log("response", response);
                 console.log("response.data.data.indicators", response.data.data.metrics);
                 let NewCompanyData = [...ChosenCompanyData];
@@ -295,25 +295,13 @@ const UserItem = ({ user }) => (
                 let NewCompanyYear = [...ChosenCompanyYears];
                 NewCompanyYear[CurrentSlotIndex] = selectedYear.label;
                 setChosenCompanyYears(NewCompanyYear);
+            } else {
+                console.log("response", response);
+                setError(response.data.message);
             }
         } catch (error) {
-            console.log("error", error);
-            if (error.response && error.response.status === 1000) { //input company is out of format
-                setError('The company name entered does not conform to the format.');
-            } else if (error.response && error.response.status === 1001) {
-                setError('The industry entered does not conform to the format.');
-            } else if (error.response && error.response.status === 1002) {
-                setError('The year entered is out of range or out of format.');
-            }
-            else if (error.response && error.response.status === 1003) {
-                setError('There is no such company under this industry.');
-            }
-            else if (error.response && error.response.status === 1004) {
-                setError('Can\'t find any data for this company in this industry for this year.');
-            }
-            else {
-                setError('Something went wrong. Please try again later.');
-            }
+            setError(error.response.data.message);
+            console.log("error: ", error);
         }
 
     }
