@@ -3765,10 +3765,10 @@ const CompanySearch = () => {
     const handleSearchCompany = async (e) => {
         try {
             console.log("selectedCompany", e);
-            console.log("get", `http://localhost:9090/basic/single/year?company=${encodeURIComponent(e)}`,
+            console.log("get", `http://localhost:9090/basic/single/years?company=${encodeURIComponent(e)}`,
                 { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }
             );
-            const response = await axios.get(`http://localhost:9090/basic/single/year?company=${encodeURIComponent(e)}`,
+            const response = await axios.get(`http://localhost:9090/basic/single/years?company=${encodeURIComponent(e)}`,
                 { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }
             );
             if (response.status === 200 && response.data.status === 200) {
