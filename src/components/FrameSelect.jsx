@@ -416,7 +416,11 @@ const FrameSelect = () => {
 
     // Check if any of the metrics is not a number or not in the range of 0 to 1
     for (let category of top_categories) {
-      for (let metric in data[category].metrics) {
+        for (let metric in data[category].metrics) {
+            //skip if the metric is not selected
+            if (CustomMetricOppOrRisk[category][metric] === false) {
+                continue;
+            } 
         if (
           isNaN(parseFloat(data[category].metrics[metric])) ||
           parseFloat(data[category].metrics[metric]) * 100 < 0 ||
@@ -431,8 +435,11 @@ const FrameSelect = () => {
     // Check if the sum of the metrics in each category is not 1
     for (let category of top_categories) {
       sum = 0;
-      for (let metric in data[category].metrics) {
-        console.log(data[category].metrics[metric]);
+        for (let metric in data[category].metrics) {
+            if (CustomMetricOppOrRisk[category][metric] === false) {
+                continue;
+            } 
+          console.log(data[category].metrics[metric]);
         sum += parseFloat(data[category].metrics[metric]) * 100;
       }
       if (sum !== 100) {
@@ -1250,7 +1257,7 @@ const FrameSelect = () => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // 添加token
+            Authorization: `Bearer ${localStorage.getItem("token")}`, 
           },
         }
       );
