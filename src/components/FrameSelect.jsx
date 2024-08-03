@@ -388,6 +388,12 @@ const FrameSelect = () => {
       console.log("Please input the frame name!" + data.framework_name);
       return false;
     }
+      // length of name should in 5 to 16
+    else if (type === "Create" && (data.framework_name.length < 5 || data.framework_name.length > 16)) {
+        setCustomError("The length of the frame name should be between 5 and 16!");
+        console.log("The length of the frame name should be between 5 and 16!" + data.framework_name);
+        return false;
+        }
 
     // Check if any of the weights is not a number or not in the range of 0 to 1
     for (let category of top_categories) {
