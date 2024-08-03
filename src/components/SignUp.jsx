@@ -10,6 +10,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { AlternateEmail } from "@mui/icons-material";
 
 const SignUp = () => {
   const [userData, setUserData] = useState({
@@ -32,9 +33,8 @@ const SignUp = () => {
         userData
       );
       if (response.status === 200) {
-        localStorage.setItem("username", userData.username);
-        localStorage.setItem("token", response.data.data);
-        navigate("/dashboard");
+        navigate("/login");
+        Alert("User registered successfully");
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
