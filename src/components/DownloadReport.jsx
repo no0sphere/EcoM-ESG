@@ -52,9 +52,9 @@ const DownloadReport = () => {
                     barData={barData}
                     barOptions={barOptions}
                     descriptions={descriptions}
-                    Industry={selectedIndustry}
-                    Company={selectedCompany}
-                    Year={selectedYear}
+                    Industry={selectedIndustry.value}
+                    Company={selectedCompany.value}
+                    Year={selectedYear.value}
                 />
             </div>
             
