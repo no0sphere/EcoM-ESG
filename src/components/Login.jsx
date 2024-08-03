@@ -74,7 +74,7 @@ const Login = () => {
       >
         <Card style={{ width: "400px" }} className="shadow-lg">
           <Card.Body className="p-5">
-            <h2 className="text-center mb-4">Ecom ESG Platform</h2>
+            <h2 className="text-center mb-4">EcoM ESG</h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
                 <InputGroup>
