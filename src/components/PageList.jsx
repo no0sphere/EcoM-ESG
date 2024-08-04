@@ -10,7 +10,6 @@ import HelpPage from "./HelpingPage";
 import Login from "./Login.jsx";
 import SignUp from "./SignUp.jsx";
 import DownloadReport from "./DownloadReport.jsx";
-import Setting from "./Setting.jsx";
 import FrameSelect from "./FrameSelect.jsx";
 import CompanySearch from "./CompanySearch.jsx";
 import ComparisonMode from "./ComparisonMode.jsx";
@@ -19,7 +18,7 @@ import Dashboard from "./Dashboard.jsx";
 const PageList = () => {
   //If there is no token jump to login page
   //otherwise jump to the dashboard
-  //temporary solution for header and footer not showing in the login and signup page
+
   const location = useLocation();
   const showHeaderAndFooter =
     location.pathname !== "/login" &&
@@ -29,7 +28,7 @@ const PageList = () => {
     <div>
       {showHeaderAndFooter && <Header />}
       {showHeaderAndFooter && <Subheader />}
-      {/* pages added here */}
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
@@ -42,13 +41,12 @@ const PageList = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/setting" element={<Setting />} />
         <Route path="/SingleMode" element={<SingleMode />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="/downloadreport" element={<DownloadReport />} />
         <Route path="/comparisonMode" element={<ComparisonMode />} />
       </Routes>
-       {showHeaderAndFooter && <ChatBot/>} 
+      {showHeaderAndFooter && <ChatBot />}
 
       {showHeaderAndFooter && <Footer />}
     </div>

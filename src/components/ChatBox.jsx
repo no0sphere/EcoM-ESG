@@ -41,79 +41,6 @@ const ChatBot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  //const mock = new MockAdapter(axios);
-
-  // mock.onGet("/basic/chat/history").reply(200, {
-  //   code: "200",
-  //   status: 200,
-  //   message: "Success",
-  //   timestamp: 1672525850000,
-  //   data: [
-  //     {
-  //       user_name: "ray",
-  //       content: "Hello, how are you?",
-  //       timestamp: "2024-07-15T10:00:00Z",
-  //       messageType: "user",
-  //       session_id: "session_12345",
-  //     },
-  //     {
-  //       user_name: "ray",
-  //       content: "I am doing well, thank you!",
-  //       timestamp: "2024-07-15T10:00:02Z",
-  //       messageType: "bot",
-  //       session_id: "session_12345",
-  //     },
-  //   ],
-  // });
-
-  // mock.onPost("/basic/chat/send").reply((config) => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       const { message } = JSON.parse(config.data);
-
-  //       resolve([
-  //         200,
-  //         {
-  //           code: "200",
-  //           status: 200,
-  //           message: "Success",
-  //           timestamp: Date.now(),
-  //           data: [
-  //             {
-  //               user_name: "ray",
-  //               content: "Hello, how are you?",
-  //               timestamp: "2024-07-15T10:00:00Z",
-  //               messageType: "user",
-  //               session_id: "session_12345",
-  //             },
-  //             {
-  //               user_name: "ray",
-  //               content: "I am doing well, thank you!",
-  //               timestamp: "2024-07-15T10:00:02Z",
-  //               messageType: "bot",
-  //               session_id: "session_12345",
-  //             },
-  //             {
-  //               user_name: "ray",
-  //               content: "What is the weather like today?",
-  //               timestamp: "2024-07-15T11:00:00Z",
-  //               messageType: "user",
-  //               session_id: "session_67890",
-  //             },
-  //             {
-  //               user_name: "ray",
-  //               content: "The weather today is sunny with a high of 25°C.",
-  //               timestamp: "2024-07-15T11:00:02Z",
-  //               messageType: "bot",
-  //               session_id: "session_67890",
-  //             },
-  //           ],
-  //         },
-  //       ]);
-  //     }, 2000); // 2秒
-  //   });
-  // });
-
   useEffect(() => {
     if (showChat) {
       fetchChatHistory();
@@ -253,20 +180,7 @@ const ChatBot = () => {
             )}
             <div ref={messagesEndRef} />
           </ListGroup>
-          {/* <ListGroup className="mb-3" style={{ height: '400px', overflowY: 'auto' }}>
-            {messages.map((msg, index) => (
-              <ListGroup.Item key={index} className={msg.messageType === 'user' ? 'text-end' : ''}>
-                <strong>{msg.messageType === 'user' ? 'You' : 'AI'}:</strong> {msg.content}
-              </ListGroup.Item>
-            ))}
-            {isLoading && (
-              <ListGroup.Item>
-                <Spinner animation="border" size="sm" /> AI is thinking...
-              </ListGroup.Item>
-            )}
-            <div ref={messagesEndRef} />
-          </ListGroup> */
-          /*没用任何css，仅上述样式不可用时启用，应在联调成功后删除 */}
+
           <Form
             onSubmit={(e) => {
               e.preventDefault();

@@ -1,21 +1,24 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import SingleModeData from './SingleModeData';
-
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import SingleModeData from "./SingleModeData";
 
 const SingleMode = () => {
+  const styleSingleMode = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    padding: "10px",
+    margin: "20px",
+    width: "95%",
+  };
 
-    const styleSingleMode = {
-        display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '10px', margin: '20px', width: '95%'
-    };
-
-    return (
-        <div>
-            <div style={styleSingleMode}>
-                <SingleModeData />
-            </div>
-        </div>
-    );
-}
+  return (
+    <div>
+      <div style={styleSingleMode}>
+        <SingleModeData />
+      </div>
+    </div>
+  );
+};
 
 export default SingleMode;

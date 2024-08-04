@@ -34,7 +34,6 @@ const SignUp = () => {
       );
       if (response.status === 200) {
         navigate("/login");
-        Alert("User registered successfully");
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {

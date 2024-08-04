@@ -21,366 +21,6 @@ import React, { useEffect, useState } from "react";
 import RadarChart from "./RadarChart.jsx";
 
 const FrameSelect = () => {
-   //const mock = new MockAdapter(axios);
-  
-   //mock.onGet(/\/basic\/getFramework\?username=.+/).reply((config) => {
-   //  const urlParams = new URLSearchParams(config.url.split("?")[1]);
-   //  const user_name = urlParams.get("user_name");
-   //  if (user_name === "Jim" || user_name === "jim" || user_name === "qq") {
-   //    return [
-   //      200,
-   //      {
-   //        code: 200,
-   //        status: 200,
-   //        message: "Found frameworks for this user.",
-   //        timestamp: 1718203200000,
-   //        data: [
-   //          {
-   //            framework_name: "Jim's Framework1",
-   //            update_time: "2024-06-05",
-   //            environmental_risk_metrics: {
-   //              "indicator er weight": 0.175,
-   //              co2directscope1: 0.1,
-   //              co2indirectscope2: 0.1,
-   //              co2indirectscope3: 0.1,
-   //              noxemissions: 0.05,
-   //              soxemissions: 0.05,
-   //              vocemissions: 0.05,
-   //              "particulate matter emissions": 0.05,
-   //              wastetotal: 0.1,
-   //              hazardouswaste: 0.1,
-   //              "airpollutants direct": 0.1,
-   //              "airpollutants indirect": 0.1,
-   //              waterwithdrawaltotal: 0.1,
-   //            },
-   //            environmental_opportunity_metrics: {
-   //                "indicator eo weight": 0.175,
-   //              "AIRPOLLUTANTS_INDIRECT": 0.1,
-   //              "climate change risks opp": 0.2,
-   //              "organic products initiatives": 0.15,
-   //              analyticwasterecyclingratio: 0.2,
-   //              "waste recycled": 0.15,
-   //              "water technologies": 0.15,
-   //              tranalyicrenewenergyuse: 0.15,
-   //            },
-   //            social_risk_metrics: {
-   //              "indicator sr weight": 0.125,
-   //              "employee fatalities": 0.25,
-   //              "turnover employees": 0.2,
-   //              "human rights violation pai": 0.3,
-   //              "tir total": 0.25,
-   //            },
-   //            social_opportunity_metrics: {
-   //              "indicator so weight": 0.125,
-  
-   //              "employee health safety policy": 0.25,
-   //              "trade union rep": 0.35,
-   //              "women employees": 0.2,
-   //              "women managers": 0.2,
-   //            },
-   //            governance_risk_metrics: {
-   //              "indicator gr weight": 0.2,
-   //              "bribery and corruption pai insufficient actions": 1, //yes or no
-   //            },
-   //            governance_opportunity_metrics: {
-   //              "indicator go weight": 0.2,
-   //              "analytic audit commind": 0.15,
-   //              "analytic board female": 0.1,
-   //              "analytic comp commind": 0.1,
-   //              "analytic nomination commind": 0.1,
-   //              "audit comm nonexec members": 0.1,
-   //              "board meeting attendance avg": 0.15,
-   //              "comp comm nonexec members": 0.1,
-   //              "analytic indep board": 0.15,
-   //              "analytic nonexec board": 0.05,
-   //            },
-   //          },
-   //          {
-   //            framework_name: "Find Fish's Framework",
-   //            update_time: "2023-10-07",
-   //            environmental_risk_metrics: {
-   //              indicator_er_weight: 0.3,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            environmental_opportunity_metrics: {
-   //              indicator_eo_weight: 0.2,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            social_risk_metrics: {
-   //              indicator_sr_weight: 0.25,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            social_opportunity_metrics: {
-   //              indicator_so_weight: 0.15,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            governance_risk_metrics: {
-   //              indicator_gr_weight: 0.05,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            governance_opportunity_metrics: {
-   //              indicator_go_weight: 0.05,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //          },
-   //        ],
-   //      },
-   //    ];
-   //  } else {
-   //    return [
-   //      200,
-   //      {
-   //        code: 200,
-   //        status: 200,
-   //        message: "one frameworks for this user.",
-   //        timestamp: 1718203200000,
-   //        data: [
-   //          {
-   //            framework_name: "Ray's Framework",
-   //            update_time: "2023-10-07",
-   //            environmental_risk_metrics: {
-   //              "indicator er weight": 0.175,
-   //              co2directscope1: 0.1,
-   //              co2indirectscope2: 0.1,
-   //              co2indirectscope3: 0.1,
-   //              noxemissions: 0.05,
-   //              soxemissions: 0.05,
-   //              vocemissions: 0.05,
-   //              "particulate matter emissions": 0.05,
-   //              wastetotal: 0.1,
-   //              hazardouswaste: 0.1,
-   //              "airpollutants direct": 0.1,
-   //              "airpollutants indirect": 0.1,
-   //              waterwithdrawaltotal: 0.1,
-   //            },
-   //            environmental_opportunity_metrics: {
-   //              "indicator eo weight": 0.175,
-   //              "climate change risks opp": 0.2,
-   //              "organic products initiatives": 0.15,
-   //              analyticwasterecyclingratio: 0.2,
-   //              "waste recycled": 0.15,
-   //              "water technologies": 0.15,
-   //              tranalyicrenewenergyuse: 0.15,
-   //            },
-   //            social_risk_metrics: {
-   //              "indicator sr weight": 0.125,
-   //              "employee fatalities": 0.25,
-   //              "turnover employees": 0.2,
-   //              "human rights violation pai": 0.3,
-   //              "tir total": 0.25,
-   //            },
-   //            social_opportunity_metrics: {
-   //              "indicator so weight": 0.125,
-  
-   //              "employee health safety policy": 0.25,
-   //              "trade union rep": 0.35,
-   //              "women employees": 0.2,
-   //              "women managers": 0.2,
-   //            },
-   //            governance_risk_metrics: {
-   //              "indicator gr weight": 0.2,
-   //              "bribery and corruption pai insufficient actions": 1, //yes or no
-   //            },
-   //            governance_opportunity_metrics: {
-   //              "indicator go weight": 0.2,
-   //              "analytic audit commind": 0.15,
-   //              "analytic board female": 0.1,
-   //              "analytic comp commind": 0.1,
-   //              "analytic nomination commind": 0.1,
-   //              "audit comm nonexec members": 0.1,
-   //              "board meeting attendance avg": 0.15,
-   //              "comp comm nonexec members": 0.1,
-   //              "analytic indep board": 0.15,
-   //              "analytic nonexec board": 0.05,
-   //            },
-   //          },
-   //          {
-   //            framework_name: "Hao's Framework",
-   //            update_time: "2023-10-07",
-   //            environmental_risk_metrics: {
-   //              indicator_er_weight: 0.3,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            environmental_opportunity_metrics: {
-   //              indicator_eo_weight: 0.2,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            social_risk_metrics: {
-   //              indicator_sr_weight: 0.25,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            social_opportunity_metrics: {
-   //              indicator_so_weight: 0.15,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            governance_risk_metrics: {
-   //              indicator_gr_weight: 0.05,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            governance_opportunity_metrics: {
-   //              indicator_go_weight: 0.05,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //          },
-   //          {
-   //            framework_name: "6Yan's Framework",
-   //            update_time: "2023-10-07",
-   //            environmental_risk_metrics: {
-   //              indicator_er_weight: 0.3,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            environmental_opportunity_metrics: {
-   //              indicator_eo_weight: 0.2,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            social_risk_metrics: {
-   //              indicator_sr_weight: 0.25,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            social_opportunity_metrics: {
-   //              indicator_so_weight: 0.15,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            governance_risk_metrics: {
-   //              indicator_gr_weight: 0.05,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //            governance_opportunity_metrics: {
-   //              indicator_go_weight: 0.05,
-   //              metric1: 0.5,
-   //              metric2: 0.3,
-   //              metric3: 0.2,
-   //            },
-   //          },
-   //        ],
-   //      },
-   //    ];
-   //  }
-   //});
-  
-   //  mock.onPost("http://localhost:9090/basic/insertFramework").reply((config) => {
-   //      const data = JSON.parse(config.data);
-   //    if (config.headers && config.headers.Authorization != 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
-   //        return [500, {
-   //            "code": "500",
-   //            "status": 500,
-   //            "message": "Authentication failed. Please log in first.",
-   //            "timestamp": 1721670835582,
-   //            "data": null,
-   //            "error": null
-   //        }];
-   //    } else if (
-   //        data.framework_name === "framework1" ||
-   //        data.framework_name === "framework2"
-   //    ) {
-   //        return [
-   //            4001,
-   //            {
-   //                code: "4001",
-   //                status: 4001,
-   //                message: "Framework name already used",
-   //                timestamp: 1721668449393,
-   //                data: null,
-   //                error: null,
-   //            },
-   //        ];
-   //    }else if (!validateCustomFrameworkData(data)) {
-   //    return [
-   //      4007,
-   //      {
-   //        code: "4007",
-   //        status: 4001,
-   //        message: "Existence of categories whose weights do not sum to 1",
-   //        timestamp: 1721668449393,
-   //        data: null,
-   //        error: null,
-   //      },
-   //    ];
-   //  }
-   //  return [
-   //    200,
-   //    {
-   //      code: "200",
-   //      status: 200,
-   //      message: "Success",
-   //      timestamp: 1718203200000,
-   //      data: null,
-   //      error: null,
-   //    },
-   //  ];
-   //  });
-  
-   //  mock.onPut("http://localhost:9090/basic/updateFramework").reply((config) => {
-   //      const data = JSON.parse(config.data);
-   //      if (config.headers && config.headers.Authorization != 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsidXNlcmlkIjpudWxsLCJ1c2VybmFtZSI6InRlc3R1c2VyMTgifSwiZXhwIjoxNzIxNzE4NjcyfQ.iil9h5Htzd9QrC4ciq3sXX-UiuWZaOszyUxCogRwi-Q') {
-   //          return [500, {
-   //              "code": "500",
-   //              "status": 500,
-   //              "message": "Authentication failed. Please log in first.",
-   //              "timestamp": 1721670835582,
-   //              "data": null,
-   //              "error": null
-   //          }];
-   //      } else if (!validateCustomFrameworkData(data,"Edit")) {
-   //          return [
-   //              4007,
-   //              {
-   //                  code: "4007",
-   //                  status: 4001,
-   //                  message: "Existence of categories whose weights do not sum to 1",
-   //                  timestamp: 1721668449393,
-   //                  data: null,
-   //                  error: null,
-   //              },
-   //          ];
-   //      }
-   //      return [
-   //          200,
-   //          {
-   //              code: "200",
-   //              status: 200,
-   //              message: "Success",
-   //              timestamp: 1718203200000,
-   //              data: null,
-   //              error: null,
-   //          },
-   //      ];
-   //  });
-
   const validateCustomFrameworkData = (data, type = "Create") => {
     console.log(data);
     if (!data.framework_name && type === "Create") {
@@ -388,12 +28,20 @@ const FrameSelect = () => {
       console.log("Please input the frame name!" + data.framework_name);
       return false;
     }
-      // length of name should in 5 to 16
-    else if (type === "Create" && (data.framework_name.length < 5 || data.framework_name.length > 16)) {
-        setCustomError("The length of the frame name should be between 5 and 16!");
-        console.log("The length of the frame name should be between 5 and 16!" + data.framework_name);
-        return false;
-        }
+    // length of name should in 5 to 16
+    else if (
+      type === "Create" &&
+      (data.framework_name.length < 5 || data.framework_name.length > 16)
+    ) {
+      setCustomError(
+        "The length of the frame name should be between 5 and 16!"
+      );
+      console.log(
+        "The length of the frame name should be between 5 and 16!" +
+          data.framework_name
+      );
+      return false;
+    }
 
     // Check if any of the weights is not a number or not in the range of 0 to 1
     for (let category of top_categories) {
@@ -422,11 +70,11 @@ const FrameSelect = () => {
 
     // Check if any of the metrics is not a number or not in the range of 0 to 1
     for (let category of top_categories) {
-        for (let metric in data[category].metrics) {
-            //skip if the metric is not selected
-            if (CustomMetricOppOrRisk[category][metric] === false) {
-                continue;
-            } 
+      for (let metric in data[category].metrics) {
+        //skip if the metric is not selected
+        if (CustomMetricOppOrRisk[category][metric] === false) {
+          continue;
+        }
         if (
           isNaN(parseFloat(data[category].metrics[metric])) ||
           parseFloat(data[category].metrics[metric]) * 100 < 0 ||
@@ -441,11 +89,11 @@ const FrameSelect = () => {
     // Check if the sum of the metrics in each category is not 1
     for (let category of top_categories) {
       sum = 0;
-        for (let metric in data[category].metrics) {
-            if (CustomMetricOppOrRisk[category][metric] === false) {
-                continue;
-            } 
-          console.log(data[category].metrics[metric]);
+      for (let metric in data[category].metrics) {
+        if (CustomMetricOppOrRisk[category][metric] === false) {
+          continue;
+        }
+        console.log(data[category].metrics[metric]);
         sum += parseFloat(data[category].metrics[metric]) * 100;
       }
       if (sum !== 100) {
@@ -736,7 +384,7 @@ const FrameSelect = () => {
           }
         );
         console.log("frameworks page GET response", response);
-          if (response.status === 200 && response.data.status === 200) {
+        if (response.status === 200 && response.data.status === 200) {
           const sortedFrameworks = response.data.data.sort(
             (a, b) => new Date(b.update_time) - new Date(a.update_time)
           );
@@ -1129,22 +777,23 @@ const FrameSelect = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         } // token
       );
-        if (response.status === 200 && response.data.status === 200) {
-            console.log(
-                "Custom framework created successfully:",
-                response.data.message
-            );
-            console.log("Custom framework:", filteredCustomFramework);
-            alert("Custom framework created successfully!");
-            setRefreshKey(refreshKey + 1);
-            setCustomWindowVisible(false);
-        }
-        else {
-            console.error("Failed to create custom framework:", response.data.message);
-            alert(response.data.message);
-            setCustomError(response.data.message);
-        }
-
+      if (response.status === 200 && response.data.status === 200) {
+        console.log(
+          "Custom framework created successfully:",
+          response.data.message
+        );
+        console.log("Custom framework:", filteredCustomFramework);
+        alert("Custom framework created successfully!");
+        setRefreshKey(refreshKey + 1);
+        setCustomWindowVisible(false);
+      } else {
+        console.error(
+          "Failed to create custom framework:",
+          response.data.message
+        );
+        alert(response.data.message);
+        setCustomError(response.data.message);
+      }
     } catch (error) {
       console.error(
         "Failed to create custom framework:",
@@ -1182,7 +831,7 @@ const FrameSelect = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         } // token
       );
-        if (response.status === 200 && response.data.status === 200) {
+      if (response.status === 200 && response.data.status === 200) {
         console.log(
           "Custom framework edited successfully:",
           response.data.message
@@ -1191,9 +840,11 @@ const FrameSelect = () => {
         alert("Custom framework created successfully!");
         setRefreshKey(refreshKey + 1);
         setEditWindowVisible(false);
-      }
-      else {
-        console.error("Failed to edit custom framework:", response.data.message);
+      } else {
+        console.error(
+          "Failed to edit custom framework:",
+          response.data.message
+        );
         alert(response.data.message);
         setCustomError(response.data.message);
       }
@@ -1263,12 +914,12 @@ const FrameSelect = () => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`, 
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
 
-        if (response.status === 200 && response.data.status === 200) {
+      if (response.status === 200 && response.data.status === 200) {
         console.log("Framework deleted successfully:", response.data.message);
         alert("Framework deleted successfully!");
         setRefreshKey(refreshKey + 1);
